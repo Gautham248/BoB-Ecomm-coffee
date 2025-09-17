@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://beansofbodhi.com/</loc>
+    <lastmod>2024-01-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://beansofbodhi.com/og-homepage.jpg</image:loc>
+      <image:title>Beans of Bodhi - Premium Coffee Collection</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Movement Page -->
+  <url>
+    <loc>https://beansofbodhi.com/movement</loc>
+    <lastmod>2024-01-15T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://beansofbodhi.com/og-movement.jpg</image:loc>
+      <image:title>The Movement - Sustainable Coffee Adventure</image:title>
+    </image:image>
+  </url>
+  
+</urlset>
