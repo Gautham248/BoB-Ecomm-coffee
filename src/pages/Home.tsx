@@ -5,6 +5,7 @@ import CollectionsSection from '../components/CollectionsSection';
 import FeaturedSection from '../components/FeaturedSection';
 import StorySection from '../components/StorySection';
 import NewsletterSection from '../components/NewsletterSection';
+import CarouselHeroSection from '../components/CarouselHeroSection';
 
 const Home: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const Home: React.FC = () => {
         ogImage="https://beansofbodhi.com/og-homepage.jpg"
       />
       
-      <HeroSection />
+      <CarouselHeroSection/>
       <CollectionsSection />
       <FeaturedSection />
       <StorySection />
