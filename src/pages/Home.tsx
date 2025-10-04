@@ -6,6 +6,7 @@ import FeaturedSection from '../components/FeaturedSection';
 import StorySection from '../components/StorySection';
 import NewsletterSection from '../components/NewsletterSection';
 import CarouselHeroSection from '../components/CarouselHeroSection';
+import FeaturedProducts from '../components/FeaturedProducts';
 
 const Home: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const Home: React.FC = () => {
       <CarouselHeroSection/>
       <CollectionsSection />
       <FeaturedSection />
+      <FeaturedProducts/>
       <StorySection />
       <NewsletterSection />
     </>
