@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-// import { useNavigate } from 'react-router-dom';
-// import { gsap } from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Mock GSAP functions for demonstration
 const gsap = {
@@ -20,7 +17,7 @@ const mockCollections = [
     name: 'Western Ghats Selects',
     price: 'From ₹749',
     originalPrice: null,
-    image: 'https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    image: 'src/assets/images/Origin_1-p-1080.png',
     products: ['product1']
   },
   {
@@ -28,7 +25,7 @@ const mockCollections = [
     name: 'Gadget Galaxy',
     price: 'From ₹6699',
     originalPrice: null,
-    image: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    image: 'src/assets/images/Origin_1-p-1080.png',
     products: ['product2']
   },
   {
@@ -36,7 +33,7 @@ const mockCollections = [
     name: 'Nitro Blends',
     price: 'From ₹779',
     originalPrice: null,
-    image: 'https://images.pexels.com/photos/851555/pexels-photo-851555.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    image: 'src/assets/images/Origin_1-p-1080.png',
     products: ['product3']
   },
   {
@@ -44,7 +41,7 @@ const mockCollections = [
     name: 'Merchandise',
     price: 'From ₹599',
     originalPrice: null,
-    image: 'https://images.pexels.com/photos/1458671/pexels-photo-1458671.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    image: 'src/assets/images/Origin_1-p-1080.png',
     products: ['product4']
   },
   {
@@ -52,48 +49,90 @@ const mockCollections = [
     name: 'Premium Blends',
     price: 'From ₹899',
     originalPrice: null,
-    image: 'https://images.pexels.com/photos/1458671/pexels-photo-1458671.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    image: 'src/assets/images/Origin_1-p-1080.png',
     products: ['product5']
+  },
+  {
+    id: '5',
+    name: 'Merchandise',
+    price: 'From ₹599',
+    originalPrice: null,
+    image: 'src/assets/images/Origin_1-p-1080.png',
+    products: ['product4']
   }
 ];
 
 const CollectionsSection: React.FC = () => {
-  // const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [itemsPerView, setItemsPerView] = useState(1); // Configurable items per view on mobile
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
   
-  // const collections = getFeaturedCollections();
-  const collections = mockCollections; // Replace with your actual data
+  const collections = mockCollections;
 
-  // Calculate max slides based on items per view
-  const maxSlides = collections.length;
+  // Enhanced drag scroll functionality
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+    sliderRef.current.style.cursor = 'grabbing';
+    sliderRef.current.style.scrollSnapType = 'none';
+  };
 
-  // Handle window resize to update slider
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        // Mobile: Show configurable number of items (default 1)
-        setItemsPerView(1); // You can make this configurable: 1, 2, or 3
-      } else if (window.innerWidth < 1024) {
-        // Tablet: Show 2-3 items
-        setItemsPerView(Math.min(3, collections.length));
-      } else {
-        // Desktop: Show all items
-        setItemsPerView(collections.length);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    if (sliderRef.current) {
+      sliderRef.current.style.cursor = 'grab';
+      // Re-enable scroll snap after dragging
+      setTimeout(() => {
+        if (sliderRef.current) {
+          sliderRef.current.style.scrollSnapType = 'x mandatory';
+        }
+      }, 100);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    if (sliderRef.current) {
+      sliderRef.current.style.cursor = 'grab';
+    }
+  };
+
+  // Touch events for mobile drag
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+    sliderRef.current.style.scrollSnapType = 'none';
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+    const x = e.touches[0].pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setTimeout(() => {
+      if (sliderRef.current) {
+        sliderRef.current.style.scrollSnapType = 'x mandatory';
       }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [collections.length]);
-
-  // Reset current slide when items per view changes
-  useEffect(() => {
-    setCurrentSlide(0);
-  }, [itemsPerView]);
+    }, 100);
+  };
 
   useEffect(() => {
     const cards = gsap.utils.toArray('.collection-card');
@@ -181,11 +220,9 @@ const CollectionsSection: React.FC = () => {
   }, []);
 
   const handleCollectionClick = (collectionId: string) => {
-    // For now, navigate to the first product in the collection
     const collection = collections.find(c => c.id === collectionId);
     if (collection && collection.products.length > 0) {
       console.log(`Navigate to product: ${collection.products[0]}`);
-      // navigate(`/product/${collection.products[0]}`);
     }
   };
 
@@ -193,217 +230,111 @@ const CollectionsSection: React.FC = () => {
     console.log('Navigate to all products');
   };
 
-  // Slider navigation functions
-  const goToPrevious = () => {
-    setCurrentSlide(prev => prev > 0 ? prev - 1 : collections.length - itemsPerView);
-  };
+ return (
+    <section 
+      ref={sectionRef} 
+      className="w-full bg-white flex flex-col justify-center py-20 md:py-24 overflow-hidden"
+    >
+      {/* Header */}
+      <div className="text-center mb-16 md:mb-20 flex-shrink-0 px-6">
+        <h2 className="collections-title text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 tracking-widest">
+          OUR COLLECTIONS
+        </h2>
+      </div>
 
-  const goToNext = () => {
-    setCurrentSlide(prev => {
-      const maxSlide = collections.length - itemsPerView;
-      return prev < maxSlide ? prev + 1 : 0;
-    });
-  };
+      {/* Slider Container */}
+      <div className="w-full overflow-hidden mb-16 md:mb-20">
+        <div 
+          ref={sliderRef}
+          className="flex gap-16 md:gap-24 lg:gap-32 overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab active:cursor-grabbing px-6 md:px-12 lg:px-20 py-8"
+          style={{ 
+            scrollbarWidth: 'none', 
+            msOverflowStyle: 'none',
+            scrollSnapType: 'x mandatory',
+            scrollBehavior: 'smooth',
+            WebkitOverflowScrolling: 'touch'
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {collections.map((collection, index) => (
+            <div
+              key={`${collection.id}-${index}`}
+              className="flex-shrink-0"
+              style={{
+                scrollSnapAlign: 'center',
+                width: '240px',
+              }}
+            >
+              <div 
+                className="collection-card group cursor-pointer flex flex-col"
+                onClick={() => handleCollectionClick(collection.id)}
+              >
+                {/* Collection Image */}
+                <div className="relative mb-8 overflow-hidden bg-gray-50 rounded-lg aspect-square">
+                  <img
+                    src={collection.image}
+                    alt={collection.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    draggable="false"
+                    onDragStart={(e) => e.preventDefault()}
+                  />
+                </div>
 
-  const goToSlide = (index: number) => {
-    const maxSlide = collections.length - itemsPerView;
-    setCurrentSlide(Math.min(index, maxSlide));
-  };
-
-  // Calculate responsive sizing based on number of collections for desktop
-  const getDesktopGridClasses = () => {
-    const count = collections.length;
-    if (count === 1) return 'justify-center';
-    return 'justify-between';
-  };
-
-  const getDesktopItemClasses = () => {
-    const count = collections.length;
-    if (count === 1) return 'w-64 md:w-80';
-    if (count === 2) return 'w-1/2 max-w-sm px-2';
-    if (count === 3) return 'w-1/3 max-w-xs px-1';
-    if (count === 4) return 'w-1/4 max-w-xs px-1';
-    if (count === 5) return 'w-1/5 max-w-xs px-1';
-    if (count === 6) return 'w-1/6 max-w-xs px-1';
-    return 'w-1/7 max-w-xs px-1'; // For 7+ items
-  };
-
-  // Check if we need slider (mobile/tablet view)
-  const needsSlider = itemsPerView < collections.length;
-
-  return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="collections-title text-4xl md:text-5xl font-light text-gray-900 tracking-wider">
-            OUR COLLECTIONS
-          </h2>
-        </div>
-
-        {/* Collections Container */}
-        <div className="relative mb-16">
-          {needsSlider ? (
-            /* Mobile/Tablet Slider View */
-            <>
-              {/* Slider Container */}
-              <div className="overflow-hidden">
-                <div 
-                  ref={sliderRef}
-                  className="flex transition-transform duration-500 ease-in-out"
-                  style={{
-                    transform: `translateX(-${(currentSlide * 100) / itemsPerView}%)`
-                  }}
-                >
-                  {collections.map((collection, index) => (
-                    <div
-                      key={collection.id}
-                      className={`flex-shrink-0 px-2 ${
-                        itemsPerView === 1 ? 'w-full' : 
-                        itemsPerView === 2 ? 'w-1/2' : 
-                        'w-1/3'
-                      }`}
-                    >
-                      <div className="collection-card group cursor-pointer w-full max-w-sm mx-auto"
-                           onClick={() => handleCollectionClick(collection.id)}>
-                        {/* Collection Image */}
-                        <div className="relative mb-4 overflow-hidden rounded-lg">
-                          <img
-                            src={collection.image}
-                            alt={collection.name}
-                            className="w-full h-48 md:h-56 object-cover group-hover:scale-110 transition-transform duration-700 rounded-lg"
-                            style={{
-                              filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
-                          
-                          {/* Hover overlay */}
-                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                            <div className="text-white font-medium text-sm px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                              View Collection
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Collection Info */}
-                        <div className="text-center px-2">
-                          <h3 className="text-base md:text-lg font-light text-gray-900 mb-2 tracking-wide leading-tight">
-                            {collection.name}
-                          </h3>
-                          <div className="flex items-center justify-center space-x-2">
-                            {collection.originalPrice && (
-                              <span className="text-gray-500 line-through text-sm">
-                                {collection.originalPrice}
-                              </span>
-                            )}
-                            <span className="text-gray-900 font-medium text-sm md:text-base">
-                              {collection.price}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                {/* Collection Info */}
+                <div className="text-center">
+                  <h3 className="text-lg md:text-xl font-normal text-gray-900 mb-2 tracking-wide">
+                    {collection.name}
+                  </h3>
+                  <div className="flex items-center justify-center space-x-2">
+                    {collection.originalPrice && (
+                      <span className="text-gray-400 line-through text-sm md:text-base">
+                        {collection.originalPrice}
+                      </span>
+                    )}
+                    <span className="text-gray-600 text-sm md:text-base">
+                      {collection.price}
+                    </span>
+                  </div>
                 </div>
               </div>
-
-              {/* Navigation Arrows */}
-              <button
-                onClick={goToPrevious}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
-                aria-label="Previous collections"
-              >
-                <ChevronLeft className="w-5 h-5 text-gray-800" />
-              </button>
-
-              <button
-                onClick={goToNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
-                aria-label="Next collections"
-              >
-                <ChevronRight className="w-5 h-5 text-gray-800" />
-              </button>
-
-              {/* Slider Indicators */}
-              {collections.length > itemsPerView && (
-                <div className="flex justify-center mt-8 space-x-2">
-                  {Array.from({ length: collections.length - itemsPerView + 1 }, (_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === currentSlide 
-                          ? 'bg-gray-900 scale-125' 
-                          : 'bg-gray-400 hover:bg-gray-600'
-                      }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </>
-          ) : (
-            /* Desktop Grid View - Even Distribution */
-            <div className={`flex flex-wrap items-center ${getDesktopGridClasses()} gap-y-8`}>
-              {collections.map((collection, index) => (
-                <div
-                  key={collection.id}
-                  className={`collection-card group cursor-pointer ${getDesktopItemClasses()}`}
-                  onClick={() => handleCollectionClick(collection.id)}
-                >
-                  {/* Collection Image */}
-                  <div className="relative mb-4 md:mb-6 overflow-hidden rounded-lg mx-auto">
-                    <img
-                      src={collection.image}
-                      alt={collection.name}
-                      className="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-700 rounded-lg"
-                      style={{
-                        filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
-                    
-                    {/* Hover overlay with subtle animation */}
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                      <div className="text-white font-medium text-sm md:text-base px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        View Collection
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Collection Info */}
-                  <div className="text-center px-2">
-                    <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-light text-gray-900 mb-2 tracking-wide leading-tight">
-                      {collection.name}
-                    </h3>
-                    <div className="flex items-center justify-center space-x-2">
-                      {collection.originalPrice && (
-                        <span className="text-gray-500 line-through text-xs md:text-sm">
-                          {collection.originalPrice}
-                        </span>
-                      )}
-                      <span className="text-gray-900 font-medium text-sm md:text-base">
-                        {collection.price}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
-          )}
-        </div>
-
-        {/* Shop All Button */}
-        <div className="text-center">
-          <button
-            onClick={handleShopAllClick}
-            className="shop-all-btn inline-flex items-center justify-center px-8 md:px-12 py-3 md:py-4 border-2 border-gray-900 text-gray-900 font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-300 rounded-full text-sm md:text-base"
-          >
-            Shop All
-          </button>
+          ))}
         </div>
       </div>
+
+      {/* Shop All Button */}
+      <div className="text-center flex-shrink-0">
+        <button
+          onClick={handleShopAllClick}
+          className="shop-all-btn inline-flex items-center justify-center px-10 md:px-14 py-3 md:py-4 border-2 border-gray-900 text-gray-900 font-medium tracking-widest hover:bg-gray-900 hover:text-white transition-all duration-300 rounded-full text-sm md:text-base uppercase"
+        >
+          Shop All
+        </button>
+      </div>
+
+      {/* Custom scrollbar styles */}
+      <style>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .collection-card {
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+        }
+      `}</style>
     </section>
   );
 };

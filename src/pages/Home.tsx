@@ -3,6 +3,7 @@ import SEOHead from '../components/SEO/SEOHead';
 import HeroSection from '../components/HeroSection';
 import CollectionsSection from '../components/CollectionsSection';
 import FeaturedSection from '../components/FeaturedSection';
+import VideoHeroSection from '../components/VideoHeroSection';
 import StorySection from '../components/StorySection';
 import NewsletterSection from '../components/NewsletterSection';
 import CarouselHeroSection from '../components/CarouselHeroSection';
@@ -21,7 +22,8 @@ const Home: React.FC = () => {
       
       <CarouselHeroSection/>
       <CollectionsSection />
-      <FeaturedSection />
+      <VideoHeroSection />
+      {/* <FeaturedSection /> */}
       <FeaturedProducts/>
       <StorySection />
       <NewsletterSection />
