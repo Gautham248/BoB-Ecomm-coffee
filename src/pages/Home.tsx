@@ -7,6 +7,7 @@ import StorySection from '../components/StorySection';
 import NewsletterSection from '../components/NewsletterSection';
 import CarouselHeroSection from '../components/CarouselHeroSection';
 import FeaturedProducts from '../components/FeaturedProducts';
+import VideoHeroSection from '../components/VideoHeroSection';
 
 const Home: React.FC = () => {
   return (
@@ -19,10 +20,10 @@ const Home: React.FC = () => {
         ogImage="https://beansofbodhi.com/og-homepage.jpg"
       />
       
-      <CarouselHeroSection/>
+      {/* <CarouselHeroSection/> */}
+      <VideoHeroSection/>
       <CollectionsSection />
       <FeaturedSection />
-      <FeaturedProducts/>
       <StorySection />
       <NewsletterSection />
     </>

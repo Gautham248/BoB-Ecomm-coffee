@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^9.92.7",
     "@react-three/fiber": "^8.15.12",
+    "@splidejs/react-splide": "^0.7.12",
     "gsap": "^3.13.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.344.0",
