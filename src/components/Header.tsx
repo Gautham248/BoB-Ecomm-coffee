@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { products } from '../data/collections';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/images/BoB_Logo_small.png';
+import favicon from '../assets/images/Bob_Favicon-03.png';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -48,15 +49,20 @@ const Header: React.FC = () => {
     {
       title: 'OUR STORY',
       subtitle: 'Learn more about BoB',
-      action: () => navigate('/our-story')
+      action: () => {
+        navigate('/our-story');
+        setActiveDropdown(null);
+      }
     },
     {
       title: 'MOVEMENT',
       subtitle: 'Learn more about Movement',
-      action: () => navigate('/movement')
+      action: () => {
+        navigate('/movement');
+        setActiveDropdown(null);
+      }
     }
   ];
-
   const handleDropdownEnter = (dropdown: string) => {
     setActiveDropdown(dropdown);
   };
@@ -122,7 +128,7 @@ const Header: React.FC = () => {
                   {products.map((product, index) => (
                     <div 
                       key={product.name} 
-                      className="flex items-center space-x-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer"
+                      className="group flex items-center space-x-4 py-3 px-4 rounded-lg hover:bg-teal-900 transition-all duration-300 cursor-pointer"
                       role="menuitem"
                       tabIndex={0}
                       onClick={() => handleProductClick(product.name)}
@@ -133,8 +139,10 @@ const Header: React.FC = () => {
                         }
                       }}
                     >
-                      <div className="w-6 h-6 border-2 border-gray-800 rounded-full flex-shrink-0" aria-hidden="true"></div>
-                      <span className="text-gray-800 font-medium tracking-wide">{product.name}</span>
+                      <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <img src={favicon} alt="" className="w-6 h-6 object-contain" aria-hidden="true" />
+                      </div>
+                      <span className="text-gray-800 font-medium tracking-wide group-hover:text-white transition-colors duration-300">{product.name}</span>
                     </div>
                   ))}
                 </div>
@@ -167,7 +175,7 @@ const Header: React.FC = () => {
                   {insideItems.map((item, index) => (
                     <div 
                       key={item.title} 
-                      className="flex items-center space-x-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer"
+                      className="group flex items-center space-x-4 py-3 px-4 rounded-lg hover:bg-teal-900 transition-all duration-300 cursor-pointer"
                       role="menuitem"
                       tabIndex={0}
                       onClick={item.action}
@@ -178,8 +186,10 @@ const Header: React.FC = () => {
                         }
                       }}
                     >
-                      <div className="w-6 h-6 border-2 border-gray-800 rounded-full flex-shrink-0" aria-hidden="true"></div>
-                      <span className="text-gray-800 font-medium tracking-wide">{item.title}</span>
+                      <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <img src={favicon} alt="" className="w-6 h-6 object-contain" aria-hidden="true" />
+                      </div>
+                      <span className="text-gray-800 font-medium tracking-wide group-hover:text-white transition-colors duration-300">{item.title}</span>
                     </div>
                   ))}
                 </div>
@@ -345,7 +355,7 @@ const Header: React.FC = () => {
                     onClick={() => handleProductClick(product.name)}
                     className="flex items-center space-x-3 w-full text-left py-2 px-4 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
                   >
-                    <div className="w-4 h-4 border border-white rounded-full flex-shrink-0" aria-hidden="true"></div>
+                    <img src={favicon} alt="" className="w-4 h-4 object-contain flex-shrink-0" aria-hidden="true" />
                     <span className="text-white text-sm">{product.name}</span>
                   </button>
                 ))}
@@ -380,7 +390,7 @@ const Header: React.FC = () => {
                     className="w-full text-left py-3 px-4 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
                   >
                     <div className="flex items-center space-x-3 mb-1">
-                      <div className="w-4 h-4 border border-white rounded-full flex-shrink-0" aria-hidden="true"></div>
+                      <img src={favicon} alt="" className="w-4 h-4 object-contain flex-shrink-0" aria-hidden="true" />
                       <span className="text-white font-medium">{item.title}</span>
                     </div>
                     <p className="text-gray-300 text-sm ml-7">{item.subtitle}</p>

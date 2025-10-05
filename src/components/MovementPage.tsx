@@ -171,16 +171,16 @@ const MovementPage: React.FC<MovementPageProps> = ({ onBackToHome, onProductClic
     <div ref={containerRef}>
       {/* Hero Section with 3D Scene */}
       <section className="relative h-screen overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-0">
           <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
             <Scene scrollProgress={scrollProgress} />
           </Canvas>
         </div>
         
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 z-10" />
         
         {/* Back to Home Button */}
-        <div className="absolute top-24 left-6 z-20">
+        <div className="absolute top-24 left-6 z-30">
           <button 
             onClick={onBackToHome}
             className="flex items-center space-x-2 text-white hover:text-gray-300 transition-colors duration-300 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-lg"
@@ -192,7 +192,7 @@ const MovementPage: React.FC<MovementPageProps> = ({ onBackToHome, onProductClic
           </button>
         </div>
         
-        <div className="relative z-10 flex items-center justify-center h-full">
+        <div className="relative z-20 flex items-center justify-center h-full">
           <div className="text-center text-white movement-hero-text">
             <h1 className="text-6xl md:text-8xl font-serif mb-6">
               The Movement

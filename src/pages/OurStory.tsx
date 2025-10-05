@@ -1,192 +1,211 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import SEOHead from '../components/SEO/SEOHead';
 import StructuredData from '../components/SEO/StructuredData';
-import Client from 'shopify-buy';
+import NewsletterSection from '../components/NewsletterSection';
+import Footer from '../components/Footer';
 
-const client = Client.buildClient({
-  domain: 'beansofbodhi.myshopify.com',
-  storefrontAccessToken: import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || "b8f1f60c294032ca5816afa179b3636c",
-  apiVersion: ''
-});
-export const fetchShopifyProducts = async () => {
-  try {
-    console.log('Fetching products from Shopify...');
-    const products = await client.product.fetchAll();
-    console.log('Available products:', products);
-    
-    // Log product details for easy copying
-    products.forEach(product => {
-      console.log(`Product: ${product.title}`);
-      console.log(`ID: ${product.id}`);
-      console.log('Variants:');
-      product.variants.forEach(variant => {
-        console.log(`  - ${variant.title}: ${variant.id} (${variant.price.amount} ${variant.price.currencyCode})`);
-      });
-      console.log('---');
-    });
-    
-    return products;
-  } catch (error) {
-    console.error('Failed to fetch products:', error);
-    return [];
-  }
-};
+// Type definitions
+interface NavArrowProps {
+  direction: 'left' | 'right';
+  onClick: () => void;
+  hidden: boolean;
+}
 
-// export const fetchShopifyProducts = async () => {
-//   try {
-//     console.log('Fetching products from Shopify...');
-//     const products = await client.product.fetchAll();
+interface HorizontalIndicatorsProps {
+  total: number;
+  active: number;
+  onSelect: (index: number) => void;
+}
 
-//     // Build structured JSON data
-//     const productData = products.map(product => ({
-//       id: product.id,
-//       title: product.title,
-//       description: product.descriptionHtml || product.description,
-//       variants: product.variants.map(variant => ({
-//         id: variant.id,
-//         title: variant.title,
-//         price: `${variant.price.amount} ${variant.price.currencyCode}`
-//       }))
-//     }));
+interface HorizontalSectionProps {
+  children: React.ReactNode;
+  showSwipeHint?: boolean;
+}
 
-//     // Convert to JSON string
-//     const jsonString = JSON.stringify(productData, null, 2);
+interface HorizontalScrollContainerProps {
+  sections: React.ReactNode[];
+}
 
-//     // Trigger download in browser
-//     const blob = new Blob([jsonString], { type: "application/json" });
-//     const url = URL.createObjectURL(blob);
+// Navigation Arrow Component
+const NavArrow = ({ direction, onClick, hidden }: NavArrowProps) => (
+  <div
+    className={`nav-arrow nav-arrow-${direction} ${hidden ? 'hidden' : ''}`}
+    onClick={onClick}
+  >
+    {direction === 'left' ? '‹' : '›'}
+  </div>
+);
 
-//     const link = document.createElement("a");
-//     link.href = url;
-//     link.download = "shopify_products.json";
-//     document.body.appendChild(link);
-//     link.click();
+// Horizontal Indicators Component
+const HorizontalIndicators = ({ total, active, onSelect }: HorizontalIndicatorsProps) => (
+  <div className="horizontal-indicators">
+    {Array.from({ length: total }).map((_, index) => (
+      <div
+        key={index}
+        className={`horizontal-indicator ${index === active ? 'active' : ''}`}
+        onClick={() => onSelect(index)}
+      />
+    ))}
+  </div>
+);
 
-//     // Clean up
-//     document.body.removeChild(link);
-//     URL.revokeObjectURL(url);
+// Horizontal Section Component
+const HorizontalSection = ({ children, showSwipeHint = false }: HorizontalSectionProps) => (
+  <div className="horizontal-section">
+    {children}
+    {showSwipeHint && <div className="swipe-hint">Swipe →</div>}
+  </div>
+);
 
-//     return products;
-//   } catch (error) {
-//     console.error('Failed to fetch products:', error);
-//     return [];
-//   }
-// };
-
-gsap.registerPlugin(ScrollTrigger);
-
-const OurStory: React.FC = () => {
-  const navigate = useNavigate();
+// Horizontal Scroll Container Component
+const HorizontalScrollContainer = ({ sections }: HorizontalScrollContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeSection, setActiveSection] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const handleTouchStart = useRef({ x: 0, y: 0 });
 
-  const sections = [
-    {
-      id: 'purpose',
-      title: 'Purpose',
-      headline: 'A higher calling.',
-      subtext: 'Our athletes\' stories are diverse, but they all share a calling to push the limits of human potential.',
-      cta: 'Meet the Athletes',
-      background: 'https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
-      isHero: true
-    },
-    {
-      id: 'history',
-      title: 'History',
-      headline: 'Born from Adventure',
-      subtext: 'From the misty peaks of the Western Ghats to your cup, our journey began with a simple belief: great coffee should fuel great adventures.',
-      background: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop'
-    },
-    {
-      id: 'sustainability',
-      title: 'Sustainability',
-      headline: 'Protecting Our Playground',
-      subtext: 'Every cup supports conservation efforts in the Western Ghats, preserving the wild spaces that inspire our adventures.',
-      background: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop'
-    },
-    {
-      id: 'athletes',
-      title: 'Athletes',
-      headline: 'Fueled by Passion',
-      subtext: 'Meet the adventurers, climbers, and explorers who push boundaries with every sip of our premium coffee.',
-      background: 'https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop'
-    },
-    {
-      id: 'explore-fund',
-      title: 'The Explore Fund',
-      headline: 'Funding the Future',
-      subtext: 'Supporting the next generation of adventurers through grants, equipment, and mentorship programs.',
-      background: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop'
-    },
-    {
-      id: 'technology',
-      title: 'Technology',
-      headline: 'Innovation in Every Bean',
-      subtext: 'Cutting-edge roasting techniques and sustainable processing methods that honor tradition while embracing the future.',
-      background: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop'
-    },
-    {
-      id: 'innovation',
-      title: 'Innovation',
-      headline: 'Beyond the Cup',
-      subtext: 'Pioneering new ways to connect coffee culture with adventure culture, creating experiences that transcend the ordinary.',
-      background: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop'
+  const navigateToSection = (index: number) => {
+    if (index >= 0 && index < sections.length && containerRef.current) {
+      setCurrentIndex(index);
+      setIsScrolling(true);
+
+      const targetScrollLeft = index * containerRef.current.clientWidth;
+      containerRef.current.scrollTo({
+        left: targetScrollLeft,
+        behavior: 'smooth'
+      });
+
+      setTimeout(() => setIsScrolling(false), 500);
     }
-  ];
+  };
+
+  const updateCurrentIndex = () => {
+    if (!isScrolling && containerRef.current) {
+      const scrollLeft = containerRef.current.scrollLeft;
+      const containerWidth = containerRef.current.clientWidth;
+      const newIndex = Math.round(scrollLeft / containerWidth);
+
+      if (newIndex !== currentIndex && newIndex >= 0 && newIndex < sections.length) {
+        setCurrentIndex(newIndex);
+      }
+    }
+  };
+
+  const handleScroll = () => {
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      updateCurrentIndex();
+
+      if (containerRef.current) {
+        const scrollLeft = containerRef.current.scrollLeft;
+        const containerWidth = containerRef.current.clientWidth;
+        const targetIndex = Math.round(scrollLeft / containerWidth);
+        const targetScrollLeft = targetIndex * containerWidth;
+
+        if (Math.abs(scrollLeft - targetScrollLeft) > 5) {
+          containerRef.current.scrollTo({
+            left: targetScrollLeft,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }, 100);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const touchEndY = e.changedTouches[0].screenY;
+    const deltaX = Math.abs(touchEndX - handleTouchStart.current.x);
+    const deltaY = Math.abs(touchEndY - handleTouchStart.current.y);
+
+    if (deltaY > deltaX) return;
+
+    if (deltaX > 50) {
+      if (touchEndX < handleTouchStart.current.x) {
+        navigateToSection(currentIndex + 1);
+      } else {
+        navigateToSection(currentIndex - 1);
+      }
+    }
+  };
 
   useEffect(() => {
-    fetchShopifyProducts();
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Track active section on scroll
-    const handleScroll = () => {
-      const scrollTop = container.scrollTop;
-      const sectionHeight = window.innerHeight;
-      const currentSection = Math.round(scrollTop / sectionHeight);
-      
-      if (currentSection !== activeSection && currentSection >= 0 && currentSection < sections.length) {
-        setActiveSection(currentSection);
+    const handleResize = () => {
+      if (containerRef.current) {
+        const targetScrollLeft = currentIndex * containerRef.current.clientWidth;
+        containerRef.current.scrollTo({
+          left: targetScrollLeft,
+          behavior: 'auto'
+        });
       }
     };
 
-    container.addEventListener('scroll', handleScroll);
-
-    // Initial animations
-    gsap.fromTo('.hero-content',
-      { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.5, ease: 'power3.out', delay: 0.5 }
-    );
-
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [activeSection]);
-
-  const scrollToSection = (index: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const targetScroll = index * window.innerHeight;
-    
-    container.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
-  };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [currentIndex]);
 
   return (
     <>
+      <div
+        ref={containerRef}
+        className="horizontal-container"
+        onScroll={handleScroll}
+        onTouchStart={(e) => {
+          handleTouchStart.current = {
+            x: e.changedTouches[0].screenX,
+            y: e.changedTouches[0].screenY
+          };
+        }}
+        onTouchEnd={handleTouchEnd}
+      >
+        {sections}
+      </div>
+      <NavArrow
+        direction="left"
+        onClick={() => navigateToSection(currentIndex - 1)}
+        hidden={currentIndex === 0}
+      />
+      <NavArrow
+        direction="right"
+        onClick={() => navigateToSection(currentIndex + 1)}
+        hidden={currentIndex === sections.length - 1}
+      />
+      <HorizontalIndicators
+        total={sections.length}
+        active={currentIndex}
+        onSelect={navigateToSection}
+      />
+    </>
+  );
+};
+
+// Hero Section Component (Section 0)
+const HeroSection = () => (
+  <section id="Section0" className="snap-section-new snap-0">
+    <div className="uui-padding-vertical-xhuge-6">
+      <a href="#" className="uui-blogpost02_category-link-2 w-inline-block">
+        <div className="text-block-31">OUR STORY</div>
+      </a>
+      <h1 className="uui-heading-large-2 text-color-white-3">
+        From <em>heritage </em>to Horizons,<br />A Journey of Bold <em>Adventures.</em>
+      </h1>
+    </div>
+  </section>
+);
+
+// Main Our Story Component
+const OurStory = () => {
+  return (
+    <>
       <SEOHead
-        title="Our Story - A Higher Calling"
-        description="Discover the story behind Beans of Bodhi. From adventure-inspired beginnings to sustainable coffee innovation, learn about our purpose, history, and commitment to fueling human potential."
+        title="Our Story - Beans of Bodhi"
+        description="Discover the story behind Beans of Bodhi. From adventure-inspired beginnings to sustainable coffee innovation in the Western Ghats, learn about our purpose, craft, and commitment to excellence."
         canonical="https://beansofbodhi.com/our-story"
-        keywords="coffee story, adventure coffee, sustainable coffee, Western Ghats coffee, coffee innovation, outdoor adventure"
+        keywords="coffee story, adventure coffee, sustainable coffee, Western Ghats coffee, coffee innovation, Indian coffee, specialty coffee"
         ogImage="https://beansofbodhi.com/og-our-story.jpg"
       />
       
@@ -198,145 +217,490 @@ const OurStory: React.FC = () => {
         ]} 
       />
 
-      <div 
-        ref={containerRef}
-        className="h-screen overflow-y-scroll"
-        style={{ scrollSnapType: 'y mandatory' }}
-      >
-        {/* Sections */}
-        {sections.map((section, index) => (
-          <section
-            key={section.id}
-            className="relative h-screen flex items-center justify-center"
-            style={{ 
-              scrollSnapAlign: 'start',
-              backgroundImage: `url(${section.background})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundAttachment: 'fixed'
-            }}
-          >
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
-            
-            {/* Content */}
-            <div className={`relative z-10 max-w-4xl mx-auto px-6 text-center text-white ${section.isHero ? 'hero-content' : ''}`}>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-light mb-8 leading-tight">
-                {section.headline}
-              </h1>
-              
-              <p className="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-                {section.subtext}
-              </p>
-              
-              {section.cta && (
-                <button className="inline-flex items-center space-x-3 bg-white text-black px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-                  <span>{section.cta}</span>
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              )}
-            </div>
+      <div className="our-story-wrapper">
+        <style>{`
+          @font-face {
+            font-family: 'PPPangaia-Medium';
+            src: url('../fonts/PPPangaia-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+          }
 
-            {/* Section Number */}
-            <div className="absolute bottom-8 right-8 text-white/50 text-sm font-medium">
-              {String(index + 1).padStart(2, '0')} / {String(sections.length).padStart(2, '0')}
-            </div>
-          </section>
-        ))}
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
 
-        {/* Footer Section */}
-        <footer className="h-screen flex items-center justify-center bg-black text-white" style={{ scrollSnapAlign: 'start' }}>
-          <div className="text-center max-w-4xl mx-auto px-6">
-            <h2 className="text-4xl md:text-6xl font-light mb-8">
-              Ready to Begin Your Journey?
-            </h2>
-            <p className="text-xl md:text-2xl font-light leading-relaxed mb-12">
-              Every great adventure starts with a single step. Let our coffee fuel your next expedition.
-            </p>
-            <button 
-              onClick={() => navigate('/')}
-              className="inline-flex items-center space-x-3 bg-white text-black px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
-            >
-              <span>Explore Our Coffee</span>
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </footer>
-      </div>
-
-      {/* Progress Bar - Fixed Position */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-sm">
-        {/* Desktop Progress Bar */}
-        <div className="hidden md:flex items-center justify-center py-4">
-          <div className="flex items-center space-x-8">
-            {sections.map((section, index) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(index)}
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                  activeSection === index
-                    ? 'text-white'
-                    : 'text-white/60 hover:text-white/80'
-                }`}
-              >
-                {section.title}
-                {activeSection === index && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 to-teal-500" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile Progress Bar */}
-        <div className="md:hidden py-4 overflow-x-auto">
-          <div className="flex items-center space-x-6 px-6" style={{ minWidth: 'max-content' }}>
-            {sections.map((section, index) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(index)}
-                className={`relative px-3 py-2 text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  activeSection === index
-                    ? 'text-white'
-                    : 'text-white/60 hover:text-white/80'
-                }`}
-              >
-                {section.title}
-                {activeSection === index && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 to-teal-500" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Progress Indicator */}
-        <div className="absolute top-0 left-0 h-1 bg-gradient-to-r from-red-500 to-teal-500 transition-all duration-300"
-             style={{ width: `${((activeSection + 1) / sections.length) * 100}%` }} />
-      </div>
-
-      <style jsx>{`
-        .h-screen::-webkit-scrollbar {
-          display: none;
-        }
-        
-        .h-screen {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-          scroll-behavior: smooth;
-        }
-
-        @media (max-width: 768px) {
-          .fixed.bottom-0 {
-            overflow-x: auto;
+          body {
+            font-family: "PPPangaia-Medium", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
             -webkit-overflow-scrolling: touch;
           }
-          
-          .fixed.bottom-0::-webkit-scrollbar {
+
+          html, body {
+            height: 100%;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+
+          html::-webkit-scrollbar, body::-webkit-scrollbar {
             display: none;
           }
-        }
-      `}</style>
+
+          .our-story-wrapper {
+            width: 100%;
+          }
+
+          .main-section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+          }
+
+          .horizontal-container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+
+          .horizontal-container::-webkit-scrollbar {
+            display: none;
+          }
+
+          .horizontal-section {
+            flex: none;
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .horizontal-section img,
+          .horizontal-section video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+          }
+
+          .section-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            max-width: 600px;
+          }
+
+          .text-color-white-3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            font-family: "PPPangaia-Medium", sans-serif;
+          }
+
+          .section-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          }
+
+          .horizontal-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 10px;
+          }
+
+          .horizontal-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+          }
+
+          .horizontal-indicator.active {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.2);
+          }
+
+          .horizontal-indicator:hover {
+            background: rgba(255, 255, 255, 0.7);
+          }
+
+          .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 25;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+          }
+
+          .nav-arrow:hover {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.8);
+            opacity: 1;
+            transform: translateY(-50%) scale(1.05);
+          }
+
+          .nav-arrow:active {
+            transform: translateY(-50%) scale(0.95);
+          }
+
+          .nav-arrow.hidden {
+            opacity: 0;
+            pointer-events: none;
+          }
+
+          .nav-arrow-left {
+            left: 20px;
+          }
+
+          .nav-arrow-right {
+            right: 20px;
+          }
+
+          .swipe-hint {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            z-index: 15;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            animation: fadeInOut 3s infinite;
+          }
+
+          @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+          }
+
+          .horizontal-container {
+            touch-action: pan-x;
+          }
+
+          .snap-section-new {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+          }
+
+          .uui-padding-vertical-xhuge-6 {
+            padding: 80px 20px;
+            text-align: center;
+          }
+
+          .uui-blogpost02_category-link-2 {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+          }
+
+          .text-block-31 {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+          }
+
+          .uui-heading-large-2 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            font-family: "PPPangaia-Medium", sans-serif;
+          }
+
+          .uui-heading-large-2 em {
+            font-style: italic;
+            color: #f0f0f0;
+          }
+
+          /* Newsletter section styling */
+          .newsletter-section-wrapper {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            height: 100vh;
+            width: 100vw;
+            // display: flex;
+            align-items: center;
+            justify-content: center;
+            // background: #f5f5f5;
+          }
+
+          @media (max-width: 768px) {
+            .text-color-white-3 {
+              font-size: 2.5rem;
+            }
+            
+            .section-subtitle {
+              font-size: 1rem;
+            }
+            
+            .section-content {
+              max-width: 90%;
+              padding: 15px;
+            }
+
+            .nav-arrow {
+              width: 45px;
+              height: 45px;
+              font-size: 16px;
+            }
+
+            .nav-arrow-left {
+              left: 15px;
+            }
+
+            .nav-arrow-right {
+              right: 15px;
+            }
+
+            .swipe-hint {
+              font-size: 0.8rem;
+              right: 15px;
+            }
+
+            .uui-heading-large-2 {
+              font-size: 2.5rem;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .text-color-white-3 {
+              font-size: 2rem;
+            }
+            
+            .section-subtitle {
+              font-size: 0.9rem;
+            }
+            
+            .section-content {
+              max-width: 90%;
+              padding: 12px;
+            }
+
+            .nav-arrow {
+              width: 40px;
+              height: 40px;
+              font-size: 14px;
+            }
+
+            .nav-arrow-left {
+              left: 10px;
+            }
+
+            .nav-arrow-right {
+              right: 10px;
+            }
+
+            .uui-heading-large-2 {
+              font-size: 2rem;
+            }
+          }
+        `}</style>
+
+        {/* Hero Section */}
+        <HeroSection />
+
+        {/* Section 1: Redefining */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="1a" showSwipeHint>
+                <video autoPlay muted loop playsInline>
+                  <source src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining-desktop.mp4?updatedAt=1757551540680" type="video/mp4" />
+                </video>
+                <div className="section-content">
+                  <h1 className="text-color-white-3">Redefining the <em>Rules</em> of <em>Coffee</em></h1>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="1b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining/01Redefining.webp?updatedAt=1757728886632" alt="Redefining" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">We don't follow trends-we follow purpose. Beans of Bodhi was born to rewrite what coffee stands for. From India to the World, here quality is a lived practice. From the high-altitude farms of Western Ghats to our in-house curing works, we obsess over every detail. We believe coffee should move people-not just with caffeine, but with meaning. That's why we do things differently, not for approval, but for excellence. For us, craft means care, and purpose means progress. And the Youth? They deserve better. We don't just roast beans-we ignite journeys. Rooted in craft, driven by values, and never bound by convention</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Section 2: Our Promise */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="2a" showSwipeHint>
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Promise/02Promise.webp?updatedAt=1757728817710" alt="Our Promise" loading="lazy" />
+                <div className="section-content">
+                  <h1 className="text-color-white-3">Our <em>Promise,</em> Our <em>Practice</em></h1>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="2b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Promise/02Promise2.webp?updatedAt=1757728818039" alt="Our Promise" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">Integrity at Beans of Bodhi isn't just an accessory-it's the foundation. We look in the mirror often: questioning, evolving, and never settling. From farm to roast, we maintain full transparency, take accountability, and honor every commitment we make-to farmers, to customers, to the planet. Our promise? That every sip reflects our values, our craft, and our courage to do things differently</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Section 3: Our Guarantee */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="3a" showSwipeHint>
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/03Guarentee.webp?updatedAt=1757728650876" alt="Our Guarantee" loading="lazy" />
+                <div className="section-content">
+                  <h1 className="text-color-white-3">Our <em>Guarantee</em></h1>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="3b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/03Guarentee2.webp?updatedAt=1757728752562" alt="Our Guarantee" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">We stand behind everything we make. If it's not extraordinary, it's not Bodhi. We work directly with trusted farmers who share our passion for sustainability and craftsmanship. Each bean is hand-selected and slow-cured in our own facilities to bring out the natural depth and flavor that defines Beans of Bodhi</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Section 4: Responsibility */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="4a" showSwipeHint>
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Responsibility/04Impact.webp?updatedAt=1757728597869" alt="Responsibility" loading="lazy" />
+                <div className="section-content">
+                  <h1 className="text-color-white-3">We take <em>Responsibility</em> for our <em>Impact</em> on <em>People, Planet</em> & <em>Purpose</em></h1>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="4b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Responsibility/R-2.webp?updatedAt=1757551486012" alt="Responsibility" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">We're more than a coffee brand-we're a mindful movement driven by quality. We empower the farmers behind our beans and the lives they fuel, supporting fair wages and regenerative farming. Our purpose goes beyond coffee. We believe India's youth find purpose, discipline and impact when they reconnect with nature through action sports and bold movement-because real change begins outside comfort zones</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Section 5: Process */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="5a" showSwipeHint>
+                <video autoPlay muted loop playsInline>
+                  <source src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Process.mp4?updatedAt=1757551521435" type="video/mp4" />
+                </video>
+                <div className="section-content">
+                  <h1 className="text-color-white-3">The more you <em>Know,</em> The more you <em>Need</em></h1>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="5b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/OG-2.webp?updatedAt=1757551486055" alt="Process" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">Because once you understand where your coffee comes from-how it's sourced, cured, and crafted- there's no going back. Our mission is to make Indian coffee extraordinary again. We work from root to roast with intention, crafting high-performance brews that carry culture, complexity, and care. Because the more truth in your cup, the more meaning in your day</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Section 6: Commitment */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="6a" showSwipeHint>
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Commitment/Commitment1.webp?updatedAt=1757728489266" alt="Commitment" loading="lazy" />
+                <div className="section-content">
+                  <h1 className="text-color-white-3">The <em>Commitment</em> Forward</h1>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="6b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Commitment/Commitment2.webp?updatedAt=1757728488952" alt="Commitment" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">Every decision starts with responsibility-to people, planet, and purpose. We're not just building a coffee company-we're shaping a more mindful future. Our vision: a world where every sip fuels not just energy, but impact. With our 1% for the Planet and 1% for the Community pledge, we channel profit into purpose-regenerating ecosystems and uplifting local cultures. Each blend is proof that progress can taste good.</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Section 7: Era */}
+        <div className="main-section">
+          <HorizontalScrollContainer
+            sections={[
+              <HorizontalSection key="7a" showSwipeHint>
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Era/Era1.webp?updatedAt=1757728389579" alt="New Era" loading="lazy" />
+                <div className="section-content">
+                  <h2 className="text-color-white-3"><em>Stepping</em> into a new <em>Era</em></h2>
+                </div>
+              </HorizontalSection>,
+              <HorizontalSection key="7b">
+                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Era/Era2.webp?updatedAt=1757728389360" alt="New Era" loading="lazy" />
+                <div className="section-content">
+                  <p className="section-subtitle">This isn't just about coffee. It's a shift in mindset-towards purpose, quality, and conscious consumption. Dedicating to a generation that refuses to compromise</p>
+                </div>
+              </HorizontalSection>
+            ]}
+          />
+        </div>
+
+        {/* Newsletter Section - With snap behavior */}
+        <div className="newsletter-section-wrapper">
+          <NewsletterSection />
+          <Footer/>
+        </div>
+     
+      </div>
     </>
   );
 };
