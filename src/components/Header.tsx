@@ -89,7 +89,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-transparent'
       }`}>
         {/* Desktop Navigation */}
@@ -225,18 +225,18 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden flex items-center justify-between px-4 py-4 w-full box-border">
+        <nav className="md:hidden flex items-center justify-between px-6 py-4 w-full">
           {/* Logo */}
-          <button onClick={handleLogoClick} className="flex-shrink min-w-0 mr-2">
+          <button onClick={handleLogoClick} className="flex-shrink min-w-0">
             <img 
               src={logo} 
               alt="Beans of Bodhi" 
-              className="h-7 w-auto max-w-[120px] object-contain"
+              className="h-8 w-auto max-w-[150px]"
             />
           </button>
 
           {/* Right Icons */}
-          <div className="flex items-center space-x-3 flex-shrink-0">
+          <div className="flex items-center space-x-4 flex-shrink-0">
             <button
               onClick={toggleCart}
               className="text-white hover:text-gray-300 transition-colors"
@@ -283,15 +283,15 @@ const Header: React.FC = () => {
           isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}>
           {/* Mobile Header */}
-          <div className="flex items-center justify-between px-4 py-4 border-b border-gray-800 w-full box-border">
-            <button onClick={handleLogoClick} className="flex-shrink min-w-0 mr-2">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 w-full">
+            <button onClick={handleLogoClick} className="flex-shrink min-w-0">
               <img 
                 src={logo} 
                 alt="Beans of Bodhi" 
-                className="h-7 w-auto max-w-[120px] object-contain"
+                className="h-8 w-auto max-w-[150px]"
               />
             </button>
-            <div className="flex items-center space-x-3 flex-shrink-0">
+            <div className="flex items-center space-x-4 flex-shrink-0">
               <button
                 onClick={toggleCart}
                 className="text-white hover:text-gray-300 transition-colors"
