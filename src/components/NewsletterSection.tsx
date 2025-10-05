@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import planetLogo from '../assets/images/Bob_Footer-Content-p-500.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,21 +38,22 @@ const NewsletterSection: React.FC = () => {
 
   return (
     <section 
-      ref={sectionRef} 
-      className="relative py-32 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: 'url("https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
-      }}
-    >
+  ref={sectionRef} 
+  className="relative py-32 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundColor: 'rgb(12, 12, 12)'
+  }}
+>
+
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
       
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div className="newsletter-content text-white">
-            <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
+            <h4 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
               JOIN THE MOVEMENT
-            </h2>
+            </h4>
             
             <p className="text-xl leading-relaxed mb-12 text-gray-200">
               Fuel your adventure, connect with like-minded explorers, and be part of a community that values purpose, sustainability, and exceptional coffee.
@@ -59,13 +61,12 @@ const NewsletterSection: React.FC = () => {
 
             {/* 1% for the Planet */}
             <div className="flex items-center space-x-6 mb-16">
-              <div className="w-20 h-20 border-2 border-white rounded-full flex items-center justify-center">
-                <div className="w-12 h-12 border border-white rounded-full flex items-center justify-center">
-                  <span className="text-xs font-bold">1%</span>
-                </div>
-              </div>
               <div>
-                <div className="text-4xl font-serif mb-2">1% for the Planet</div>
+                <img 
+                  src={planetLogo}
+                  alt="1% for the Planet" 
+                  className="h-25 w-auto"
+                />
               </div>
             </div>
           </div>
@@ -114,10 +115,10 @@ const NewsletterSection: React.FC = () => {
             {/* Social Links */}
             <div className="mt-16 space-y-4">
               <div className="text-right">
-                <a href="#" className="text-white hover:text-gray-300 transition-colors block mb-2">Instagram</a>
-                <a href="#" className="text-white hover:text-gray-300 transition-colors block mb-2">Youtube</a>
-                <a href="#" className="text-white hover:text-gray-300 transition-colors block mb-2">Facebook</a>
-                <a href="#" className="text-white hover:text-gray-300 transition-colors block">X</a>
+                <a href="https://www.instagram.com/bodhi.movement?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-white hover:text-gray-300 transition-colors block mb-2">Instagram</a>
+                <a href="https://www.youtube.com/@BeansofBodhi" className="text-white hover:text-gray-300 transition-colors block mb-2">Youtube</a>
+                <a href="https://www.facebook.com/profile.php?id=61566143430200" className="text-white hover:text-gray-300 transition-colors block mb-2">Facebook</a>
+                <a href="https://www.linkedin.com/company/beans-of-bodhi/" className="text-white hover:text-gray-300 transition-colors block">LinkedIn</a>
               </div>
             </div>
           </div>

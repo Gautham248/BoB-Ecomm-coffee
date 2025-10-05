@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X, ShoppingBag } from 'lucide-react';
 import { gsap } from 'gsap';
 import { products } from '../data/collections';
 import { useCart } from '../context/CartContext';
+import logo from '../assets/images/BoB_Logo_small.png';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -88,11 +89,11 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${
         isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-transparent'
       }`}>
         {/* Desktop Navigation */}
-        <nav className="header-nav hidden md:flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+        <nav className="header-nav hidden md:flex items-center justify-between px-6 py-6 max-w-7xl mx-auto">
           {/* Left Menu */}
           <div className="flex items-center space-x-8">
             {/* MENU Dropdown */}
@@ -189,7 +190,11 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="absolute left-1/2 transform -translate-x-1/2" role="banner">
             <button onClick={handleLogoClick}>
-              <h1 className="text-white text-2xl font-serif italic">Beans of Bodhi</h1>
+              <img 
+                src={logo} 
+                alt="Beans of Bodhi" 
+                className="h-12 w-auto"
+              />
             </button>
           </div>
 
@@ -220,14 +225,18 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden flex items-center justify-between px-6 py-4">
+        <nav className="md:hidden flex items-center justify-between px-4 py-4 w-full box-border">
           {/* Logo */}
-          <button onClick={handleLogoClick}>
-            <h1 className="text-white text-xl font-serif italic">Beans of Bodhi</h1>
+          <button onClick={handleLogoClick} className="flex-shrink min-w-0 mr-2">
+            <img 
+              src={logo} 
+              alt="Beans of Bodhi" 
+              className="h-7 w-auto max-w-[120px] object-contain"
+            />
           </button>
 
           {/* Right Icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 flex-shrink-0">
             <button
               onClick={toggleCart}
               className="text-white hover:text-gray-300 transition-colors"
@@ -274,11 +283,15 @@ const Header: React.FC = () => {
           isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}>
           {/* Mobile Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
-            <button onClick={handleLogoClick}>
-              <h1 className="text-white text-xl font-serif italic">Beans of Bodhi</h1>
+          <div className="flex items-center justify-between px-4 py-4 border-b border-gray-800 w-full box-border">
+            <button onClick={handleLogoClick} className="flex-shrink min-w-0 mr-2">
+              <img 
+                src={logo} 
+                alt="Beans of Bodhi" 
+                className="h-7 w-auto max-w-[120px] object-contain"
+              />
             </button>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 flex-shrink-0">
               <button
                 onClick={toggleCart}
                 className="text-white hover:text-gray-300 transition-colors"

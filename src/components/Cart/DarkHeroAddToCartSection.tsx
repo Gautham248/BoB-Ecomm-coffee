@@ -83,22 +83,19 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
 
   return (
     <div className="space-y-6 mt-8">
-      {/* Variant Selector - Dropdown Pill Style */}
+      {/* Variant Selector - Dark Style */}
       {product.shopifyVariants.length > 1 && (
-        <div className="space-y-3">
+        <div className="space-y-2">
           <label className="block text-sm font-medium text-white/80">
             Capacity
           </label>
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center justify-between px-5 py-2.5 border border-white/30 rounded-full text-white hover:border-white/50 transition-colors text-sm min-w-[120px]"
+              className="px-5 py-2.5 border border-white/30 rounded-full bg-transparent text-white hover:border-white/50 transition-colors text-sm"
               disabled={isAddToCartDisabled()}
             >
               <span>{selectedVariantData?.title || '400ml'}</span>
-              <ChevronDown className={`w-4 h-4 ml-2 transition-transform ${
-                isDropdownOpen ? 'rotate-180' : ''
-              }`} />
             </button>
             
             {isDropdownOpen && (
@@ -139,10 +136,10 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
       {/* Quantity and Add to Cart Row */}
       <div className="flex items-center space-x-4">
         {/* Quantity Selector */}
-        <div className="flex items-center bg-zinc-800 rounded-lg">
+        <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
           <button
             onClick={decrementQuantity}
-            className="p-3 hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-l-lg"
+            className="p-3 hover:bg-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-l-lg"
             disabled={quantity <= 1 || isAddToCartDisabled()}
           >
             <Minus className="w-4 h-4 text-white" />
@@ -154,7 +151,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
           
           <button
             onClick={incrementQuantity}
-            className="p-3 hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-r-lg"
+            className="p-3 hover:bg-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-r-lg"
             disabled={isAddToCartDisabled()}
           >
             <Plus className="w-4 h-4 text-white" />
@@ -165,7 +162,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
         <button
           onClick={handleAddToCart}
           disabled={isAddToCartDisabled()}
-          className="flex-1 bg-zinc-800 text-white py-3 px-6 rounded-lg font-medium hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 bg-white/10 backdrop-blur-sm text-white py-3 px-6 rounded-lg font-medium hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-white/20"
         >
           {(localLoading || loading) ? (
             <div className="flex items-center justify-center space-x-2">

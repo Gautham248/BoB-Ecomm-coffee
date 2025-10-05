@@ -15,6 +15,7 @@ export interface Product {
   originalPrice?: string;
   composition: string[];
   heroImage: string;
+  heroImageMobile: string;
   galleryImages: string[];
   descriptionContent: {
     title: string;
@@ -50,23 +51,25 @@ export const products: Product[] = [
     ],
     name: 'THE ORIGIN',
     title: 'The Origin',
-    description: 'Rooted in the rich soils of the Western Ghats, The Origin is a harmonious blend that embodies the untamed spirit of its origins. This earthy, robust brew connects you to the ancient roots of coffee, offering a taste of adventure with every sip.',
+    description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
     price: 'INR 689.00',
     composition: [
       '60% Arabica',
       '20% Robusta', 
       '20% Peaberry'
     ],
-    heroImage: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_The-Origin-p-1600.png?updatedAt=1759647760949',
+    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/The_Origin_Mob-p-800.jpg?updatedAt=1759650427307',
     galleryImages: [
-      'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/ORGIN_FD_V002-p-1600.png?updatedAt=1759660224678',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/7-p-800.jpg?updatedAt=1759660224525',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/OR_03-p-1080.jpg?updatedAt=1759660766150',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/OR_05-p-1080.jpg?updatedAt=1759660224460'
     ],
     descriptionContent: {
       title: 'Rooted in Nature. Preserving its legacy.',
       content: 'The Origin is more than a coffee-it\'s a pledge to preserve the untamed wilderness and vibrant landscapes of the Western Ghats. Every cup supports initiatives aimed at protecting these vital eco systems and the forest communities who call them home.',
-      image: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop'
+      image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/Origin_1-p-1080.png?updatedAt=1759660224565'
     },
     category: 'nitro-blends',
     featured: true
@@ -82,22 +85,24 @@ export const products: Product[] = [
     ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
-    description: 'An intense blend that ignites your senses with bold flavors and fiery passion. This smoky, fierce brew fuels your inner fire and pushes boundaries, delivering a rush of excitement with every cup.',
+    description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it’s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
     price: 'INR 689.00',
     composition: [
       '70% Arabica',
       '30% Robusta'
     ],
-    heroImage: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_Wild-Fire-p-1600.png?updatedAt=1759650893936',
+    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Wild_Fire_Mob-p-800.jpg?updatedAt=1759650461721',
     galleryImages: [
-      'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/WF_02-p-1600.jpg?updatedAt=1759660123198',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/WF_03-p-1600.jpg?updatedAt=1759660123161',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/Wild-Fire-Rush-p-500.png?updatedAt=1759660123080',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/WF_05-p-800.jpg?updatedAt=1759660123078'
     ],
     descriptionContent: {
-      title: 'Igniting Passion. Fueling Adventure.',
-      content: 'The Wild Fire Rush embodies the spirit of those who dare to venture beyond the ordinary. Each bean is carefully selected to deliver an intense, memorable experience that fuels your next great adventure.',
-      image: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop'
+      title: 'Ignite Your Energy, Unleash the Wild',
+      content: 'Wild Fire Rush is more than just a cup of coffee—it’s a spark for change. Every sip contributes to reforestation initiatives, helping to restore ecosystems impacted by deforestation and land degradation. These efforts ensure that forests, the lungs of our planet, continue to thrive, supporting biodiversity and combating climate change.',
+      image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/Wild-Fire-Rush_1-p-1080.png?updatedAt=1759660123237'
     },
     category: 'nitro-blends',
     featured: true
@@ -113,21 +118,23 @@ export const products: Product[] = [
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
-    description: 'A sustainable blend that delivers an electrifying taste while supporting environmental conservation. This bright, colorful coffee is full of youthful energy and surprises with vibrant flavors.',
+    description: 'Step into a world of vibrant energy with Echo Shock,a playful blend of light roasted 100% Peaberry designed to awaken your senses. Bright, lively flavors meet a smooth, balanced finish, crafted for those who thrive on curiosity and boundless enthusiasm.',
     price: 'INR 749.00',
     composition: [
       '100% Peaberry'
     ],
-    heroImage: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Inside-Header-p-1080.png?updatedAt=1759647315410',
+    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Eco_Shock_Mob-p-800.jpg?updatedAt=1759651050240',
     galleryImages: [
-      'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Eco%20Shock/ECO-SHOCK-FD-p-1600.png?updatedAt=1759660383927',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Eco%20Shock/ES_04-p-1600.jpg?updatedAt=1759660383899',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Eco%20Shock/ES_03-p-1080.jpg?updatedAt=1759660383859',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Eco%20Shock/2-p-800.jpg?updatedAt=1759660383622'
     ],
     descriptionContent: {
-      title: 'Sustainable Shock. Environmental Impact.',
-      content: 'The Eco Shock represents our commitment to environmental stewardship. Every purchase directly supports reforestation efforts and sustainable farming practices in the Western Ghats region.',
-      image: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop'
+      title: 'Shock your senses. Safegaurd the Wild',
+      content: 'Echo Shock is more than just a coffee-it\'s a commitment to protecting the wildlife that inspires us. With every sip, you\'re supporting vital wildlife conservation efforts, helping to preserve the habitats of the world\'s most vibrant and endangered species.',
+      image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Eco%20Shock/Eco-shock_2-p-1080.png?updatedAt=1759660383892'
     },
     category: 'western-ghats-selects',
     featured: true
@@ -143,21 +150,23 @@ export const products: Product[] = [
     ],
     name: 'THE HIGH TIDE',
     title: 'The High Tide',
-    description: 'Ride the wave of exceptional flavor with this smooth, balanced blend. Smooth as the ocean with a wave of clarity and balance, this rich, clean brew offers perfect harmony of strength and subtlety.',
+    description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
     price: 'INR 789.00',
     composition: [
       '100% Arabica'
     ],
-    heroImage: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Inside-Header-1-p-1600.png?updatedAt=1759651342901',
+    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Mobile-p-800.jpg?updatedAt=1759650461664',
     galleryImages: [
-      'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/High%20Tide/High-Tide_1-p-500.png?updatedAt=1759660511839',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/High%20Tide/1-p-800.jpg?updatedAt=1759660511738',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/High%20Tide/4-HighTide-p-800.jpg?updatedAt=1759660511826',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/High%20Tide/HT_02-p-1080.jpg?updatedAt=1759660511603'
     ],
     descriptionContent: {
-      title: 'Riding the Wave. Embracing the Journey.',
-      content: 'The High Tide captures the essence of coastal adventures and mountain expeditions. This carefully crafted blend delivers consistent excellence, making every moment an opportunity for discovery.',
-      image: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop'
+      title: 'A crisp finish. A lasting impact on our waters.',
+      content: 'Inspired by the untamed power of the sea, High Tide is a 100% Arabica blend with smooth chocolatey undertones and a crisp finish, crafted for those who seek clarity in chaos.',
+      image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/High%20Tide/HighTide.png?updatedAt=1759660511916'
     },
     category: 'western-ghats-selects',
     featured: true
@@ -173,21 +182,23 @@ export const products: Product[] = [
     ],
     name: 'THE THUNDER FUSE',
     title: 'The Thunder Fuse',
-    description: 'An explosive blend that awakens your senses with powerful, electrifying flavors. This brew is lightning in a cup—bright, intense, and full of adrenaline that energizes your spirit.',
+    description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
     price: 'INR 599.00',
     composition: [
       '100% Robusta'
     ],
-    heroImage: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/thunder--p-1080.jpg?updatedAt=1759647315069',
+    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Thunder_Fuse_Mob-p-800.jpg?updatedAt=1759650461428',
     galleryImages: [
-      'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Thunder%20Fuse/Thunder-Fuse_2-p-500.png?updatedAt=1759660698358',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Thunder%20Fuse/Thunder-front-p-1600.png?updatedAt=1759660698292',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Thunder%20Fuse/TF_05-p-1080.jpg?updatedAt=1759660698155',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Thunder%20Fuse/TF_03-p-1080.jpg?updatedAt=1759660698180'
     ],
     descriptionContent: {
-      title: 'Explosive Flavor. Electrifying Experience.',
-      content: 'The Thunder Fuse is designed for coffee lovers who crave intensity and power. This bold blend delivers an unforgettable experience that energizes your spirit and fuels your adventures.',
-      image: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop'
+      title: 'Feel the surge. Power the future.',
+      content: 'Thunder Fuse isn’t just about charging your day—it’s about lighting up lives. With every bold sip, you’re contributing to the electrification of remote communities, ensuring they have access to the power they need to thrive.',
+      image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Thunder%20Fuse/Thunder-Fuse_3-p-1080.png?updatedAt=1759660698222'
     },
     category: 'western-ghats-selects',
     featured: true
@@ -203,22 +214,24 @@ export const products: Product[] = [
     ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
-    description: 'A whirlwind of complex flavors that creates a unique and memorable coffee experience. This daring brew hits hard with bold kick, perfect for those who love an adventurous twist.',
+    description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
     price: 'INR 669.00',
     composition: [
       '50% Arabica',
       '50% Robusta'
     ],
-    heroImage: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_Tornado-Twist-p-1080.png?updatedAt=1759647315384',
+    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Tornado_Twist_Mob-p-800.jpg?updatedAt=1759651612432',
     galleryImages: [
-      'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop',
-      'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/Tornoda-Twist-p-500.png?updatedAt=1759661242679',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_03-p-1080.jpg?updatedAt=1759656359706',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_01-p-1080.jpg?updatedAt=1759656359593',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_02-p-1080.jpg?updatedAt=1759656358730'
     ],
     descriptionContent: {
-      title: 'Whirlwind of Flavors. Endless Discovery.',
-      content: 'The Tornado Twist represents the perfect storm of coffee craftsmanship. Each cup delivers a complex symphony of flavors that evolves with every sip, creating an unforgettable journey of taste.',
-      image: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop'
+      title: 'Fuel the adventure. Rebuild the future.',
+      content: 'Tornado Twist is more than a bold brew - it\'s a catalyst for change. Every sip fuels efforts to rebuild communities hit by floods, helping them rise stronger after the storm.',
+      image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/Tornado-twist_2-p-1080.png?updatedAt=1759660032208'
     },
     category: 'nitro-blends',
     featured: true
