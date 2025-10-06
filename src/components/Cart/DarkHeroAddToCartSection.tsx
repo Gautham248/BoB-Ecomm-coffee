@@ -19,7 +19,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
 
   useEffect(() => {
     setSelectedVariant(product.shopifyVariants?.[0]?.id || '');
-    setQuantity(3);
+    setQuantity(1);
     setIsDropdownOpen(false);
     setLocalLoading(false);
   }, [product.id]);
@@ -82,7 +82,16 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
   }
 
   return (
-    <div className="space-y-6 mt-8">
+    <div className="space-y-6 mt-1">
+
+      {/* Price Display */}
+      <div className="text-white">
+        <div className="text-3xl font-light mb-1">
+          {selectedVariantData ? formatPrice(selectedVariantData.price) : product.price}
+        </div>
+      </div>
+
+
       {/* Variant Selector - Dark Style */}
       {product.shopifyVariants.length > 1 && (
         <div className="space-y-2">
@@ -92,14 +101,15 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="px-5 py-2.5 border border-white/30 rounded-full bg-transparent text-white hover:border-white/50 transition-colors text-sm"
+              className="w-full px-5 py-2.5 border border-white/30 rounded-lg bg-white/5 text-white hover:border-white/50 transition-colors text-sm flex items-center justify-between"
               disabled={isAddToCartDisabled()}
             >
               <span>{selectedVariantData?.title || '400ml'}</span>
+              <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             
             {isDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 bg-gray-900 border border-white/20 rounded-lg shadow-xl z-10 min-w-[200px]">
+              <div className="absolute top-full left-0 mt-2 bg-gray-900 border border-white/20 rounded-lg shadow-xl z-10 w-full">
                 {product.shopifyVariants.map((variant) => (
                   <button
                     key={variant.id}
@@ -126,13 +136,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
         </div>
       )}
 
-      {/* Price Display */}
-      <div className="text-white">
-        <div className="text-3xl font-light mb-1">
-          {selectedVariantData ? formatPrice(selectedVariantData.price) : product.price}
-        </div>
-      </div>
-
+    
       {/* Quantity and Add to Cart Row */}
       <div className="flex items-center space-x-4">
         {/* Quantity Selector */}

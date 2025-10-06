@@ -43,6 +43,14 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    // Refresh ScrollTrigger after scroll
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 50);
+  }, [product.name]);
+  
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -158,7 +166,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
           <div className="bg-black text-white px-4 py-8">
             <div className="product-hero-content space-y-4 max-w-xl mx-auto">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-light tracking-wide text-amber-200 leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-pangaia font-bold tracking-wide  leading-tight">
                   {product.title}
                 </h2>
               </div>
@@ -167,13 +175,16 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
                 {product.description}
               </p>
 
-              <div className="space-y-1 pt-2">
-                {product.composition.map((item, index) => (
-                  <p key={index} className="text-xs sm:text-sm text-white/80">
-                    • {item}
-                  </p>
-                ))}
-              </div>
+              <div className="flex flex-wrap gap-2 pt-2">
+                  {product.composition.map((item, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs sm:text-sm text-white/90"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
 
               {/* Dark Hero Add to Cart Section */}
               <div className="pt-4">
@@ -207,20 +218,23 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
                   {/* Right: Product Information and Cart */}
                   <div className="product-hero-content text-white space-y-6 max-w-xl">
                     <div>
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-wide text-amber-200 leading-tight">
+                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-pangaia font-bold tracking-wide  leading-tight">
                         {product.title}
                       </h2>
                     </div>
 
-                    <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                    <p className="text-base md:text-lg text-white/90 leading-relaxed ">
                       {product.description}
                     </p>
 
-                    <div className="space-y-1 pt-2">
+                    <div className="flex flex-wrap gap-2 pt-2">
                       {product.composition.map((item, index) => (
-                        <p key={index} className="text-sm md:text-base text-white/80">
-                          • {item}
-                        </p>
+                        <span
+                          key={index}
+                          className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm md:text-base text-white/90"
+                        >
+                          {item}
+                        </span>
                       ))}
                     </div>
 
@@ -241,7 +255,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
         <div className="w-full">
           <div className="text-center mb-10 md:mb-14 lg:mb-16 px-4 sm:px-6 md:px-8">
             <p className="text-white text-xs sm:text-sm font-medium tracking-wider mb-3 md:mb-4">GALLERY</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-white">{product.name.toUpperCase()}</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-helvetica text-white">{product.name.toUpperCase()}</h2>
           </div>
 
           {/* Swipeable Gallery Container */}
@@ -383,10 +397,10 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
           <div className="tab-content">
             {activeTab === 'DESCRIPTION' && (
               <div className="text-center">
-                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-gray-900 mb-6 md:mb-8 px-4">
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-gray-900 mb-6 md:mb-8 px-4">
                   {product.descriptionContent.title}
                 </h3>
-                <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto px-4">
+                <p className="text-sm sm:text-base md:text-lg text-gray-700 font-helvetica leading-relaxed mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto px-4">
                   {product.descriptionContent.content}
                 </p>
                 <div className="flex justify-center px-4">
@@ -428,7 +442,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
         </div>
       </section>
 
-      <NewsletterSection />
+      <NewsletterSection key={product.name} />
     </>
   );
 };

@@ -21,10 +21,14 @@ const Home: React.FC = () => {
       />
       
       {/* <CarouselHeroSection/> */}
-      <VideoHeroSection/>
+      <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/Bob_Main_Hero__2.mp4" />
       <CollectionsSection />
+      <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/Home_Video_02.mp4?updatedAt=1759757830243" 
+      headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
+      />
       <FeaturedSection />
       <StorySection />
+      <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/1-Planet_1.mp4?updatedAt=1759753845223" />
       <NewsletterSection />
     </>
   );

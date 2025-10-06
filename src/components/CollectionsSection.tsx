@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-// import { useNavigate } from 'react-router-dom';
-// import { gsap } from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Mock GSAP functions for demonstration
 const gsap = {
@@ -58,29 +55,22 @@ const mockCollections = [
 ];
 
 const CollectionsSection: React.FC = () => {
-  // const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [itemsPerView, setItemsPerView] = useState(1); // Configurable items per view on mobile
+  const [itemsPerView, setItemsPerView] = useState(1);
   
-  // const collections = getFeaturedCollections();
-  const collections = mockCollections; // Replace with your actual data
+  const collections = mockCollections;
 
-  // Calculate max slides based on items per view
   const maxSlides = collections.length;
 
-  // Handle window resize to update slider
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        // Mobile: Show configurable number of items (default 1)
-        setItemsPerView(1); // You can make this configurable: 1, 2, or 3
+        setItemsPerView(1);
       } else if (window.innerWidth < 1024) {
-        // Tablet: Show 2-3 items
         setItemsPerView(Math.min(3, collections.length));
       } else {
-        // Desktop: Show all items
         setItemsPerView(collections.length);
       }
     };
@@ -90,7 +80,6 @@ const CollectionsSection: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [collections.length]);
 
-  // Reset current slide when items per view changes
   useEffect(() => {
     setCurrentSlide(0);
   }, [itemsPerView]);
@@ -98,7 +87,6 @@ const CollectionsSection: React.FC = () => {
   useEffect(() => {
     const cards = gsap.utils.toArray('.collection-card');
     
-    // Title animation
     gsap.fromTo('.collections-title',
       { y: 50, opacity: 0 },
       {
@@ -115,7 +103,6 @@ const CollectionsSection: React.FC = () => {
       }
     );
     
-    // Cards animation with improved stagger
     gsap.fromTo(cards,
       { y: 80, opacity: 0, scale: 0.9 },
       {
@@ -137,7 +124,6 @@ const CollectionsSection: React.FC = () => {
       }
     );
 
-    // Shop All button animation
     gsap.fromTo('.shop-all-btn',
       { y: 40, opacity: 0 },
       {
@@ -155,7 +141,6 @@ const CollectionsSection: React.FC = () => {
       }
     );
 
-    // Hover animations for cards
     cards.forEach((card) => {
       const cardElement = card as HTMLElement;
       
@@ -181,19 +166,18 @@ const CollectionsSection: React.FC = () => {
   }, []);
 
   const handleCollectionClick = (collectionId: string) => {
-    // For now, navigate to the first product in the collection
     const collection = collections.find(c => c.id === collectionId);
     if (collection && collection.products.length > 0) {
-      console.log(`Navigate to product: ${collection.products[0]}`);
-      // navigate(`/product/${collection.products[0]}`);
+      // Navigate to product page
+      window.location.href = `/product/${collection.products[0]}`;
     }
   };
 
   const handleShopAllClick = () => {
-    console.log('Navigate to all products');
+    // Navigate to shop page
+    window.location.href = '/shop';
   };
 
-  // Slider navigation functions
   const goToPrevious = () => {
     setCurrentSlide(prev => prev > 0 ? prev - 1 : collections.length - itemsPerView);
   };
@@ -210,7 +194,6 @@ const CollectionsSection: React.FC = () => {
     setCurrentSlide(Math.min(index, maxSlide));
   };
 
-  // Calculate responsive sizing based on number of collections for desktop
   const getDesktopGridClasses = () => {
     const count = collections.length;
     if (count === 1) return 'justify-center';
@@ -225,10 +208,9 @@ const CollectionsSection: React.FC = () => {
     if (count === 4) return 'w-1/4 max-w-xs px-1';
     if (count === 5) return 'w-1/5 max-w-xs px-1';
     if (count === 6) return 'w-1/6 max-w-xs px-1';
-    return 'w-1/7 max-w-xs px-1'; // For 7+ items
+    return 'w-1/7 max-w-xs px-1';
   };
 
-  // Check if we need slider (mobile/tablet view)
   const needsSlider = itemsPerView < collections.length;
 
   return (
@@ -236,8 +218,8 @@ const CollectionsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="collections-title text-4xl md:text-5xl font-light text-gray-900 tracking-wider">
-            OUR COLLECTIONS
+          <h2 className="collections-title text-3xl md:text-4xl font-pangaia font-bold text-gray-900 tracking-wider">
+            Our Collections
           </h2>
         </div>
 
@@ -265,7 +247,8 @@ const CollectionsSection: React.FC = () => {
                       }`}
                     >
                       <div className="collection-card group cursor-pointer w-full max-w-sm mx-auto"
-                           onClick={() => handleCollectionClick(collection.id)}>
+                           onClick={() => handleCollectionClick(collection.id)}
+                           >
                         {/* Collection Image */}
                         <div className="relative mb-4 overflow-hidden rounded-lg">
                           <img
@@ -397,7 +380,7 @@ const CollectionsSection: React.FC = () => {
         {/* Shop All Button */}
         <div className="text-center">
           <button
-            onClick={handleShopAllClick}
+            // onClick={handleShopAllClick}
             className="shop-all-btn inline-flex items-center justify-center px-8 md:px-12 py-3 md:py-4 border-2 border-gray-900 text-gray-900 font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-300 rounded-full text-sm md:text-base"
           >
             Shop All

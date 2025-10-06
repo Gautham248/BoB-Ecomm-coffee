@@ -19,7 +19,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
 
   useEffect(() => {
     setSelectedVariant(product.shopifyVariants?.[0]?.id || '');
-    setQuantity(3);
+    setQuantity(1);
     setIsDropdownOpen(false);
     setLocalLoading(false);
   }, [product.id]);

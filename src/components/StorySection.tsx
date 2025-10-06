@@ -49,7 +49,7 @@ const StorySection: React.FC = () => {
           {/* Image */}
           <div className="story-image">
             <img
-              src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+              src="https://ik.imagekit.io/7ujz6ljli/Story/Western_Ghats.png?updatedAt=1759757310810"
               alt="Western Ghats landscape"
               className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl"
             />
@@ -61,7 +61,7 @@ const StorySection: React.FC = () => {
               <span className="text-sm font-medium text-gray-600 tracking-wider">OUR STORY</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-pangaia text-gray-900 mb-8 leading-tight">
               Born in the Heart of Western Ghats
             </h2>
             
@@ -85,15 +85,20 @@ const StorySection: React.FC = () => {
               <span className="text-sm font-medium text-gray-600 tracking-wider">COMMITTED TO THE PLANET</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8 font-pangaia leading-tight">
               For the planet, its people, and the future we're building together
             </h2>
+            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+              Beans of Bodhi is where timeless coffee traditions meet the thrill of adventure. 
+              From rich, sustainably grown beans to the spirit of exploration in every sip, 
+              each cup fuels bold journeys and lasting impact.
+            </p>
           </div>
 
           {/* Image */}
           <div className="story-image lg:order-2">
             <img
-              src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+              src="https://ik.imagekit.io/7ujz6ljli/Story/Vo7YbYQQ8iyOo4J9bOoj_ggb24-p-2000.jpg?updatedAt=1759757310766"
               alt="Sustainable farming"
               className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl"
             />

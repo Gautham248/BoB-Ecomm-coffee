@@ -51,7 +51,7 @@ const NewsletterSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div className="newsletter-content text-white">
-            <h4 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
+            <h4 className="text-5xl md:text-6xl font-helvetica mb-8 leading-tight">
               JOIN THE MOVEMENT
             </h4>
             

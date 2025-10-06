@@ -122,9 +122,14 @@ const HorizontalScrollContainer = ({ sections }: HorizontalScrollContainerProps)
     const deltaX = Math.abs(touchEndX - handleTouchStart.current.x);
     const deltaY = Math.abs(touchEndY - handleTouchStart.current.y);
 
-    if (deltaY > deltaX) return;
+    // Allow vertical scrolling if gesture is more vertical than horizontal
+    if (deltaY > deltaX && deltaY > 30) {
+      return;
+    }
 
-    if (deltaX > 50) {
+    // Only navigate horizontally if swipe is significant and horizontal
+    if (deltaX > 50 && deltaX > deltaY) {
+      e.preventDefault();
       if (touchEndX < handleTouchStart.current.x) {
         navigateToSection(currentIndex + 1);
       } else {
@@ -185,16 +190,25 @@ const HorizontalScrollContainer = ({ sections }: HorizontalScrollContainerProps)
 
 // Hero Section Component (Section 0)
 const HeroSection = () => (
-  <section id="Section0" className="snap-section-new snap-0">
-    <div className="uui-padding-vertical-xhuge-6">
-      <a href="#" className="uui-blogpost02_category-link-2 w-inline-block">
-        <div className="text-block-31">OUR STORY</div>
-      </a>
-      <h1 className="uui-heading-large-2 text-color-white-3">
-        From <em>heritage </em>to Horizons,<br />A Journey of Bold <em>Adventures.</em>
-      </h1>
-    </div>
-  </section>
+  <section
+  id="Section0"
+  className="snap-section-new snap-0 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: "url('https://ik.imagekit.io/7ujz6ljli/Our%20Story/Bob_Our-Story-p-1600.jpg?updatedAt=1759717731252')",
+  }}
+>
+  <div className="uui-padding-vertical-xhuge-6 ">
+    <a href="#" className="uui-blogpost02_category-link-2 w-inline-block">
+      <div className="text-block-31">OUR STORY</div>
+    </a>
+    <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-normal tracking-wide leading-loose text-white">
+      From <em className='font-pangaia font-normal'>heritage</em> to Horizons,<br />A Journey of Bold <em>Adventures.</em>
+    </h1>
+
+
+  </div>
+</section>
+
 );
 
 // Main Our Story Component
@@ -234,8 +248,7 @@ const OurStory = () => {
 
           body {
             font-family: "PPPangaia-Medium", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: none;
           }
 
           html, body {
@@ -418,7 +431,13 @@ const OurStory = () => {
           }
 
           .horizontal-container {
-            touch-action: pan-x;
+            touch-action: pan-x pan-y;
+          }
+
+          @media (max-width: 768px) {
+            .horizontal-container {
+              touch-action: manipulation;
+            }
           }
 
           .snap-section-new {
@@ -559,8 +578,11 @@ const OurStory = () => {
                   <source src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining-desktop.mp4?updatedAt=1757551540680" type="video/mp4" />
                 </video>
                 <div className="section-content">
-                  <h1 className="text-color-white-3">Redefining the <em>Rules</em> of <em>Coffee</em></h1>
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
+                    Redefining the <em>Rules</em> of <em>Coffee</em>
+                  </h1>
                 </div>
+
               </HorizontalSection>,
               <HorizontalSection key="1b">
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining/01Redefining.webp?updatedAt=1757728886632" alt="Redefining" loading="lazy" />
@@ -579,8 +601,11 @@ const OurStory = () => {
               <HorizontalSection key="2a" showSwipeHint>
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Promise/02Promise.webp?updatedAt=1757728817710" alt="Our Promise" loading="lazy" />
                 <div className="section-content">
-                  <h1 className="text-color-white-3">Our <em>Promise,</em> Our <em>Practice</em></h1>
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
+                    Our <em>Promise,</em> Our <em>Practice</em>
+                  </h1>
                 </div>
+
               </HorizontalSection>,
               <HorizontalSection key="2b">
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Promise/02Promise2.webp?updatedAt=1757728818039" alt="Our Promise" loading="lazy" />
@@ -599,7 +624,7 @@ const OurStory = () => {
               <HorizontalSection key="3a" showSwipeHint>
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/03Guarentee.webp?updatedAt=1757728650876" alt="Our Guarantee" loading="lazy" />
                 <div className="section-content">
-                  <h1 className="text-color-white-3">Our <em>Guarantee</em></h1>
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">Our <em>Guarantee</em></h1>
                 </div>
               </HorizontalSection>,
               <HorizontalSection key="3b">
@@ -619,7 +644,7 @@ const OurStory = () => {
               <HorizontalSection key="4a" showSwipeHint>
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Responsibility/04Impact.webp?updatedAt=1757728597869" alt="Responsibility" loading="lazy" />
                 <div className="section-content">
-                  <h1 className="text-color-white-3">We take <em>Responsibility</em> for our <em>Impact</em> on <em>People, Planet</em> & <em>Purpose</em></h1>
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">We take <em>Responsibility</em> for our <em>Impact</em> on <em>People, Planet</em> & <em>Purpose</em></h1>
                 </div>
               </HorizontalSection>,
               <HorizontalSection key="4b">
@@ -641,7 +666,7 @@ const OurStory = () => {
                   <source src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Process.mp4?updatedAt=1757551521435" type="video/mp4" />
                 </video>
                 <div className="section-content">
-                  <h1 className="text-color-white-3">The more you <em>Know,</em> The more you <em>Need</em></h1>
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">The more you <em>Know,</em> The more you <em>Need</em></h1>
                 </div>
               </HorizontalSection>,
               <HorizontalSection key="5b">
@@ -661,7 +686,7 @@ const OurStory = () => {
               <HorizontalSection key="6a" showSwipeHint>
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Commitment/Commitment1.webp?updatedAt=1757728489266" alt="Commitment" loading="lazy" />
                 <div className="section-content">
-                  <h1 className="text-color-white-3">The <em>Commitment</em> Forward</h1>
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">The <em>Commitment</em> Forward</h1>
                 </div>
               </HorizontalSection>,
               <HorizontalSection key="6b">
@@ -681,7 +706,7 @@ const OurStory = () => {
               <HorizontalSection key="7a" showSwipeHint>
                 <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Era/Era1.webp?updatedAt=1757728389579" alt="New Era" loading="lazy" />
                 <div className="section-content">
-                  <h2 className="text-color-white-3"><em>Stepping</em> into a new <em>Era</em></h2>
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white"><em>Stepping</em> into a new <em>Era</em></h2>
                 </div>
               </HorizontalSection>,
               <HorizontalSection key="7b">

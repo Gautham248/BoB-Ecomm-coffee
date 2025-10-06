@@ -15,6 +15,7 @@ import Product from './pages/Product';
 import Movement from './pages/Movement';
 import OurStory from './pages/OurStory';
 import NotFound from './pages/NotFound';
+import Shop from './pages/Shop';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,8 +73,9 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/product/:productId" element={<Product />} />
-                    <Route path="/movement" element={<Movement />} />
+                    {/* <Route path="/movement" element={<Movement />} /> */}
                     <Route path="/our-story" element={<OurStory />} />
+                    <Route path="/shop" element={<Shop />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>

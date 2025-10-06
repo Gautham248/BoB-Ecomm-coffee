@@ -53,7 +53,7 @@ const FeaturedSection: React.FC = () => {
 
         {/* Carousel Container */}
         <div className="relative">
-          <div ref={carouselRef} className="relative h-[480px] md:h-[550px] flex items-center justify-center">
+          <div ref={carouselRef} className="relative h-[560px] md:h-[650px] flex items-center justify-center">
             {/* Products Container */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-full h-full flex items-center justify-center">
@@ -80,7 +80,7 @@ const FeaturedSection: React.FC = () => {
                         onClick={() => isActive && handleProductClick(product.id)}
                       >
                         {/* Coffee Package with actual product image */}
-                        <div className="w-56 md:w-80 h-80 md:h-[450px]">
+                        <div className="w-72 md:w-[420px] h-[420px] md:h-[560px]">
                           <img 
                             src={product.descriptionContent.image}
                             alt={product.name}
@@ -113,11 +113,11 @@ const FeaturedSection: React.FC = () => {
           </div>
 
           {/* Product Name Display */}
-          <div className="text-center mt-4">
-            <h3 className="text-lg md:text-xl font-serif text-white mb-1">
+          <div className="text-center mt-2">
+            <h3 className="text-2xl md:text-3xl font-serif text-white mb-2">
               {products[currentIndex].name}
             </h3>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-lg md:text-xl">
               {products[currentIndex].price}
             </p>
           </div>
