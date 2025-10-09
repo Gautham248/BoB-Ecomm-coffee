@@ -53,7 +53,7 @@ function App() {
     <HelmetProvider>
       <CartProvider>
         <Router>
-          <div className="min-h-screen bg-white text-black">
+          <div className="min-h-screen bg-white text-black overflow-x-hidden w-full">
             {/* Global Structured Data */}
             <StructuredData type="organization" />
             <StructuredData type="website" />

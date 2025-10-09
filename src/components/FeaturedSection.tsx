@@ -9,6 +9,8 @@ const FeaturedSection: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   
   const products = getFeaturedProducts();
 
@@ -30,6 +32,33 @@ const FeaturedSection: React.FC = () => {
     navigate(`/product/${productId}`);
   };
 
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextProduct();
+    }
+    if (isRightSwipe) {
+      prevProduct();
+    }
+
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   // Auto-rotation
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,18 +71,24 @@ const FeaturedSection: React.FC = () => {
   }, [isTransitioning]);
 
   return (
-    <section ref={sectionRef} className="relative py-12 bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden h-screen flex items-center">
-      <div className="w-full px-6">
+    <section ref={sectionRef} className="relative py-8 md:py-12 bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden h-screen flex items-center">
+      <div className="w-full px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-6 pt-4">
-          <h2 className="text-3xl md:text-5xl font-light tracking-wider">
+        <div className="text-center mb-4 md:mb-6 pt-2 md:pt-4">
+          <h2 className="text-2xl md:text-5xl font-light tracking-wider">
             FEATURED PRODUCTS
           </h2>
         </div>
 
         {/* Carousel Container */}
         <div className="relative">
-          <div ref={carouselRef} className="relative h-[560px] md:h-[650px] flex items-center justify-center">
+          <div 
+            ref={carouselRef} 
+            className="relative h-[450px] md:h-[600px] flex items-center justify-center"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* Products Container */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-full h-full flex items-center justify-center">
@@ -80,7 +115,7 @@ const FeaturedSection: React.FC = () => {
                         onClick={() => isActive && handleProductClick(product.id)}
                       >
                         {/* Coffee Package with actual product image */}
-                        <div className="w-72 md:w-[420px] h-[420px] md:h-[560px]">
+                        <div className="w-48 md:w-80 h-72 md:h-[450px]">
                           <img 
                             src={product.descriptionContent.image}
                             alt={product.name}
@@ -98,26 +133,26 @@ const FeaturedSection: React.FC = () => {
             <button
               onClick={prevProduct}
               disabled={isTransitioning}
-              className="absolute left-2 md:left-8 z-30 w-10 h-10 md:w-16 md:h-16 border border-white/30 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/50 transition-all duration-300 disabled:opacity-50"
+              className="absolute left-1 md:left-8 z-30 w-8 h-8 md:w-16 md:h-16 border border-white/30 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/50 transition-all duration-300 disabled:opacity-50"
             >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </button>
 
             <button
               onClick={nextProduct}
               disabled={isTransitioning}
-              className="absolute right-2 md:right-8 z-30 w-10 h-10 md:w-16 md:h-16 border border-white/30 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/50 transition-all duration-300 disabled:opacity-50"
+              className="absolute right-1 md:right-8 z-30 w-8 h-8 md:w-16 md:h-16 border border-white/30 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/50 transition-all duration-300 disabled:opacity-50"
             >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </button>
           </div>
 
           {/* Product Name Display */}
-          <div className="text-center mt-2">
-            <h3 className="text-2xl md:text-3xl font-serif text-white mb-2">
+          <div className="text-center mt-3 md:mt-4">
+            <h3 className="text-xl md:text-3xl font-serif text-white mb-1 md:mb-2">
               {products[currentIndex].name}
             </h3>
-            <p className="text-gray-400 text-lg md:text-xl">
+            <p className="text-gray-400 text-base md:text-xl">
               {products[currentIndex].price}
             </p>
           </div>

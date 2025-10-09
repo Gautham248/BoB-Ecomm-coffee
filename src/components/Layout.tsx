@@ -7,8 +7,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, className = '' }) => {
   return (
-    <div className={`min-h-screen w-full bg-white ${className}`}>
-      <div className="max-w-full mx-auto">
+    <div className={`min-h-screen w-full bg-white overflow-x-hidden ${className}`}>
+      <div className="w-full mx-auto">
         {children}
       </div>
     </div>

@@ -139,32 +139,32 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       dispatch({ type: 'SET_ERROR', payload: null });
       
       const checkoutId = Cookies.get('shopify_checkout_id');
-      console.log('Existing checkout ID from cookies:', checkoutId);
+      // console.log('Existing checkout ID from cookies:', checkoutId);
       
       if (checkoutId) {
         try {
-          console.log('Fetching existing checkout...');
+          // console.log('Fetching existing checkout...');
           const checkout = await client.checkout.fetch(checkoutId);
-          console.log('Fetched checkout:', checkout);
+          // console.log('Fetched checkout:', checkout);
           
           if (checkout && !checkout.completedAt) {
             dispatch({ type: 'SET_CHECKOUT', payload: checkout });
-            console.log('Using existing checkout');
+            // console.log('Using existing checkout');
             return;
           } else {
-            console.log('Checkout is completed or invalid, creating new one');
+            // console.log('Checkout is completed or invalid, creating new one');
             Cookies.remove('shopify_checkout_id');
           }
         } catch (error) {
-          console.log('Error fetching existing checkout, creating new one:', error);
+          // console.log('Error fetching existing checkout, creating new one:', error);
           Cookies.remove('shopify_checkout_id');
         }
       }
       
       // Create new checkout
-      console.log('Creating new checkout...');
+      // console.log('Creating new checkout...');
       const checkout = await client.checkout.create();
-      console.log('Created new checkout:', checkout);
+      // console.log('Created new checkout:', checkout);
       dispatch({ type: 'SET_CHECKOUT', payload: checkout });
       
     } catch (error) {
@@ -180,11 +180,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const addToCart = async (variantId: string, quantity: number) => {
     try {
-      console.log('Adding to cart:', { variantId, quantity });
+      // console.log('Adding to cart:', { variantId, quantity });
       
       // Ensure we have an initialized cart
       if (!state.initialized) {
-        console.log('Cart not initialized, initializing...');
+        // console.log('Cart not initialized, initializing...');
         await initializeCart();
       }
 
@@ -211,11 +211,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         quantity: quantity
       }];
 
-      console.log('Adding line items:', lineItemsToAdd);
-      console.log('To checkout:', state.checkout.id);
+      // console.log('Adding line items:', lineItemsToAdd);
+      // console.log('To checkout:', state.checkout.id);
 
       const checkout = await client.checkout.addLineItems(state.checkout.id, lineItemsToAdd);
-      console.log('Updated checkout:', checkout);
+      // console.log('Updated checkout:', checkout);
       
       dispatch({ 
         type: 'ADD_TO_CART_SUCCESS', 
@@ -259,7 +259,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         quantity: quantity
       }];
 
-      console.log('Updating cart item:', lineItemsToUpdate);
+      // console.log('Updating cart item:', lineItemsToUpdate);
       const checkout = await client.checkout.updateLineItems(state.checkout.id, lineItemsToUpdate);
       dispatch({ type: 'UPDATE_CART_SUCCESS', payload: checkout });
       
@@ -277,7 +277,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'SET_ERROR', payload: null });
       
-      console.log('Removing item from cart:', lineItemId);
+      // console.log('Removing item from cart:', lineItemId);
       const checkout = await client.checkout.removeLineItems(state.checkout.id, [lineItemId]);
       dispatch({ type: 'UPDATE_CART_SUCCESS', payload: checkout });
       
@@ -292,7 +292,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const proceedToCheckout = () => {
     if (state.checkout?.webUrl) {
-      console.log('Proceeding to checkout:', state.checkout.webUrl);
+      // console.log('Proceeding to checkout:', state.checkout.webUrl);
       window.location.href = state.checkout.webUrl;
     } else {
       showNotification('Checkout URL not available', 'error');

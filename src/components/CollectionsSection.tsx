@@ -59,6 +59,8 @@ const CollectionsSection: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(1);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   
   const collections = mockCollections;
 
@@ -194,6 +196,33 @@ const CollectionsSection: React.FC = () => {
     setCurrentSlide(Math.min(index, maxSlide));
   };
 
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      goToNext();
+    }
+    if (isRightSwipe) {
+      goToPrevious();
+    }
+
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   const getDesktopGridClasses = () => {
     const count = collections.length;
     if (count === 1) return 'justify-center';
@@ -214,22 +243,27 @@ const CollectionsSection: React.FC = () => {
   const needsSlider = itemsPerView < collections.length;
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={sectionRef} className="py-12 md:py-20 bg-gray-50 overflow-x-hidden w-full">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="collections-title text-3xl md:text-4xl font-pangaia font-bold text-gray-900 tracking-wider">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="collections-title text-2xl md:text-4xl font-pangaia font-bold text-gray-900 tracking-wider">
             Our Collections
           </h2>
         </div>
 
         {/* Collections Container */}
-        <div className="relative mb-16">
+        <div className="relative mb-8 md:mb-16">
           {needsSlider ? (
-            /* Mobile/Tablet Slider View */
+            /* Mobile/Tablet Slider View with Swipe */
             <>
               {/* Slider Container */}
-              <div className="overflow-hidden">
+              <div 
+                className="overflow-hidden w-full"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 <div 
                   ref={sliderRef}
                   className="flex transition-transform duration-500 ease-in-out"
@@ -246,15 +280,15 @@ const CollectionsSection: React.FC = () => {
                         'w-1/3'
                       }`}
                     >
-                      <div className="collection-card group cursor-pointer w-full max-w-sm mx-auto"
+                      <div className="collection-card group cursor-pointer w-full max-w-xs mx-auto"
                            onClick={() => handleCollectionClick(collection.id)}
                            >
                         {/* Collection Image */}
-                        <div className="relative mb-4 overflow-hidden rounded-lg">
+                        <div className="relative mb-3 md:mb-4 overflow-hidden rounded-lg">
                           <img
                             src={collection.image}
                             alt={collection.name}
-                            className="w-full h-48 md:h-56 object-cover group-hover:scale-110 transition-transform duration-700 rounded-lg"
+                            className="w-full h-40 md:h-56 object-cover group-hover:scale-110 transition-transform duration-700 rounded-lg"
                             style={{
                               filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                             }}
@@ -263,7 +297,7 @@ const CollectionsSection: React.FC = () => {
                           
                           {/* Hover overlay */}
                           <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                            <div className="text-white font-medium text-sm px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <div className="text-white font-medium text-xs md:text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                               View Collection
                             </div>
                           </div>
@@ -271,16 +305,16 @@ const CollectionsSection: React.FC = () => {
 
                         {/* Collection Info */}
                         <div className="text-center px-2">
-                          <h3 className="text-base md:text-lg font-light text-gray-900 mb-2 tracking-wide leading-tight">
+                          <h3 className="text-sm md:text-lg font-light text-gray-900 mb-1 md:mb-2 tracking-wide leading-tight">
                             {collection.name}
                           </h3>
                           <div className="flex items-center justify-center space-x-2">
                             {collection.originalPrice && (
-                              <span className="text-gray-500 line-through text-sm">
+                              <span className="text-gray-500 line-through text-xs md:text-sm">
                                 {collection.originalPrice}
                               </span>
                             )}
-                            <span className="text-gray-900 font-medium text-sm md:text-base">
+                            <span className="text-gray-900 font-medium text-xs md:text-base">
                               {collection.price}
                             </span>
                           </div>
@@ -291,10 +325,10 @@ const CollectionsSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Navigation Arrows */}
+              {/* Navigation Arrows - Only show on tablet/desktop */}
               <button
                 onClick={goToPrevious}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+                className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full items-center justify-center transition-all duration-300 hover:scale-110 z-10"
                 aria-label="Previous collections"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-800" />
@@ -302,7 +336,7 @@ const CollectionsSection: React.FC = () => {
 
               <button
                 onClick={goToNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+                className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full items-center justify-center transition-all duration-300 hover:scale-110 z-10"
                 aria-label="Next collections"
               >
                 <ChevronRight className="w-5 h-5 text-gray-800" />
@@ -310,7 +344,7 @@ const CollectionsSection: React.FC = () => {
 
               {/* Slider Indicators */}
               {collections.length > itemsPerView && (
-                <div className="flex justify-center mt-8 space-x-2">
+                <div className="flex justify-center mt-6 md:mt-8 space-x-2">
                   {Array.from({ length: collections.length - itemsPerView + 1 }, (_, index) => (
                     <button
                       key={index}
@@ -381,7 +415,7 @@ const CollectionsSection: React.FC = () => {
         <div className="text-center">
           <button
             // onClick={handleShopAllClick}
-            className="shop-all-btn inline-flex items-center justify-center px-8 md:px-12 py-3 md:py-4 border-2 border-gray-900 text-gray-900 font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-300 rounded-full text-sm md:text-base"
+            className="shop-all-btn inline-flex items-center justify-center px-6 md:px-12 py-2.5 md:py-4 border-2 border-gray-900 text-gray-900 font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-300 rounded-full text-sm md:text-base"
           >
             Shop All
           </button>

@@ -31,7 +31,7 @@ const NewsletterSection: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email && agreed) {
-      console.log('Newsletter signup:', email);
+      // console.log('Newsletter signup:', email);
       // Handle newsletter signup
     }
   };

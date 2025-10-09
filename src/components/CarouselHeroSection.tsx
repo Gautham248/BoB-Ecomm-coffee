@@ -53,11 +53,11 @@ const CarouselHeroSection: React.FC = () => {
 
   // Manual navigation functions
   const handlePrevious = () => {
-    console.log('Previous clicked, current slide:', currentSlide);
+    // console.log('Previous clicked, current slide:', currentSlide);
     clearAutoSlide();
     setCurrentSlide((prev) => {
       const newSlide = prev === 0 ? slides.length - 1 : prev - 1;
-      console.log('New slide will be:', newSlide);
+      // console.log('New slide will be:', newSlide);
       return newSlide;
     });
     // Restart auto-slide after 3 seconds
@@ -67,11 +67,11 @@ const CarouselHeroSection: React.FC = () => {
   };
 
   const handleNext = () => {
-    console.log('Next clicked, current slide:', currentSlide);
+    // console.log('Next clicked, current slide:', currentSlide);
     clearAutoSlide();
     setCurrentSlide((prev) => {
       const newSlide = (prev + 1) % slides.length;
-      console.log('New slide will be:', newSlide);
+      // console.log('New slide will be:', newSlide);
       return newSlide;
     });
     // Restart auto-slide after 3 seconds
@@ -81,7 +81,7 @@ const CarouselHeroSection: React.FC = () => {
   };
 
   const handleGoToSlide = (index: number) => {
-    console.log('Dot clicked, going to slide:', index);
+    // console.log('Dot clicked, going to slide:', index);
     clearAutoSlide();
     setCurrentSlide(index);
     // Restart auto-slide after 3 seconds
@@ -90,7 +90,7 @@ const CarouselHeroSection: React.FC = () => {
     }, 3000);
   };
 
-  console.log('Current slide index:', currentSlide);
+  // console.log('Current slide index:', currentSlide);
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
@@ -108,7 +108,8 @@ const CarouselHeroSection: React.FC = () => {
               backgroundImage: `url(${slide.image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
+              backgroundRepeat: 'no-repeat',
+              maxWidth: '100vw'
             }}
           >
             {/* Overlay for better contrast */}

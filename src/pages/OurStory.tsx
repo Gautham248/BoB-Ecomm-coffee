@@ -201,9 +201,12 @@ const HeroSection = () => (
     <a href="#" className="uui-blogpost02_category-link-2 w-inline-block">
       <div className="text-block-31">OUR STORY</div>
     </a>
-    <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-normal tracking-wide leading-loose text-white">
-      From <em className='font-pangaia font-normal'>heritage</em> to Horizons,<br />A Journey of Bold <em>Adventures.</em>
-    </h1>
+    <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-normal tracking-wider leading-tight text-white">
+  From <br/><em className='font-pangaia font-normal'>heritage</em><br />
+  to Horizons,<br />
+  A Journey of Bold<br />
+  <em className='font-pangaia font-normal'>Adventures.</em>
+</h1>
 
 
   </div>

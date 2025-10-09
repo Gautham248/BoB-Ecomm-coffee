@@ -43,52 +43,52 @@ const StorySection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section ref={sectionRef} className="py-10 md:py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Image */}
           <div className="story-image">
             <img
               src="https://ik.imagekit.io/7ujz6ljli/Story/Western_Ghats.png?updatedAt=1759757310810"
               alt="Western Ghats landscape"
-              className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl"
+              className="w-full h-48 md:h-80 lg:h-[500px] object-cover rounded-lg shadow-2xl"
             />
           </div>
 
           {/* Content */}
           <div className="story-content">
-            <div className="mb-6">
-              <span className="text-sm font-medium text-gray-600 tracking-wider">OUR STORY</span>
+            <div className="mb-4 md:mb-6">
+              <span className="text-xs md:text-sm font-medium text-gray-600 tracking-wider">OUR STORY</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-pangaia text-gray-900 mb-8 leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-pangaia text-gray-900 mb-4 md:mb-8 leading-tight">
               Born in the Heart of Western Ghats
             </h2>
             
-            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+            <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
               Beans of Bodhi is where timeless coffee traditions meet the thrill of adventure. 
               From rich, sustainably grown beans to the spirit of exploration in every sip, 
               each cup fuels bold journeys and lasting impact.
             </p>
             
-            <button className="border border-gray-900 px-8 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors duration-300">
+            <button className="border border-gray-900 px-6 md:px-8 py-2.5 md:py-3 text-xs md:text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors duration-300">
               DISCOVER
             </button>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center mt-16 md:mt-32">
           {/* Content */}
           <div className="story-content lg:order-1">
-            <div className="mb-6">
-              <span className="text-sm font-medium text-gray-600 tracking-wider">COMMITTED TO THE PLANET</span>
+            <div className="mb-4 md:mb-6">
+              <span className="text-xs md:text-sm font-medium text-gray-600 tracking-wider">COMMITTED TO THE PLANET</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8 font-pangaia leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-pangaia text-gray-900 mb-4 md:mb-8 leading-tight">
               For the planet, its people, and the future we're building together
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+            <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
               Beans of Bodhi is where timeless coffee traditions meet the thrill of adventure. 
               From rich, sustainably grown beans to the spirit of exploration in every sip, 
               each cup fuels bold journeys and lasting impact.
@@ -100,7 +100,7 @@ const StorySection: React.FC = () => {
             <img
               src="https://ik.imagekit.io/7ujz6ljli/Story/Vo7YbYQQ8iyOo4J9bOoj_ggb24-p-2000.jpg?updatedAt=1759757310766"
               alt="Sustainable farming"
-              className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl"
+              className="w-full h-48 md:h-80 lg:h-[500px] object-cover rounded-lg shadow-2xl"
             />
           </div>
         </div>
