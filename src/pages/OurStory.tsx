@@ -197,19 +197,24 @@ const HeroSection = () => (
     backgroundImage: "url('https://ik.imagekit.io/7ujz6ljli/Our%20Story/Bob_Our-Story-p-1600.jpg?updatedAt=1759717731252')",
   }}
 >
-  <div className="uui-padding-vertical-xhuge-6 ">
-    <a href="#" className="uui-blogpost02_category-link-2 w-inline-block">
-      <div className="text-block-31">OUR STORY</div>
-    </a>
-    <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-normal tracking-wider leading-tight text-white">
-  From <br/><em className='font-pangaia font-normal'>heritage</em><br />
-  to Horizons,<br />
-  A Journey of Bold<br />
-  <em className='font-pangaia font-normal'>Adventures.</em>
-</h1>
-
-
-  </div>
+<div className="uui-padding-vertical-xhuge-6">
+  <a href="#" className="uui-blogpost02_category-link-2 w-inline-block">
+    <div className="text-block-31">OUR STORY</div>
+  </a>
+  
+  {/* Mobile version */}
+  <h1 className="block md:hidden text-4xl font-pangaia font-normal tracking-wider leading-tight text-white">
+    From <br/><em className='font-pangaia font-normal'>heritage</em><br />
+    to Horizons,<br />
+    A Journey of Bold<br />
+  </h1>
+  
+  {/* Desktop version */}
+  <h1 className="hidden md:block text-4xl md:text-6xl lg:text-7xl font-pangaia font-normal tracking-wider leading-tight text-white">
+    From <em className='font-pangaia font-normal'>heritage</em> to Horizons,<br />
+    A Journey of Bold <em className='font-pangaia font-normal'>Adventures.</em>
+  </h1>
+</div>
 </section>
 
 );
@@ -722,11 +727,6 @@ const OurStory = () => {
           />
         </div>
 
-        {/* Newsletter Section - With snap behavior */}
-        <div className="newsletter-section-wrapper">
-          <NewsletterSection />
-          <Footer/>
-        </div>
      
       </div>
     </>

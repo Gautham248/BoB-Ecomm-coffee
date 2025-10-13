@@ -442,7 +442,6 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onBackToHome }) => {
         </div>
       </section>
 
-      <NewsletterSection key={product.name} />
     </>
   );
 };

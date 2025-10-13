@@ -8,6 +8,7 @@ import NewsletterSection from '../components/NewsletterSection';
 import CarouselHeroSection from '../components/CarouselHeroSection';
 import FeaturedProducts from '../components/FeaturedProducts';
 import VideoHeroSection from '../components/VideoHeroSection';
+import BusinessSection from '../components/BusinessSection';
 
 const Home: React.FC = () => {
   return (
@@ -27,9 +28,10 @@ const Home: React.FC = () => {
       headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
       />
       <FeaturedSection />
+      <BusinessSection/>
       <StorySection />
       <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/1-Planet_1.mp4?updatedAt=1759753845223" />
-      <NewsletterSection />
+
     </>
   );
 };
