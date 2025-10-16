@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { Building2, User, Mail, Phone, MapPin, Coffee, MessageSquare, CheckCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import NewsletterSection from '../components/NewsletterSection';
+import HeroImageSection from '../components/HeroImageSection';
 
 // Main Page Component
 const BusinessSubscriptionEnquiry = () => {
   return (
     <div className="min-h-screen bg-white">
+        <HeroImageSection
+         backgroundUrl="https://ik.imagekit.io/7ujz6ljli/Story/B2B%20Landscape.webp?updatedAt=1760370986291"
+        alt="Hero Image Description"
+        />
       <div className="py-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center">
