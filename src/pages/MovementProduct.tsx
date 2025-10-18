@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import VideoHeroSection from '../components/VideoHeroSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,8 +20,6 @@ const MovementProduct: React.FC = () => {
     description: 'A revolutionary coffee brewing gadget engineered for precision and sustainability. Designed to extract the full complexity of specialty coffee through controlled water flow and temperature management.',
     price: '$189.99',
     composition: ['Ceramic Filter', 'Stainless Steel', 'Heat-Resistant Glass', 'Eco-Conscious Design'],
-    heroImage: 'https://images.unsplash.com/photo-1559056199-641a0ac8b3f3?w=1200&h=600&fit=crop',
-    heroImageMobile: 'https://images.unsplash.com/photo-1559056199-641a0ac8b3f3?w=600&h=800&fit=crop',
     galleryImages: [
       'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=600&fit=crop',
       'https://images.unsplash.com/photo-1559056199-641a0ac8b3f3?w=500&h=600&fit=crop',
@@ -55,14 +53,9 @@ const MovementProduct: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    gsap.fromTo('.product-hero-image',
-      { scale: 1.1, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1.5, ease: 'power3.out' }
-    );
-
-    gsap.fromTo('.product-hero-content',
-      { x: 100, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.2, delay: 0.3, ease: 'power3.out' }
+    gsap.fromTo('.product-info-content',
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.3 }
     );
 
     gsap.fromTo('.gallery-item',
@@ -136,111 +129,44 @@ const MovementProduct: React.FC = () => {
 
   return (
     <>
-      {/* Hero Section - Fully Responsive */}
+      {/* Video Hero Section */}
       <section ref={heroRef} className="relative w-full bg-black">
-        {/* Mobile Layout - Image then Content Below */}
-        <div className="block md:hidden">
-          {/* Mobile Image */}
-          <div className="relative w-full">
-            <img
-              src={product.heroImageMobile}
-              alt={product.name}
-              className="w-full h-auto product-hero-image"
-            />
-          </div>
+        <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Desk_01_1.mp4?updatedAt=1760249904962" />
+      </section>
+
+      {/* Product Information Section */}
+      <section className="py-12 md:py-16 lg:py-20 bg-black">
+        <div className="product-info-content text-center text-white space-y-6 px-4 max-w-3xl mx-auto">
+          {/* Title */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
+            {product.title}
+          </h1>
           
-          {/* Mobile Content Section - Below Image */}
-          <div className="bg-black text-white px-4 py-8">
-            <div className="product-hero-content space-y-4 max-w-xl mx-auto">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-pangaia font-bold tracking-wide leading-tight">
-                  {product.title}
-                </h2>
-              </div>
-
-              <p className="text-sm sm:text-base text-white/90 leading-relaxed">
-                {product.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                {product.composition.map((item, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs sm:text-sm text-white/90"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="pt-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl font-bold text-white">{product.price}</span>
-                  <button className="px-6 py-2 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Desktop Layout - Content Overlay on Image */}
-        <div className="hidden md:block relative">
-          {/* Desktop Image */}
-          <div className="relative w-full">
-            <img
-              src={product.heroImage}
-              alt={product.name}
-              className="w-full h-auto product-hero-image"
-            />
-            {/* Dark gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/60"></div>
+          {/* Description */}
+          <p className="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
+            {product.description}
+          </p>
+          
+          {/* Composition Tags */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {product.composition.map((item, index) => (
+              <span
+                key={index}
+                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs sm:text-sm text-white/90"
+              >
+                {item}
+              </span>
+            ))}
           </div>
 
-          {/* Desktop Content Overlay */}
-          <div className="absolute inset-0 z-10 flex flex-col bg-black/30">
-            <div className="flex-1 flex items-center py-12">
-              <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                  {/* Left: Empty space for image visibility */}
-                  <div className="hidden lg:block"></div>
-
-                  {/* Right: Product Information and Cart */}
-                  <div className="product-hero-content text-white space-y-6 max-w-xl">
-                    <div>
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-pangaia font-bold tracking-wide leading-tight">
-                        {product.title}
-                      </h2>
-                    </div>
-
-                    <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                      {product.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {product.composition.map((item, index) => (
-                        <span
-                          key={index}
-                          className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm md:text-base text-white/90"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="pt-4">
-                      <div className="flex items-center gap-4">
-                        <span className="text-3xl font-bold text-white">{product.price}</span>
-                        <button className="px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors">
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Price and Add to Cart */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-6">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+              {product.price}
+            </span>
+            <button className="px-6 sm:px-8 py-2 sm:py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors duration-300 whitespace-nowrap text-sm sm:text-base">
+              Add to Cart
+            </button>
           </div>
         </div>
       </section>
@@ -280,7 +206,7 @@ const MovementProduct: React.FC = () => {
                   className="gallery-item flex-shrink-0 snap-center relative group cursor-pointer overflow-hidden rounded-md md:rounded-lg w-[280px] h-[350px] md:w-[240px] md:h-[300px] lg:w-[260px] lg:h-[325px]"
                   onClick={() => openViewer(index)}
                 >
-                  <div className="w-full h-full">
+                  <div className="w-full h-full bg-gray-800">
                     <img
                       src={image}
                       alt={`${product.name} gallery ${index + 1}`}
@@ -302,7 +228,7 @@ const MovementProduct: React.FC = () => {
           </div>
 
           {/* Scroll Indicator */}
-          <div className="flex justify-center gap-2 mt-6 px-4">
+          <div className="flex justify-center gap-2 mt-6 md:mt-8 px-4">
             {product.galleryImages.map((_, index) => (
               <div
                 key={index}
@@ -382,7 +308,7 @@ const MovementProduct: React.FC = () => {
                 <img
                   src={product.descriptionContent.image}
                   alt={product.name}
-                  className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-lg"
+                  className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-lg bg-gray-800"
                 />
               </div>
             </div>

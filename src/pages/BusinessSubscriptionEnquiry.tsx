@@ -9,8 +9,9 @@ const BusinessSubscriptionEnquiry = () => {
   return (
     <div className="min-h-screen bg-white">
         <HeroImageSection
-         backgroundUrl="https://ik.imagekit.io/7ujz6ljli/Story/B2B%20Landscape.webp?updatedAt=1760370986291"
-        alt="Hero Image Description"
+         backgroundImageDesktop="https://ik.imagekit.io/7ujz6ljli/Story/B2B%20Landscape.webp?updatedAt=1760370986291"
+         backgroundImageMobile="https://ik.imagekit.io/7ujz6ljli/Story/B2B%20Portrait.webp?updatedAt=1760779787381"
+         alt="Hero Image Description"
         />
       <div className="py-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
