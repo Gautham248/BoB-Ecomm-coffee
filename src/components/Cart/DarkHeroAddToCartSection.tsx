@@ -49,14 +49,14 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
     }
   };
 
-  const formatPrice = (price: string | { amount: string; currencyCode: string }) => {
+  const formatPrice = (price: string | { amount: string; currencyCode: string }): string => {
     if (typeof price === 'object' && price.amount) {
       return `₹${parseFloat(price.amount).toFixed(2)}`;
     }
     if (typeof price === 'string') {
       return `₹${parseFloat(price).toFixed(2)}`;
     }
-    return price;
+    return '₹0.00';
   };
 
   const incrementQuantity = () => {
@@ -85,9 +85,10 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
     <div className="space-y-6 mt-1">
 
       {/* Price Display */}
+      
       <div className="text-white">
         <div className="text-3xl font-pangaia font-medium mb-1">
-          {selectedVariantData ? formatPrice(selectedVariantData.price) : product.price}
+        {selectedVariantData ? formatPrice(selectedVariantData.price) : formatPrice(product.price)}
         </div>
       </div>
 

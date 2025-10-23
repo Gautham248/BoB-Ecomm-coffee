@@ -15,11 +15,14 @@ interface MediaHeroSliderProps {
   showArrows?: boolean;
 }
 
-const MediaSlideItem: React.FC<{
+interface MediaSlideItemProps {
   slide: MediaSlide;
   isActive: boolean;
   index: number;
-}> = ({ slide, isActive, index }) => {
+  isMobile: boolean;
+}
+
+const MediaSlideItem: React.FC<MediaSlideItemProps> = ({ slide, isActive, index, isMobile }) => {
   const [isMediaLoaded, setIsMediaLoaded] = useState(false);
   const [shouldLoadMedia, setShouldLoadMedia] = useState(false);
   const [error, setError] = useState(false);
@@ -66,14 +69,14 @@ const MediaSlideItem: React.FC<{
   return (
     <div
       ref={itemRef}
-      className="relative w-full h-full flex-shrink-0 bg-gray-900"
+      className={`relative w-full flex-shrink-0 bg-gray-900 ${isMobile ? 'h-auto' : 'h-full'}`}
     >
       {/* Poster/Placeholder - Shows while media loads */}
       {slide.posterUrl && !isMediaLoaded && !error && (
         <img
           src={slide.posterUrl}
           alt={`Slide ${index + 1}`}
-          className="w-full h-full object-cover"
+          className={`w-full object-cover ${isMobile ? 'h-auto' : 'h-full'}`}
           loading={isActive ? "eager" : "lazy"}
         />
       )}
@@ -86,14 +89,14 @@ const MediaSlideItem: React.FC<{
           muted
           playsInline
           autoPlay={isActive}
-          preload="auto"
+          preload="metadata"
           poster={slide.posterUrl}
           onLoadedData={handleMediaLoaded}
           onCanPlay={handleMediaLoaded}
           onError={handleError}
-          className={`w-full h-full object-cover transition-opacity duration-500 ${
-            isMediaLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`w-full object-cover transition-opacity duration-500 ${
+            isMobile ? 'h-auto' : 'h-full'
+          } ${isMediaLoaded ? 'opacity-100' : 'opacity-0'}`}
           crossOrigin="anonymous"
         >
           <source src={slide.url} type="video/mp4" />
@@ -108,9 +111,9 @@ const MediaSlideItem: React.FC<{
           alt={`Slide ${index + 1}`}
           onLoad={handleMediaLoaded}
           onError={handleError}
-          className={`w-full h-full object-cover transition-opacity duration-500 ${
-            isMediaLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`w-full object-cover transition-opacity duration-500 ${
+            isMobile ? 'h-auto' : 'h-full'
+          } ${isMediaLoaded ? 'opacity-100' : 'opacity-0'}`}
           loading={isActive ? "eager" : "lazy"}
           crossOrigin="anonymous"
         />
@@ -149,7 +152,17 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (!isPaused && autoPlayInterval > 0 && slides.length > 1) {
@@ -175,7 +188,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   return (
     <section
       ref={sliderRef}
-      className="relative w-full h-screen overflow-hidden"
+      className={`relative w-full overflow-hidden ${isMobile ? 'h-auto' : 'h-screen'}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -190,6 +203,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
             slide={slide}
             isActive={index === currentIndex}
             index={index}
+            isMobile={isMobile}
           />
         ))}
       </div>

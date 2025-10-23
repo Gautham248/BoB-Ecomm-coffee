@@ -17,6 +17,7 @@ import NewsletterSection from './components/NewsletterSection';
 import MovementProduct from './pages/MovementProduct';
 import OurStoryNew from './pages/OurStoryNew';
 import ShopAllPage from './pages/ShopAllPage';
+// import MovementPage from './pages/MovementPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -135,6 +136,15 @@ function AppContent() {
 }
 
 function App() {
+  useEffect(() => {
+    // Apply zoom to html element for proper scaling
+    document.documentElement.style.zoom = '0.97';
+    
+    return () => {
+      document.documentElement.style.zoom = '';
+    };
+  }, []);
+
   return (
     <HelmetProvider>
       <CartProvider>

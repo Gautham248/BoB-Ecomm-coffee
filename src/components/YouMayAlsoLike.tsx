@@ -1,18 +1,20 @@
 import React from 'react';
-import { Product, products, getProductsByCategory } from '../data/collections';
+import { useNavigate } from 'react-router-dom';
+import {  products, getProductsByCategory } from '../data/collections';
 import ProductCard from './ProductCard';
 
 interface YouMayAlsoLikeProps {
-  currentProductId: string;
-  onProductClick: (productId: string) => void;
-  maxProducts?: number;
-}
+    currentProductId: string;
+    onProductClick: (productId: string) => void;
+    maxProducts?: number;
+  }
 
 const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({ 
   currentProductId, 
-  onProductClick,
   maxProducts = 4 
 }) => {
+  const navigate = useNavigate();
+
   // Get the current product
   const currentProduct = products.find(p => p.id === currentProductId);
   
@@ -43,6 +45,14 @@ const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({
     'western-ghats-selects': 'Western Ghats Selects'
   };
 
+  const handleProductClick = (productId: string) => {
+    navigate(`/product/${productId}`);
+  };
+
+  const handleShopAllClick = () => {
+    navigate('/store');
+  };
+
   return (
     <section className="py-12 md:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,10 +72,20 @@ const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({
             <ProductCard
               key={product.id}
               product={product}
-              onClick={() => onProductClick(product.id)}
+              onClick={() => handleProductClick(product.id)}
               categoryLabel={categoryLabels[product.category]}
             />
           ))}
+        </div>
+
+        {/* Shop All Button */}
+        <div className="text-center mt-8 md:mt-12">
+          <button
+            onClick={handleShopAllClick}
+            className="inline-block px-8 py-3 bg-black text-white font-medium tracking-wide uppercase hover:bg-gray-800 transition-colors duration-300"
+          >
+            Shop All
+          </button>
         </div>
       </div>
     </section>

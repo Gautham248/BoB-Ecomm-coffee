@@ -20,6 +20,7 @@ const MovementVideoSection: React.FC<MovementVideoSectionProps> = ({
   const [desktopError, setDesktopError] = useState(false);
   const [scale, setScale] = useState(0.7);
   const [isFixed, setIsFixed] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     if (mobileVideoRef.current) {
@@ -47,18 +48,21 @@ const MovementVideoSection: React.FC<MovementVideoSectionProps> = ({
       if (rect.top > 0) {
         setScale(0.7);
         setIsFixed(false);
+        setIsComplete(false);
         return;
       }
       
       // When we've scrolled past the container completely
       if (rect.bottom <= windowHeight) {
         setScale(1.0);
-        setIsFixed(false); // Release from fixed so content flows normally
+        setIsFixed(false);
+        setIsComplete(true);
         return;
       }
       
       // Container is in viewport - fix it and scale
       setIsFixed(true);
+      setIsComplete(false);
       
       // Calculate how far we've scrolled into the container
       const scrolledIntoContainer = Math.abs(rect.top);
@@ -116,8 +120,9 @@ const MovementVideoSection: React.FC<MovementVideoSectionProps> = ({
         <div 
           className="w-full h-screen flex items-center justify-center overflow-hidden"
           style={{
-            position: isFixed ? 'fixed' : 'relative',
-            top: isFixed ? 0 : 'auto',
+            position: isFixed ? 'fixed' : 'absolute',
+            top: isFixed || !isComplete ? 0 : 'auto',
+            bottom: isComplete && !isFixed ? 0 : 'auto',
             left: 0,
             zIndex: 10
           }}

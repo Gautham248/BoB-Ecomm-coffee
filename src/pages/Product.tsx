@@ -39,7 +39,7 @@ const Product: React.FC = () => {
       <ProductPage 
         product={product} 
         onBackToHome={() => window.history.back()}
-        onProductClick={(productName) => {
+        onProductClick={(_productName) => {
           // Note: 'products' is not imported - this will also cause an error
           // You should import it from collections
         }}

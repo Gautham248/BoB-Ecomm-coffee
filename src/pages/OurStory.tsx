@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import SEOHead from '../components/SEO/SEOHead';
 import StructuredData from '../components/SEO/StructuredData';
-import NewsletterSection from '../components/NewsletterSection';
-import Footer from '../components/Footer';
+
 
 // Type definitions
 interface NavArrowProps {

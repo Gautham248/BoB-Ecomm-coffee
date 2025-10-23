@@ -1,4 +1,3 @@
-import React from 'react'
 import MovementHero from '../components/Movement/MovementHero'
 import MovementVideoSection from '../components/Movement/MovementVideoSection'
 import MovementTextSection from '../components/Movement/MovementTextSection'

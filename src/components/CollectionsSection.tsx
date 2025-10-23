@@ -8,8 +8,9 @@ const gsap = {
   utils: {
     toArray: (selector: string) => Array.from(document.querySelectorAll(selector))
   },
-  fromTo: (targets: any, fromVars: any, toVars: any) => {},
-  to: (targets: any, toVars: any) => {}
+  // The mock gsap object has unused parameters. Either remove them or prefix with underscore:
+  fromTo: (_targets: any, _fromVars: any, _toVars: any) => {},
+  to: (_targets: any, _toVars: any) => {}
 };
 
 const CollectionsSection: React.FC = () => {

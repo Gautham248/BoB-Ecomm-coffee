@@ -72,13 +72,12 @@ const StorySection: React.FC = () => {
             </div>
             
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-pangaia text-gray-900 mb-4 md:mb-8 leading-tight">
-              Born in the Heart of Western Ghats
+            Where Coffee becomes Consciousness 
             </h2>
             
             <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
-              Beans of Bodhi is where timeless coffee traditions meet the thrill of adventure. 
-              From rich, sustainably grown beans to the spirit of exploration in every sip, 
-              each cup fuels bold journeys and lasting impact.
+            Born in the wild slopes of Western Ghats, it was never just about coffee. It's a story of the land, the hands and the souls behind it. A movement for the restless, the curious and the ones who move with meaning. 
+
             </p>
             
             <button 
@@ -95,17 +94,17 @@ const StorySection: React.FC = () => {
           {/* Content */}
           <div className="story-content lg:order-1">
             <div className="mb-4 md:mb-6">
-              <span className="text-xs md:text-sm font-medium text-gray-600 tracking-wider">COMMITTED TO THE PLANET</span>
+              <span className="text-xs md:text-sm font-medium text-gray-600 tracking-wider">OUR COMMUNITY 
+              </span>
             </div>
             
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-pangaia text-gray-900 mb-4 md:mb-8 leading-tight">
-              For the planet, its people, and the future we're building together
+            The Earth is a Shareholder 
+
             </h2>
             
             <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
-              Beans of Bodhi is where timeless coffee traditions meet the thrill of adventure. 
-              From rich, sustainably grown beans to the spirit of exploration in every sip, 
-              each cup fuels bold journeys and lasting impact.
+            We see two worlds connected by a single cup, The hands that grow our beans, and the hearts that live them. Together, they form the Bodhi community — a cycle of creating, giving and evolving.
             </p>
             
             <button 

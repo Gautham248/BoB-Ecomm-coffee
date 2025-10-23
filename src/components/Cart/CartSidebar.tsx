@@ -17,14 +17,14 @@ const CartSidebar: React.FC = () => {
     error
   } = useCart();
 
-  const formatPrice = (price: string | { amount: string; currencyCode: string }) => {
+  const formatPrice = (price: string | { amount: string; currencyCode: string }): string => {
     if (typeof price === 'object' && price.amount) {
       return `₹${parseFloat(price.amount).toFixed(2)}`;
     }
     if (typeof price === 'string') {
       return `₹${parseFloat(price).toFixed(2)}`;
     }
-    return price;
+    return '₹0.00';
   };
 
   const handleQuantityChange = async (lineItemId: string, newQuantity: number) => {

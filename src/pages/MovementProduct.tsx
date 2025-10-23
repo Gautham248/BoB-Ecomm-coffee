@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const MovementProduct: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [_isMobile, setIsMobile] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);

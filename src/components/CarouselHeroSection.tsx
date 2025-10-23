@@ -23,13 +23,10 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
     {
       type: 'video',
       url: 'https://ik.imagekit.io/7ujz6ljli/Videos/Bob_Main_Hero__2.mp4',
-    
     },
-  
     {
       type: 'video',
       url: 'https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Desk_01_1.mp4?updatedAt=1760249904962',
-     
     }
   ];
 

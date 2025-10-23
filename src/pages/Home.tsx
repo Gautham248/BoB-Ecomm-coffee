@@ -1,14 +1,15 @@
 import React from 'react';
 import SEOHead from '../components/SEO/SEOHead';
-import HeroSection from '../components/HeroSection';
+// import HeroSection from '../components/HeroSection';
 import CollectionsSection from '../components/CollectionsSection';
 import FeaturedSection from '../components/FeaturedSection';
 import StorySection from '../components/StorySection';
-import NewsletterSection from '../components/NewsletterSection';
+// import NewsletterSection from '../components/NewsletterSection';
 import CarouselHeroSection from '../components/CarouselHeroSection';
-import FeaturedProducts from '../components/FeaturedProducts';
+// import FeaturedProducts from '../components/FeaturedProducts';
 import VideoHeroSection from '../components/VideoHeroSection';
 import BusinessSection from '../components/BusinessSection';
+import HomeMovement from '../components/Movement/HomeMovement';
 
 const Home: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
       headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
       />
       <FeaturedSection />
+      <HomeMovement/>
       <BusinessSection/>
       <StorySection />
       <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/1-Planet_1.mp4?updatedAt=1759753845223" />
