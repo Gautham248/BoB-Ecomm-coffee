@@ -12,12 +12,11 @@ import BusinessSubscriptionEnquiry from './pages/BusinessSubscriptionEnquiry';
 // Pages
 import Home from './pages/Home';
 import Product from './pages/Product';
-import OurStory from './pages/OurStory';
 import NotFound from './pages/NotFound';
-import Shop from './pages/Shop';
 import NewsletterSection from './components/NewsletterSection';
-import MovementPage from './pages/MovementPage';
 import MovementProduct from './pages/MovementProduct';
+import OurStoryNew from './pages/OurStoryNew';
+import ShopAllPage from './pages/ShopAllPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -102,13 +101,15 @@ function AppContent() {
           <Header />
           
           <main id="main-content" className="min-h-[calc(100vh-160px)]">
+            <ScrollToTop/>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/product/:productId" element={<Product />} />
               {/* <Route path="/movement" element={<MovementPage />} /> */}
               <Route path="/movement" element={<MovementProduct />} />
-              <Route path="/our-story" element={<OurStory />} />
-              <Route path="/shop" element={<Shop />} />
+              <Route path="/our-story" element={<OurStoryNew />} />
+              {/* <Route path="/shop-all" element={<ShopAllPage />} /> */}
+              <Route path="/store" element={<ShopAllPage />} />
               <Route path="/business-enquiry" element={<BusinessSubscriptionEnquiry />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -97,9 +97,9 @@ const VideoHeroSection: React.FC<VideoHeroSectionProps> = ({
       {/* Optional Headline */}
       {headline && (
         <div className="absolute inset-0 z-20 flex items-center justify-center px-4 md:px-6">
-          <div className="inline-block bg-white/10 backdrop-blur-md border border-white/30 rounded-full px-6 py-3 md:px-10 md:py-6">
+          <div className="inline-block border border-white/30 rounded-full px-5 py-2.5 md:px-14 md:py-8">
             <h1
-              className="text-lg md:text-4xl lg:text-4xl font-pangaia font-medium tracking-wide text-white leading-relaxed"
+              className="text-sm md:text-4xl lg:text-4xl font-pangaia font-medium tracking-wide text-white leading-relaxed"
               dangerouslySetInnerHTML={{ __html: headline }}
             />
           </div>

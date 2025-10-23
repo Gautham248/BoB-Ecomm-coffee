@@ -1,25 +1,61 @@
-# Force HTTPS and canonical domain
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Apache Configuration for React SPA
+# Place this file in your public folder or build/dist output folder
 
-# Remove trailing slashes
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{THE_REQUEST} /+([^?\s]*?)/?(\?[^\s]*)?(\s|\?|$)
-RewriteRule ^ /%1%2 [R=301,L]
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Remove trailing slashes (except for directories)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{THE_REQUEST} /+([^?\s]*?)/?(\?[^\s]*)?(\s|\?|$)
+  RewriteRule ^ /%1%2 [R=301,L]
+
+  # Handle React Router - Redirect all requests to index.html
+  # Skip if the request is for an actual file
+  RewriteCond %{REQUEST_FILENAME} !-f
+  # Skip if the request is for an actual directory
+  RewriteCond %{REQUEST_FILENAME} !-d
+  # Skip if the request is for index.html itself
+  RewriteRule ^index\.html$ - [L]
+  # Redirect everything else to index.html
+  RewriteRule . /index.html [L]
+</IfModule>
 
 # Enable compression
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml application/xml text/plain
-  AddOutputFilterByType DEFLATE image/svg+xml application/xhtml+xml application/rss+xml
-  AddOutputFilterByType DEFLATE application/x-font application/x-font-opentype application/x-font-otf application/x-font-truetype application/x-font-ttf application/font-woff application/font-woff2
+  # Compress HTML, CSS, JavaScript, Text, XML and fonts
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  
+  # Compress fonts
+  AddOutputFilterByType DEFLATE application/font-woff
+  AddOutputFilterByType DEFLATE application/font-woff2
+  AddOutputFilterByType DEFLATE application/x-font-woff
+  AddOutputFilterByType DEFLATE application/x-font-opentype
+  AddOutputFilterByType DEFLATE application/x-font-otf
+  AddOutputFilterByType DEFLATE application/x-font-truetype
+  AddOutputFilterByType DEFLATE application/x-font-ttf
 </IfModule>
 
 # Browser caching
 <IfModule mod_expires.c>
   ExpiresActive On
   
-  # Images
+  # Images - Cache for 1 year
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/avif "access plus 1 year"
   ExpiresByType image/jpg "access plus 1 year"
@@ -27,37 +63,83 @@ RewriteRule ^ /%1%2 [R=301,L]
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/gif "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/ico "access plus 1 year"
   
-  # CSS and JavaScript
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType application/x-javascript "access plus 1 month"
+  # CSS and JavaScript - Cache for 1 year (use versioning/hashing for updates)
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
   
-  # Fonts
+  # Fonts - Cache for 1 year
   ExpiresByType application/font-woff "access plus 1 year"
   ExpiresByType application/font-woff2 "access plus 1 year"
   ExpiresByType application/x-font-woff "access plus 1 year"
   ExpiresByType application/x-font-ttf "access plus 1 year"
+  ExpiresByType application/x-font-truetype "access plus 1 year"
+  ExpiresByType application/x-font-opentype "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
   
-  # HTML
-  ExpiresByType text/html "access plus 1 hour"
+  # Data files - Cache for 1 week
+  ExpiresByType application/json "access plus 1 week"
+  ExpiresByType application/xml "access plus 1 week"
+  ExpiresByType text/xml "access plus 1 week"
+  
+  # HTML - No caching (or minimal)
+  ExpiresByType text/html "access plus 0 seconds"
+  
+  # Default - Cache for 1 month
+  ExpiresDefault "access plus 1 month"
 </IfModule>
 
 # Security headers
 <IfModule mod_headers.c>
-  Header always set X-Content-Type-Options nosniff
-  Header always set X-Frame-Options DENY
+  # Prevent MIME type sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # Prevent clickjacking
+  Header always set X-Frame-Options "DENY"
+  
+  # Enable XSS protection
   Header always set X-XSS-Protection "1; mode=block"
+  
+  # Referrer policy
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  
+  # Permissions policy (restrict features)
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  
+  # Remove X-Powered-By header (if present)
+  Header unset X-Powered-By
+  
+  # Prevent caching of HTML files
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+  
+  # Cache static assets with immutable flag
+  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|avif|svg|woff|woff2|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
 </IfModule>
 
-# Handle React Router
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
-</IfModule>
+# Prevent directory browsing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "(^\.htaccess|^\.env|^\.git|composer\.json|package\.json|package-lock\.json|yarn\.lock)">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# UTF-8 encoding
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+
+# Error pages (optional - customize as needed)
+# ErrorDocument 404 /index.html
+# ErrorDocument 500 /index.html

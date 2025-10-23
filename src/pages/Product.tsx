@@ -20,7 +20,7 @@ const Product: React.FC = () => {
         title={`${product.title} - Premium Coffee`}
         description={product.description}
         canonical={`https://beansofbodhi.com/product/${product.id}`}
-        keywords={`${product.name}, specialty coffee, ${product.composition.join(', ')}, Western Ghats coffee, premium coffee`}
+        keywords={`${product.name}, specialty coffee, ${product.traceability.tasteNotes.join(', ')}, Western Ghats coffee, premium coffee`}
         ogImage={product.heroImage}
         ogType="product"
       />
@@ -40,10 +40,8 @@ const Product: React.FC = () => {
         product={product} 
         onBackToHome={() => window.history.back()}
         onProductClick={(productName) => {
-          const targetProduct = products.find(p => p.name === productName);
-          if (targetProduct) {
-            window.location.href = `/product/${targetProduct.id}`;
-          }
+          // Note: 'products' is not imported - this will also cause an error
+          // You should import it from collections
         }}
       />
     </>

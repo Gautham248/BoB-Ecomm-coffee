@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Mock GSAP functions for demonstration
@@ -55,6 +56,7 @@ const mockCollections = [
 ];
 
 const CollectionsSection: React.FC = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -170,14 +172,14 @@ const CollectionsSection: React.FC = () => {
   const handleCollectionClick = (collectionId: string) => {
     const collection = collections.find(c => c.id === collectionId);
     if (collection && collection.products.length > 0) {
-      // Navigate to product page
-      window.location.href = `/product/${collection.products[0]}`;
+      // Navigate to product page using React Router
+      navigate(`/product/${collection.products[0]}`);
     }
   };
 
   const handleShopAllClick = () => {
-    // Navigate to shop page
-    window.location.href = '/shop';
+    // Navigate to store page using React Router
+    navigate('/store');
   };
 
   const goToPrevious = () => {
@@ -414,7 +416,7 @@ const CollectionsSection: React.FC = () => {
         {/* Shop All Button */}
         <div className="text-center">
           <button
-            // onClick={handleShopAllClick}
+            onClick={handleShopAllClick}
             className="shop-all-btn inline-flex items-center justify-center px-6 md:px-12 py-2.5 md:py-4 border-2 border-gray-900 text-gray-900 font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-300 rounded-full text-sm md:text-base"
           >
             Shop All

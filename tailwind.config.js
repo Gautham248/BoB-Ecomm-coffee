@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         pangaia: ['Pangaia', 'system-ui', 'sans-serif','Helvetica'],
+        helvetica: ['Helvetica', 'sans-serif'],
       },
     },
   },

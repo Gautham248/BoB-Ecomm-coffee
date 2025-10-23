@@ -1,4 +1,4 @@
-// collections.ts - Updated with grind-type variants from Shopify
+// collections.ts - Updated with traceability data
 export interface Product {
   id: string;
   shopifyId?: string;
@@ -13,7 +13,12 @@ export interface Product {
   description: string;
   price: string;
   originalPrice?: string;
-  composition: string[];
+  traceability: {
+    source: string;
+    tasteNotes: string[];
+    process: string;
+    elevation: string;
+  };
   heroImage: string;
   heroImageMobile: string;
   galleryImages: string[];
@@ -38,11 +43,11 @@ export interface Collection {
   featured?: boolean;
 }
 
-// Individual Products with Grind Type Variants
+// Individual Products with Traceability
 export const products: Product[] = [
   {
     id: 'the-origin',
-    shopifyId: 'gid://shopify/Product/9746812141850', // Origin
+    shopifyId: 'gid://shopify/Product/9746812141850',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '689.0', available: true },
       { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '689.0', available: true },
@@ -53,11 +58,12 @@ export const products: Product[] = [
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
     price: 'INR 689.00',
-    composition: [
-      '60% Arabica',
-      '20% Robusta', 
-      '20% Peaberry'
-    ],
+    traceability: {
+      source: 'Sholayur, Attapadi, Wayanad',
+      tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
+      process: 'Natural',
+      elevation: '3280ft'
+    },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_The-Origin-p-1600.png?updatedAt=1759647760949',
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/The_Origin_Mob-p-800.jpg?updatedAt=1759650427307',
     galleryImages: [
@@ -76,7 +82,7 @@ export const products: Product[] = [
   },
   {
     id: 'the-wild-fire-rush',
-    shopifyId: 'gid://shopify/Product/9746812338458', // Wild Fire Rush
+    shopifyId: 'gid://shopify/Product/9746812338458',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '689.0', available: true },
       { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '689.0', available: true },
@@ -85,12 +91,14 @@ export const products: Product[] = [
     ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
-    description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it’s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
+    description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
     price: 'INR 689.00',
-    composition: [
-      '70% Arabica',
-      '30% Robusta'
-    ],
+    traceability: {
+      source: 'Wayanad, Anaikatti',
+      tasteNotes: ['Ripe Fruit', 'Cashew'],
+      process: 'Natural',
+      elevation: '3650ft'
+    },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_Wild-Fire-p-1600.png?updatedAt=1759650893936',
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Wild_Fire_Mob-p-800.jpg?updatedAt=1759650461721',
     galleryImages: [
@@ -101,7 +109,7 @@ export const products: Product[] = [
     ],
     descriptionContent: {
       title: 'Ignite Your Energy, Unleash the Wild',
-      content: 'Wild Fire Rush is more than just a cup of coffee—it’s a spark for change. Every sip contributes to reforestation initiatives, helping to restore ecosystems impacted by deforestation and land degradation. These efforts ensure that forests, the lungs of our planet, continue to thrive, supporting biodiversity and combating climate change.',
+      content: 'Wild Fire Rush is more than just a cup of coffee—it\'s a spark for change. Every sip contributes to reforestation initiatives, helping to restore ecosystems impacted by deforestation and land degradation. These efforts ensure that forests, the lungs of our planet, continue to thrive, supporting biodiversity and combating climate change.',
       image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/Wild-Fire-Rush_1-p-1080.png?updatedAt=1759660123237'
     },
     category: 'nitro-blends',
@@ -109,7 +117,7 @@ export const products: Product[] = [
   },
   {
     id: 'the-eco-shock',
-    shopifyId: 'gid://shopify/Product/9746812076314', // Eco Shock
+    shopifyId: 'gid://shopify/Product/9746812076314',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '749.0', available: true },
       { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '749.0', available: true },
@@ -120,9 +128,12 @@ export const products: Product[] = [
     title: 'The Eco Shock',
     description: 'Step into a world of vibrant energy with Echo Shock,a playful blend of light roasted 100% Peaberry designed to awaken your senses. Bright, lively flavors meet a smooth, balanced finish, crafted for those who thrive on curiosity and boundless enthusiasm.',
     price: 'INR 749.00',
-    composition: [
-      '100% Peaberry'
-    ],
+    traceability: {
+      source: 'Attapadi',
+      tasteNotes: ['Spice', 'Chocolate', 'Jaggery'],
+      process: 'Natural',
+      elevation: '3500ft'
+    },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Inside-Header-p-1080.png?updatedAt=1759647315410',
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Eco_Shock_Mob-p-800.jpg?updatedAt=1759651050240',
     galleryImages: [
@@ -141,7 +152,7 @@ export const products: Product[] = [
   },
   {
     id: 'the-high-tide',
-    shopifyId: 'gid://shopify/Product/9725860413722', // High Tide
+    shopifyId: 'gid://shopify/Product/9725860413722',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '789.0', available: true },
       { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '789.0', available: true },
@@ -152,9 +163,12 @@ export const products: Product[] = [
     title: 'The High Tide',
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
     price: 'INR 789.00',
-    composition: [
-      '100% Arabica'
-    ],
+    traceability: {
+      source: 'Sholayur',
+      tasteNotes: ['Sweet', 'Citric'],
+      process: 'Natural',
+      elevation: '3610ft'
+    },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Inside-Header-1-p-1600.png?updatedAt=1759651342901',
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Mobile-p-800.jpg?updatedAt=1759650461664',
     galleryImages: [
@@ -173,7 +187,7 @@ export const products: Product[] = [
   },
   {
     id: 'the-thunder-fuse',
-    shopifyId: 'gid://shopify/Product/9746812469530', // Thunder Fuse
+    shopifyId: 'gid://shopify/Product/9746812469530',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '599.0', available: true },
       { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '599.0', available: true },
@@ -184,9 +198,12 @@ export const products: Product[] = [
     title: 'The Thunder Fuse',
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
     price: 'INR 599.00',
-    composition: [
-      '100% Robusta'
-    ],
+    traceability: {
+      source: 'Wayanad',
+      tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
+      process: 'Natural',
+      elevation: '4593ft'
+    },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/thunder--p-1080.jpg?updatedAt=1759647315069',
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Thunder_Fuse_Mob-p-800.jpg?updatedAt=1759650461428',
     galleryImages: [
@@ -197,7 +214,7 @@ export const products: Product[] = [
     ],
     descriptionContent: {
       title: 'Feel the surge. Power the future.',
-      content: 'Thunder Fuse isn’t just about charging your day—it’s about lighting up lives. With every bold sip, you’re contributing to the electrification of remote communities, ensuring they have access to the power they need to thrive.',
+      content: 'Thunder Fuse isn\'t just about charging your day—it\'s about lighting up lives. With every bold sip, you\'re contributing to the electrification of remote communities, ensuring they have access to the power they need to thrive.',
       image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Thunder%20Fuse/Thunder-Fuse_3-p-1080.png?updatedAt=1759660698222'
     },
     category: 'western-ghats-selects',
@@ -205,7 +222,7 @@ export const products: Product[] = [
   },
   {
     id: 'the-tornado-twist',
-    shopifyId: 'gid://shopify/Product/9746812535066', // Tornado Twist
+    shopifyId: 'gid://shopify/Product/9746812535066',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '669.0', available: true },
       { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '669.0', available: true },
@@ -216,10 +233,12 @@ export const products: Product[] = [
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
     price: 'INR 669.00',
-    composition: [
-      '50% Arabica',
-      '50% Robusta'
-    ],
+    traceability: {
+      source: 'Yercaud, Wayanad',
+      tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
+      process: 'Natural',
+      elevation: '3650ft'
+    },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_Tornado-Twist-p-1080.png?updatedAt=1759647315384',
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Tornado_Twist_Mob-p-800.jpg?updatedAt=1759651612432',
     galleryImages: [
@@ -238,7 +257,7 @@ export const products: Product[] = [
   }
 ];
 
-// Collections/Categories (updated pricing)
+// Collections/Categories
 export const collections: Collection[] = [
   {
     id: 'western-ghats-selects',
@@ -283,7 +302,7 @@ export const collections: Collection[] = [
   }
 ];
 
-// Helper functions (unchanged)
+// Helper functions
 export const getProductById = (id: string): Product | undefined => {
   return products.find(product => product.id === id);
 };

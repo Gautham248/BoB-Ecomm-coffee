@@ -86,7 +86,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
 
       {/* Price Display */}
       <div className="text-white">
-        <div className="text-3xl font-light mb-1">
+        <div className="text-3xl font-pangaia font-medium mb-1">
           {selectedVariantData ? formatPrice(selectedVariantData.price) : product.price}
         </div>
       </div>
