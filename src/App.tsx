@@ -25,8 +25,17 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Scroll to top on route change
-    window.scrollTo(0, 0);
+    // Set scroll restoration to manual to prevent browser's default behavior
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Force immediate scroll to top
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant' // Use 'instant' instead of 'smooth' for immediate scroll
+    });
     
     // Kill all ScrollTrigger instances on route change
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -101,14 +110,11 @@ function AppContent() {
           <Header />
           
           <main id="main-content" className="min-h-[calc(100vh-160px)]">
-            <ScrollToTop/>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/product/:productId" element={<Product />} />
-              {/* <Route path="/movement" element={<MovementPage />} /> */}
               <Route path="/movement" element={<MovementProduct />} />
               <Route path="/our-story" element={<OurStoryNew />} />
-              {/* <Route path="/shop-all" element={<ShopAllPage />} /> */}
               <Route path="/store" element={<ShopAllPage />} />
               <Route path="/business-enquiry" element={<BusinessSubscriptionEnquiry />} />
               <Route path="*" element={<NotFound />} />

@@ -1,4 +1,4 @@
-// collections.ts - Updated with traceability data
+// collections.ts - Updated with new category structure
 export interface Product {
   id: string;
   shopifyId?: string;
@@ -29,6 +29,7 @@ export interface Product {
   };
   category: string;
   featured?: boolean;
+  upcoming?: boolean;
 }
 
 export interface Collection {
@@ -41,6 +42,7 @@ export interface Collection {
   image: string;
   products: string[];
   featured?: boolean;
+  upcoming?: boolean;
 }
 
 // Individual Products with Traceability
@@ -77,7 +79,7 @@ export const products: Product[] = [
       content: 'The Origin is more than a coffee-it\'s a pledge to preserve the untamed wilderness and vibrant landscapes of the Western Ghats. Every cup supports initiatives aimed at protecting these vital eco systems and the forest communities who call them home.',
       image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/Origin_1-p-1080.png?updatedAt=1759660224565'
     },
-    category: 'nitro-blends',
+    category: 'signature-blends',
     featured: true
   },
   {
@@ -112,7 +114,7 @@ export const products: Product[] = [
       content: 'Wild Fire Rush is more than just a cup of coffee—it\'s a spark for change. Every sip contributes to reforestation initiatives, helping to restore ecosystems impacted by deforestation and land degradation. These efforts ensure that forests, the lungs of our planet, continue to thrive, supporting biodiversity and combating climate change.',
       image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Wild%20Fire%20Rush/Wild-Fire-Rush_1-p-1080.png?updatedAt=1759660123237'
     },
-    category: 'nitro-blends',
+    category: 'signature-blends',
     featured: true
   },
   {
@@ -252,7 +254,7 @@ export const products: Product[] = [
       content: 'Tornado Twist is more than a bold brew - it\'s a catalyst for change. Every sip fuels efforts to rebuild communities hit by floods, helping them rise stronger after the storm.',
       image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/Tornado-twist_2-p-1080.png?updatedAt=1759660032208'
     },
-    category: 'nitro-blends',
+    category: 'signature-blends',
     featured: true
   }
 ];
@@ -265,42 +267,65 @@ export const collections: Collection[] = [
     title: 'Western Ghats Selects',
     description: 'Premium coffee blends sourced from the pristine Western Ghats region, featuring our signature HIGH TIDE, ECO SHOCK, and THUNDER FUSE varieties.',
     price: 'From ₹599',
-    originalPrice: 'From ₹750',
     image: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
     products: ['the-high-tide', 'the-eco-shock', 'the-thunder-fuse'],
-    featured: true
+    featured: true,
+    upcoming: false
   },
   {
-    id: 'gadget-galaxy',
-    name: 'Gadget Galaxy',
-    title: 'Gadget Galaxy',
-    description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
-    price: 'From ₹6899',
-    image: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-    products: [],
-    featured: true
-  },
-  {
-    id: 'nitro-blends',
-    name: 'Nitro Blends',
-    title: 'Nitro Blends',
+    id: 'signature-blends',
+    name: 'Signature Blends',
+    title: 'Signature Blends',
     description: 'Bold and adventurous coffee blends including THE ORIGIN, WILD FIRE RUSH, and TORNADO TWIST. Perfect for those seeking intense flavors and unique experiences.',
     price: 'From ₹669',
     image: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-    products: ['the-origin', 'the-wild-fire-rush', 'the-tornado-twist'],
-    featured: true
+    products: ['the-wild-fire-rush', 'the-origin', 'the-tornado-twist'],
+    featured: true,
+    upcoming: false
+  },
+  {
+    id: 'gadgets',
+    name: 'Gadgets',
+    title: 'Gadgets',
+    description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
+    price: 'Coming Soon',
+    image: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    products: [],
+    featured: true,
+    upcoming: true
   },
   {
     id: 'merchandise',
     name: 'Merchandise',
     title: 'Merchandise',
     description: 'Beans of Bodhi branded merchandise including apparel, mugs, and accessories for the true coffee enthusiast.',
-    price: 'From ₹299',
+    price: 'Coming Soon',
     image: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
     products: [],
-    featured: false
+    featured: true,
+    upcoming: true
+  },
+  {
+    id: 'microlots',
+    name: 'Microlots',
+    title: 'Microlots',
+    description: 'Exclusive small-batch coffees from single estates, offering unique and extraordinary flavor profiles for the discerning coffee connoisseur.',
+    price: 'Coming Soon',
+    image: 'https://images.pexels.com/photos/851555/pexels-photo-851555.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    products: [],
+    featured: true,
+    upcoming: true
   }
 ];
+
+// Category labels mapping for display
+export const categoryLabels: Record<string, string> = {
+  'western-ghats-selects': 'Western Ghats Selects',
+  'signature-blends': 'Signature Blends',
+  'gadgets': 'Gadgets',
+  'merchandise': 'Merchandise',
+  'microlots': 'Microlots'
+};
 
 // Helper functions
 export const getProductById = (id: string): Product | undefined => {
@@ -328,4 +353,13 @@ export const getProductsInCollection = (collectionId: string): Product[] => {
   if (!collection) return [];
   
   return collection.products.map(productId => getProductById(productId)).filter(Boolean) as Product[];
+};
+
+// Get all available categories for filtering
+export const getAvailableCategories = () => {
+  return collections.map(collection => ({
+    id: collection.id,
+    label: collection.name,
+    upcoming: collection.upcoming || false
+  }));
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getFeaturedCollections, Collection } from '../data/collections';
 
 // Mock GSAP functions for demonstration
 const gsap = {
@@ -11,50 +12,6 @@ const gsap = {
   to: (targets: any, toVars: any) => {}
 };
 
-// Mock data for demonstration - replace with your actual getFeaturedCollections()
-const mockCollections = [
-  {
-    id: '1',
-    name: 'Western Ghats Selects',
-    price: 'From ₹749',
-    originalPrice: null,
-    image: 'https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
-    products: ['product1']
-  },
-  {
-    id: '2',
-    name: 'Gadget Galaxy',
-    price: 'From ₹6699',
-    originalPrice: null,
-    image: 'https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
-    products: ['product2']
-  },
-  {
-    id: '3',
-    name: 'Nitro Blends',
-    price: 'From ₹779',
-    originalPrice: null,
-    image: 'https://images.pexels.com/photos/851555/pexels-photo-851555.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
-    products: ['product3']
-  },
-  {
-    id: '4',
-    name: 'Merchandise',
-    price: 'From ₹599',
-    originalPrice: null,
-    image: 'https://images.pexels.com/photos/1458671/pexels-photo-1458671.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
-    products: ['product4']
-  },
-  {
-    id: '5',
-    name: 'Premium Blends',
-    price: 'From ₹899',
-    originalPrice: null,
-    image: 'https://images.pexels.com/photos/1458671/pexels-photo-1458671.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
-    products: ['product5']
-  }
-];
-
 const CollectionsSection: React.FC = () => {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -64,9 +21,7 @@ const CollectionsSection: React.FC = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   
-  const collections = mockCollections;
-
-  const maxSlides = collections.length;
+  const collections = getFeaturedCollections();
 
   useEffect(() => {
     const handleResize = () => {
@@ -169,16 +124,12 @@ const CollectionsSection: React.FC = () => {
 
   }, []);
 
-  const handleCollectionClick = (collectionId: string) => {
-    const collection = collections.find(c => c.id === collectionId);
-    if (collection && collection.products.length > 0) {
-      // Navigate to product page using React Router
-      navigate(`/product/${collection.products[0]}`);
-    }
+  const handleCollectionClick = (collection: Collection) => {
+    // Navigate to store page with category filter
+    navigate(`/store?category=${collection.id}`);
   };
 
   const handleShopAllClick = () => {
-    // Navigate to store page using React Router
     navigate('/store');
   };
 
@@ -198,7 +149,6 @@ const CollectionsSection: React.FC = () => {
     setCurrentSlide(Math.min(index, maxSlide));
   };
 
-  // Touch handlers for swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -273,7 +223,7 @@ const CollectionsSection: React.FC = () => {
                     transform: `translateX(-${(currentSlide * 100) / itemsPerView}%)`
                   }}
                 >
-                  {collections.map((collection, index) => (
+                  {collections.map((collection) => (
                     <div
                       key={collection.id}
                       className={`flex-shrink-0 px-2 ${
@@ -282,27 +232,45 @@ const CollectionsSection: React.FC = () => {
                         'w-1/3'
                       }`}
                     >
-                      <div className="collection-card group cursor-pointer w-full max-w-xs mx-auto"
-                           onClick={() => handleCollectionClick(collection.id)}
-                           >
+                      <div 
+                        className={`collection-card group w-full max-w-xs mx-auto ${
+                          collection.upcoming ? 'cursor-default' : 'cursor-pointer'
+                        }`}
+                        onClick={() => handleCollectionClick(collection)}
+                      >
                         {/* Collection Image */}
                         <div className="relative mb-3 md:mb-4 overflow-hidden rounded-lg">
                           <img
                             src={collection.image}
                             alt={collection.name}
-                            className="w-full h-40 md:h-56 object-cover group-hover:scale-110 transition-transform duration-700 rounded-lg"
+                            className={`w-full h-40 md:h-56 object-cover transition-transform duration-700 rounded-lg ${
+                              collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-110'
+                            }`}
                             style={{
-                              filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
+                              filter: collection.upcoming 
+                                ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.1)) grayscale(50%)' 
+                                : 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                             }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                          <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 rounded-lg ${
+                            collection.upcoming ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
+                          }`} />
                           
-                          {/* Hover overlay */}
-                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                            <div className="text-white font-medium text-xs md:text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                              View Collection
+                          {/* Upcoming Badge */}
+                          {collection.upcoming && (
+                            <div className="absolute top-3 right-3 bg-gray-900/90 text-white text-xs px-3 py-1 rounded-full font-medium">
+                              Coming Soon
                             </div>
-                          </div>
+                          )}
+                          
+                          {/* Hover overlay - only for non-upcoming */}
+                          {!collection.upcoming && (
+                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
+                              <div className="text-white font-medium text-xs md:text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                View Collection
+                              </div>
+                            </div>
+                          )}
                         </div>
 
                         {/* Collection Info */}
@@ -316,7 +284,9 @@ const CollectionsSection: React.FC = () => {
                                 {collection.originalPrice}
                               </span>
                             )}
-                            <span className="text-gray-900 font-medium text-xs md:text-base">
+                            <span className={`font-medium text-xs md:text-base ${
+                              collection.upcoming ? 'text-gray-500' : 'text-gray-900'
+                            }`}>
                               {collection.price}
                             </span>
                           </div>
@@ -365,30 +335,47 @@ const CollectionsSection: React.FC = () => {
           ) : (
             /* Desktop Grid View - Even Distribution */
             <div className={`flex flex-wrap items-center ${getDesktopGridClasses()} gap-y-8`}>
-              {collections.map((collection, index) => (
+              {collections.map((collection) => (
                 <div
                   key={collection.id}
-                  className={`collection-card group cursor-pointer ${getDesktopItemClasses()}`}
-                  onClick={() => handleCollectionClick(collection.id)}
+                  className={`collection-card group ${getDesktopItemClasses()} ${
+                    collection.upcoming ? 'cursor-default' : 'cursor-pointer'
+                  }`}
+                  onClick={() => handleCollectionClick(collection)}
                 >
                   {/* Collection Image */}
                   <div className="relative mb-4 md:mb-6 overflow-hidden rounded-lg mx-auto">
                     <img
                       src={collection.image}
                       alt={collection.name}
-                      className="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-700 rounded-lg"
+                      className={`w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover transition-transform duration-700 rounded-lg ${
+                        collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-110'
+                      }`}
                       style={{
-                        filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
+                        filter: collection.upcoming 
+                          ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.1)) grayscale(50%)' 
+                          : 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                    <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 rounded-lg ${
+                      collection.upcoming ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
+                    }`} />
                     
-                    {/* Hover overlay with subtle animation */}
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                      <div className="text-white font-medium text-sm md:text-base px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        View Collection
+                    {/* Upcoming Badge */}
+                    {collection.upcoming && (
+                      <div className="absolute top-4 right-4 bg-gray-900/90 text-white text-xs md:text-sm px-4 py-2 rounded-full font-medium">
+                        Coming Soon
                       </div>
-                    </div>
+                    )}
+                    
+                    {/* Hover overlay - only for non-upcoming */}
+                    {!collection.upcoming && (
+                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
+                        <div className="text-white font-medium text-sm md:text-base px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                          View Collection
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Collection Info */}
@@ -402,7 +389,9 @@ const CollectionsSection: React.FC = () => {
                           {collection.originalPrice}
                         </span>
                       )}
-                      <span className="text-gray-900 font-medium text-sm md:text-base">
+                      <span className={`font-medium text-sm md:text-base ${
+                        collection.upcoming ? 'text-gray-500' : 'text-gray-900'
+                      }`}>
                         {collection.price}
                       </span>
                     </div>

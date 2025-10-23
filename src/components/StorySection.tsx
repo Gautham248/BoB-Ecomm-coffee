@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -6,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const StorySection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     gsap.fromTo('.story-image',
@@ -42,6 +44,14 @@ const StorySection: React.FC = () => {
     );
   }, []);
 
+  const handleDiscoverClick = () => {
+    navigate('/our-story');
+  };
+
+  const handleCommitmentClick = () => {
+    navigate('/our-story');
+  };
+
   return (
     <section ref={sectionRef} className="py-10 md:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -71,7 +81,10 @@ const StorySection: React.FC = () => {
               each cup fuels bold journeys and lasting impact.
             </p>
             
-            <button className="border border-gray-900 px-6 md:px-8 py-2.5 md:py-3 text-xs md:text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors duration-300">
+            <button 
+              onClick={handleDiscoverClick}
+              className="border border-gray-900 px-6 md:px-8 py-2.5 md:py-3 text-xs md:text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer"
+            >
               DISCOVER
             </button>
           </div>
@@ -88,11 +101,19 @@ const StorySection: React.FC = () => {
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-pangaia text-gray-900 mb-4 md:mb-8 leading-tight">
               For the planet, its people, and the future we're building together
             </h2>
+            
             <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
               Beans of Bodhi is where timeless coffee traditions meet the thrill of adventure. 
               From rich, sustainably grown beans to the spirit of exploration in every sip, 
               each cup fuels bold journeys and lasting impact.
             </p>
+            
+            <button 
+              onClick={handleCommitmentClick}
+              className="border border-gray-900 px-6 md:px-8 py-2.5 md:py-3 text-xs md:text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer"
+            >
+              LEARN MORE
+            </button>
           </div>
 
           {/* Image */}
