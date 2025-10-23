@@ -193,7 +193,7 @@ const HeroSection = () => (
   id="Section0"
   className="snap-section-new snap-0 bg-cover bg-center bg-no-repeat"
   style={{
-    backgroundImage: "url('https://ik.imagekit.io/7ujz6ljli/Our%20Story/Bob_Our-Story-p-1600.jpg?updatedAt=1759717731252')",
+    backgroundImage: "url('https://ik.imagekit.io/beansofbodhi/OurStory/0%20Desktop.webp?updatedAt=1761228062335')",
   }}
 >
 <div className="uui-padding-vertical-xhuge-6">
@@ -582,7 +582,7 @@ const OurStory = () => {
             sections={[
               <HorizontalSection key="1a" showSwipeHint>
                 <video autoPlay muted loop playsInline>
-                  <source src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining-desktop.mp4?updatedAt=1757551540680" type="video/mp4" />
+                  <source src="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772" type="video/mp4" />
                 </video>
                 <div className="section-content">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
@@ -592,7 +592,7 @@ const OurStory = () => {
 
               </HorizontalSection>,
               <HorizontalSection key="1b">
-                <img src="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining/01Redefining.webp?updatedAt=1757728886632" alt="Redefining" loading="lazy" />
+                <img src="https://ik.imagekit.io/beansofbodhi/OurStory/1_2.webp?updatedAt=1761228062782" alt="Redefining" loading="lazy" />
                 <div className="section-content">
                   <p className="section-subtitle">We don't follow trends-we follow purpose. Beans of Bodhi was born to rewrite what coffee stands for. From India to the World, here quality is a lived practice. From the high-altitude farms of Western Ghats to our in-house curing works, we obsess over every detail. We believe coffee should move people-not just with caffeine, but with meaning. That's why we do things differently, not for approval, but for excellence. For us, craft means care, and purpose means progress. And the Youth? They deserve better. We don't just roast beans-we ignite journeys. Rooted in craft, driven by values, and never bound by convention</p>
                 </div>

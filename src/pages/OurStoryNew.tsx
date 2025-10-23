@@ -229,7 +229,7 @@ export default function OurStoryNew() {
       >
           <section data-section="heritage" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={1}>
-              <HorizontalPanel bgImage="https://ik.imagekit.io/7ujz6ljli/Our%20Story/Bob_Our-Story-p-1600.jpg?updatedAt=1759717731252">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/0%20Desktop.webp?updatedAt=1761228062335">
                 <div className="text-center px-6 max-w-5xl">
                   <div className="inline-block mb-6 px-4 py-2">
                     <div className="text-white/70 text-sm tracking-[0.2em] uppercase">
@@ -257,7 +257,7 @@ export default function OurStoryNew() {
 
           <section data-section="redefining" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgVideo="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining-desktop.mp4?updatedAt=1757551540680">
+              <HorizontalPanel bgVideo="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772">
                 <div className="text-center px-6 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     Redefining the <br/> <em className="font-pangaia font-normal italic">Rules</em> of <em className="font-pangaia font-normal italic">Coffee</em>
@@ -265,7 +265,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Redefining/01Redefining.webp?updatedAt=1757728886632">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/1_2.webp?updatedAt=1761228062782">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     We don't follow trends-we follow purpose. Beans of Bodhi was born to rewrite what coffee stands for. From India to the World, here quality is a lived practice. From the high-altitude farms of Western Ghats to our in-house curing works, we obsess over every detail. We believe coffee should move people-not just with caffeine, but with meaning. That's why we do things differently, not for approval, but for excellence. For us, craft means care, and purpose means progress. And the Youth? They deserve better. We don't just roast beans-we ignite journeys. Rooted in craft, driven by values, and never bound by convention
@@ -277,7 +277,7 @@ export default function OurStoryNew() {
 
           <section data-section="promise" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Promise/02Promise.webp?updatedAt=1757728817710">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/2_1.webp?updatedAt=1761228062763">
                 <div className="text-center px-6 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     Our <em className="font-pangaia font-normal italic">Promise,</em> Our <em className="font-pangaia font-normal italic">Practice</em>
@@ -285,7 +285,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Promise/02Promise2.webp?updatedAt=1757728818039">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/2_2.webp?updatedAt=1761228062744">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     Integrity at Beans of Bodhi isn't just an accessory-it's the foundation. We look in the mirror often: questioning, evolving, and never settling. From farm to roast, we maintain full transparency, take accountability, and honor every commitment we make-to farmers, to customers, to the planet. Our promise? That every sip reflects our values, our craft, and our courage to do things differently
@@ -297,7 +297,7 @@ export default function OurStoryNew() {
 
           <section data-section="guarantee" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/03Guarentee.webp?updatedAt=1757728650876">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/3_1.webp?updatedAt=1761228062682">
                 <div className="text-center px-6 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     Our <em className="font-pangaia font-normal italic">Guarantee</em>
@@ -305,7 +305,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/03Guarentee2.webp?updatedAt=1757728752562">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/3_2.webp?updatedAt=1761228062826">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     We stand behind everything we make. If it's not extraordinary, it's not Bodhi. We work directly with trusted farmers who share our passion for sustainability and craftsmanship. Each bean is hand-selected and slow-cured in our own facilities to bring out the natural depth and flavor that defines Beans of Bodhi
@@ -317,7 +317,7 @@ export default function OurStoryNew() {
 
           <section data-section="responsibility" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Responsibility/04Impact.webp?updatedAt=1757728597869">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/4_1.webp?updatedAt=1761228062760">
                 <div className="text-center px-6 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     We take <em className="font-pangaia font-normal italic">Responsibility</em> for our <em className="font-pangaia font-normal italic">Impact</em> on <em className="font-pangaia font-normal italic">People, Planet</em> & <em className="font-pangaia font-normal italic">Purpose</em>
@@ -325,7 +325,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Responsibility/R-2.webp?updatedAt=1757551486012">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/4_2.webp?updatedAt=1761228062632">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     We're more than a coffee brand-we're a mindful movement driven by quality. We empower the farmers behind our beans and the lives they fuel, supporting fair wages and regenerative farming. Our purpose goes beyond coffee. We believe India's youth find purpose, discipline and impact when they reconnect with nature through action sports and bold movement-because real change begins outside comfort zones
@@ -337,7 +337,7 @@ export default function OurStoryNew() {
 
           <section data-section="process" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgVideo="https://ik.imagekit.io/clc2tp5mo/About%20Us/Process.mp4?updatedAt=1757551521435">
+              <HorizontalPanel bgVideo="https://ik.imagekit.io/beansofbodhi/OurStory/Our-Storr_Kind_-transcode.webm/ik-video.mp4?updatedAt=1761228231849">
                 <div className="text-center px-6 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     The more you <em className="font-pangaia font-normal italic">Know,</em> The more you <em className="font-pangaia font-normal italic">Need</em>
@@ -345,7 +345,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Our%20Guarentee/OG-2.webp?updatedAt=1757551486055">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/5_2.webp?updatedAt=1761228062737">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     Because once you understand where your coffee comes from-how it's sourced, cured, and crafted- there's no going back. Our mission is to make Indian coffee extraordinary again. We work from root to roast with intention, crafting high-performance brews that carry culture, complexity, and care. Because the more truth in your cup, the more meaning in your day
@@ -357,7 +357,7 @@ export default function OurStoryNew() {
 
           <section data-section="commitment" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Commitment/Commitment1.webp?updatedAt=1757728489266">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/6_1.webp?updatedAt=1761228062652">
                 <div className="text-center px-6 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     The <em className="font-pangaia font-normal italic">Commitment</em> Forward
@@ -365,7 +365,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Commitment/Commitment2.webp?updatedAt=1757728488952">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/6_2.webp?updatedAt=1761228062844">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     Every decision starts with responsibility-to people, planet, and purpose. We're not just building a coffee company-we're shaping a more mindful future. Our vision: a world where every sip fuels not just energy, but impact. With our 1% for the Planet and 1% for the Community pledge, we channel profit into purpose-regenerating ecosystems and uplifting local cultures. Each blend is proof that progress can taste good.
@@ -377,7 +377,7 @@ export default function OurStoryNew() {
 
           <section data-section="era" className="h-screen w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Era/Era1.webp?updatedAt=1757728389579">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/6_2.webp?updatedAt=1761228062844">
                 <div className="text-center px-6 max-w-4xl">
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-pangaia font-medium tracking-wide leading-relaxed text-white">
                     <em className="font-pangaia font-normal italic">Stepping</em> into a new <em className="font-pangaia font-normal italic">Era</em>
@@ -385,7 +385,7 @@ export default function OurStoryNew() {
                 </div>
               </HorizontalPanel>
               
-              <HorizontalPanel bgImage="https://ik.imagekit.io/clc2tp5mo/About%20Us/Era/Era2.webp?updatedAt=1757728389360">
+              <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/7_2.webp?updatedAt=1761228062721">
                 <div className="text-center px-6 max-w-3xl">
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
                     This isn't just about coffee. It's a shift in mindset-towards purpose, quality, and conscious consumption. Dedicating to a generation that refuses to compromise

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, Menu, X, ShoppingBag } from 'lucide-react';
 import { gsap } from 'gsap';
-import { products } from '../data/collections';
+import { headerProducts } from '../data/collections';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/images/BoB_Logo_small.png';
 import favicon from '../assets/images/Bob_Favicon-03.png';
@@ -72,7 +72,7 @@ const Header: React.FC = () => {
   };
 
   const handleProductClick = (productName: string) => {
-    const product = products.find(p => p.name === productName);
+    const product = headerProducts.find(p => p.name === productName);
     if (product) {
       navigate(`/product/${product.id}`);
       setIsMobileMenuOpen(false);
@@ -125,7 +125,7 @@ const Header: React.FC = () => {
                   : 'opacity-0 invisible -translate-y-4'
               }`}>
                 <div className="py-8 px-6">
-                  {products.map((product, index) => (
+                  {headerProducts.map((product, index) => (
                     <div 
                       key={product.name} 
                       className="group flex items-center space-x-4 py-3 px-4 rounded-lg hover:bg-teal-900 transition-all duration-300 cursor-pointer"
@@ -349,7 +349,7 @@ const Header: React.FC = () => {
                   ? 'max-h-96 opacity-100' 
                   : 'max-h-0 opacity-0'
               }`}>
-                {products.map((product) => (
+                {headerProducts.map((product) => (
                   <button
                     key={product.name}
                     onClick={() => handleProductClick(product.name)}

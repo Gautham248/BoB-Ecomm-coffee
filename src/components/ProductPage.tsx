@@ -384,10 +384,10 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-10 md:mb-12 px-4">
                   <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-gray-900 mb-4">
-                    KNOW YOUR COFFEE
+                    Know Your Coffee
                   </h3>
                   <p className="text-sm sm:text-base md:text-lg text-gray-700 font-helvetica max-w-2xl mx-auto">
-                    {product.name} sourced from the finest estates in the Western Ghats
+                    {product.title} sourced from the finest estates in the Western Ghats
                   </p>
                 </div>
 

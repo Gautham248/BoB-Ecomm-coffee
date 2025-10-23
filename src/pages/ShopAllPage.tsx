@@ -181,12 +181,29 @@ const ShopAllPage = () => {
           ))}
           
           {/* Show upcoming cards if upcoming categories are selected */}
-          {hasUpcomingCategories && upcomingCategoryLabels.map((label, index) => (
+          {/* {hasUpcomingCategories && upcomingCategoryLabels.map((label, index) => (
             <UpcomingProductCard 
               key={`upcoming-${index}`}
               categoryLabel={label}
             />
-          ))}
+          ))} */}
+          {/* {selectedCategories.length === 0 
+            ? availableCategories
+                .filter(cat => cat.upcoming)
+                .map((category, index) => (
+                    <UpcomingProductCard 
+                    key={`upcoming-${index}`}
+                    categoryLabel={category.label}
+                    />
+                ))
+            : 
+            hasUpcomingCategories && upcomingCategoryLabels.map((label, index) => (
+                <UpcomingProductCard 
+                    key={`upcoming-${index}`}
+                    categoryLabel={label}
+                />
+                ))
+            } */}
         </div>
 
         {/* Empty State - only show if no products AND no upcoming categories */}

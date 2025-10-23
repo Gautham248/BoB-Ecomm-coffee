@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Building2, User, Mail, Phone, MapPin, Coffee, MessageSquare, CheckCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
-import NewsletterSection from '../components/NewsletterSection';
 import HeroImageSection from '../components/HeroImageSection';
+
+// Types
+interface FormData {
+  businessName: string;
+  businessType: string;
+  location: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  monthlyVolume: string;
+  interests: string[];
+  message: string;
+}
+
+interface FormErrors {
+  [key: string]: string;
+}
 
 // Main Page Component
 const BusinessSubscriptionEnquiry = () => {
   return (
     <div className="min-h-screen bg-white">
         <HeroImageSection
-         backgroundImageDesktop="https://ik.imagekit.io/7ujz6ljli/Story/B2B%20Landscape.webp?updatedAt=1760370986291"
-         backgroundImageMobile="https://ik.imagekit.io/7ujz6ljli/Story/B2B%20Portrait.webp?updatedAt=1760779787381"
+         backgroundImageDesktop="https://ik.imagekit.io/beansofbodhi/Business/B2B%20Landscape.webp?updatedAt=1761229026645"
+         backgroundImageMobile="https://ik.imagekit.io/beansofbodhi/Business/B2B%20Portrait.webp?updatedAt=1761229026662"
          alt="Hero Image Description"
         />
       <div className="py-16 px-4 md:px-8">
@@ -57,7 +73,7 @@ const BusinessSubscriptionEnquiry = () => {
 
 // Form Component
 const B2BEnquiryForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     businessName: '',
     businessType: '',
     location: '',
@@ -71,7 +87,7 @@ const B2BEnquiryForm = () => {
   
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   // EmailJS Configuration
   // IMPORTANT: Replace these with your actual EmailJS credentials
@@ -79,7 +95,7 @@ const B2BEnquiryForm = () => {
   const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
   const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -90,7 +106,7 @@ const B2BEnquiryForm = () => {
     }
   };
 
-  const handleCheckboxChange = (value) => {
+  const handleCheckboxChange = (value: string) => {
     setFormData(prev => ({
       ...prev,
       interests: prev.interests.includes(value)
@@ -100,7 +116,7 @@ const B2BEnquiryForm = () => {
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
     if (!formData.businessName.trim()) newErrors.businessName = 'Business name is required';
     if (!formData.businessType) newErrors.businessType = 'Business type is required';
     if (!formData.location.trim()) newErrors.location = 'Location is required';

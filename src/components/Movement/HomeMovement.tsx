@@ -9,8 +9,8 @@ interface HomeMovementProps {
 }
 
 const HomeMovement: React.FC<HomeMovementProps> = ({
-  desktopVideoUrl = 'https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Desk_01_1.mp4?updatedAt=1760249904962',
-  mobileVideoUrl = 'https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Desk_01_1.mp4?updatedAt=1760249904962',
+  desktopVideoUrl = 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
+  mobileVideoUrl = 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
   posterUrl = 'https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Hero-p-1600.png?updatedAt=1760249831197',
   scrollHeight = '400vh'
 }) => {

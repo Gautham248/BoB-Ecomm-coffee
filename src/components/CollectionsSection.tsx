@@ -8,7 +8,6 @@ const gsap = {
   utils: {
     toArray: (selector: string) => Array.from(document.querySelectorAll(selector))
   },
-  // The mock gsap object has unused parameters. Either remove them or prefix with underscore:
   fromTo: (_targets: any, _fromVars: any, _toVars: any) => {},
   to: (_targets: any, _toVars: any) => {}
 };
@@ -21,6 +20,10 @@ const CollectionsSection: React.FC = () => {
   const [itemsPerView, setItemsPerView] = useState(1);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  
+  // Configurable peek percentage (0-100)
+  const PEEK_PERCENTAGE = 15; // 15% peek of next item
+  const CURRENT_PERCENTAGE = 100 - PEEK_PERCENTAGE; // 85% current item
   
   const collections = getFeaturedCollections();
 
@@ -126,7 +129,7 @@ const CollectionsSection: React.FC = () => {
   }, []);
 
   const handleCollectionClick = (collection: Collection) => {
-    // Navigate to store page with category filter
+    if (collection.upcoming) return;
     navigate(`/store?category=${collection.id}`);
   };
 
@@ -184,19 +187,20 @@ const CollectionsSection: React.FC = () => {
 
   const getDesktopItemClasses = () => {
     const count = collections.length;
-    if (count === 1) return 'w-64 md:w-80';
-    if (count === 2) return 'w-1/2 max-w-sm px-2';
-    if (count === 3) return 'w-1/3 max-w-xs px-1';
-    if (count === 4) return 'w-1/4 max-w-xs px-1';
-    if (count === 5) return 'w-1/5 max-w-xs px-1';
-    if (count === 6) return 'w-1/6 max-w-xs px-1';
-    return 'w-1/7 max-w-xs px-1';
+    if (count === 1) return 'w-80 md:w-96';
+    if (count === 2) return 'w-1/2 max-w-md px-6';
+    if (count === 3) return 'w-1/3 max-w-sm px-6';
+    if (count === 4) return 'w-1/4 max-w-sm px-6';
+    if (count === 5) return 'w-1/5 max-w-sm px-4';
+    if (count === 6) return 'w-1/6 max-w-sm px-4';
+    return 'w-1/7 max-w-sm px-4';
   };
 
   const needsSlider = itemsPerView < collections.length;
+  const isMobile = itemsPerView === 1;
 
   return (
-    <section ref={sectionRef} className="py-12 md:py-20 bg-gray-50 overflow-x-hidden w-full">
+    <section ref={sectionRef} className="py-12 md:py-20 bg-gray-50 overflow-hidden w-full">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="text-center mb-8 md:mb-16">
@@ -208,120 +212,105 @@ const CollectionsSection: React.FC = () => {
         {/* Collections Container */}
         <div className="relative mb-8 md:mb-16">
           {needsSlider ? (
-            /* Mobile/Tablet Slider View with Swipe */
-            <>
-              {/* Slider Container */}
-              <div 
-                className="overflow-hidden w-full"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
+            isMobile ? (
+              /* Mobile Peek View */
+              <>
                 <div 
-                  ref={sliderRef}
-                  className="flex transition-transform duration-500 ease-in-out"
-                  style={{
-                    transform: `translateX(-${(currentSlide * 100) / itemsPerView}%)`
-                  }}
+                  className="relative overflow-hidden"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
                 >
-                  {collections.map((collection) => (
-                    <div
-                      key={collection.id}
-                      className={`flex-shrink-0 px-2 ${
-                        itemsPerView === 1 ? 'w-full' : 
-                        itemsPerView === 2 ? 'w-1/2' : 
-                        'w-1/3'
-                      }`}
-                    >
-                      <div 
-                        className={`collection-card group w-full max-w-xs mx-auto ${
-                          collection.upcoming ? 'cursor-default' : 'cursor-pointer'
-                        }`}
-                        onClick={() => handleCollectionClick(collection)}
-                      >
-                        {/* Collection Image */}
-                        <div className="relative mb-3 md:mb-4 overflow-hidden rounded-lg">
-                          <img
-                            src={collection.image}
-                            alt={collection.name}
-                            className={`w-full h-40 md:h-56 object-cover transition-transform duration-700 rounded-lg ${
-                              collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-110'
-                            }`}
-                            style={{
-                              filter: collection.upcoming 
-                                ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.1)) grayscale(50%)' 
-                                : 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
-                            }}
-                          />
-                          <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 rounded-lg ${
-                            collection.upcoming ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
-                          }`} />
-                          
-                          {/* Upcoming Badge */}
-                          {collection.upcoming && (
-                            <div className="absolute top-3 right-3 bg-gray-900/90 text-white text-xs px-3 py-1 rounded-full font-medium">
-                              Coming Soon
-                            </div>
-                          )}
-                          
-                          {/* Hover overlay - only for non-upcoming */}
-                          {!collection.upcoming && (
-                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                              <div className="text-white font-medium text-xs md:text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                View Collection
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                  <div 
+                    ref={sliderRef}
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{
+                      transform: `translateX(-${currentSlide * CURRENT_PERCENTAGE}%)`
+                    }}
+                  >
+                    {collections.map((collection, index) => {
+                      const isActive = index === currentSlide;
 
-                        {/* Collection Info */}
-                        <div className="text-center px-2">
-                          <h3 className="text-sm md:text-lg font-light text-gray-900 mb-1 md:mb-2 tracking-wide leading-tight">
-                            {collection.name}
-                          </h3>
-                          <div className="flex items-center justify-center space-x-2">
-                            {collection.originalPrice && (
-                              <span className="text-gray-500 line-through text-xs md:text-sm">
-                                {collection.originalPrice}
-                              </span>
-                            )}
-                            <span className={`font-medium text-xs md:text-base ${
-                              collection.upcoming ? 'text-gray-500' : 'text-gray-900'
-                            }`}>
-                              {collection.price}
-                            </span>
+                      return (
+                        <div
+                          key={collection.id}
+                          className="flex-shrink-0 px-4 transition-all duration-500"
+                          style={{
+                            width: `${CURRENT_PERCENTAGE}%`
+                          }}
+                        >
+                          <div 
+                            className={`collection-card group w-full max-w-md mx-auto ${
+                              collection.upcoming ? 'cursor-default' : 'cursor-pointer'
+                            }`}
+                            onClick={() => isActive && handleCollectionClick(collection)}
+                          >
+                            {/* Collection Image */}
+                            <div className="relative mb-3">
+                              <img
+                                src={collection.image}
+                                alt={collection.name}
+                                className={`w-full h-64 object-cover transition-transform duration-700 ${
+                                  collection.upcoming ? 'group-hover:scale-100' : isActive ? 'group-hover:scale-105' : ''
+                                }`}
+                                style={{
+                                  filter: collection.upcoming 
+                                    ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.1)) grayscale(50%)' 
+                                    : 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
+                                }}
+                              />
+                              <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 ${
+                                collection.upcoming ? 'opacity-0' : isActive ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
+                              }`} />
+                              
+                              {/* Upcoming Badge */}
+                              {collection.upcoming && isActive && (
+                                <div className="absolute top-3 right-3 bg-gray-900/90 text-white text-xs px-3 py-1 rounded-full font-medium">
+                                  Coming Soon
+                                </div>
+                              )}
+                              
+                              {/* Hover overlay - only for non-upcoming and active */}
+                              {!collection.upcoming && isActive && (
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                  <div className="text-white font-medium text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 bg-gray-900/70">
+                                    View Collection
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              {/* Navigation Arrows - Only show on tablet/desktop */}
-              <button
-                onClick={goToPrevious}
-                className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full items-center justify-center transition-all duration-300 hover:scale-110 z-10"
-                aria-label="Previous collections"
-              >
-                <ChevronLeft className="w-5 h-5 text-gray-800" />
-              </button>
+                {/* Collection Info - Centered below slider - Only show for active item */}
+                <div className="text-center px-2 mt-6">
+                  <h3 className="text-base font-light text-gray-900 mb-1 tracking-wide leading-tight">
+                    {collections[currentSlide].name}
+                  </h3>
+                  <div className="flex items-center justify-center space-x-2">
+                    {collections[currentSlide].originalPrice && (
+                      <span className="text-gray-500 line-through text-sm">
+                        {collections[currentSlide].originalPrice}
+                      </span>
+                    )}
+                    <span className={`font-medium text-sm ${
+                      collections[currentSlide].upcoming ? 'text-gray-500' : 'text-gray-900'
+                    }`}>
+                      {collections[currentSlide].price}
+                    </span>
+                  </div>
+                </div>
 
-              <button
-                onClick={goToNext}
-                className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full items-center justify-center transition-all duration-300 hover:scale-110 z-10"
-                aria-label="Next collections"
-              >
-                <ChevronRight className="w-5 h-5 text-gray-800" />
-              </button>
-
-              {/* Slider Indicators */}
-              {collections.length > itemsPerView && (
-                <div className="flex justify-center mt-6 md:mt-8 space-x-2">
-                  {Array.from({ length: collections.length - itemsPerView + 1 }, (_, index) => (
+                {/* Slider Indicators */}
+                <div className="flex justify-center mt-6 space-x-2">
+                  {collections.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => goToSlide(index)}
+                      onClick={() => setCurrentSlide(index)}
                       className={`w-2 h-2 rounded-full transition-all duration-300 ${
                         index === currentSlide 
                           ? 'bg-gray-900 scale-125' 
@@ -331,11 +320,134 @@ const CollectionsSection: React.FC = () => {
                     />
                   ))}
                 </div>
-              )}
-            </>
+              </>
+            ) : (
+              /* Tablet Slider View */
+              <>
+                <div 
+                  className="overflow-hidden w-full"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  <div 
+                    ref={sliderRef}
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: `translateX(-${(currentSlide * 100) / itemsPerView}%)`
+                    }}
+                  >
+                    {collections.map((collection) => (
+                      <div
+                        key={collection.id}
+                        className={`flex-shrink-0 px-6 ${
+                          itemsPerView === 2 ? 'w-1/2' : 'w-1/3'
+                        }`}
+                      >
+                        <div 
+                          className={`collection-card group w-full max-w-md mx-auto ${
+                            collection.upcoming ? 'cursor-default' : 'cursor-pointer'
+                          }`}
+                          onClick={() => handleCollectionClick(collection)}
+                        >
+                          {/* Collection Image */}
+                          <div className="relative mb-4">
+                            <img
+                              src={collection.image}
+                              alt={collection.name}
+                              className={`w-full h-72 object-cover transition-transform duration-700 ${
+                                collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-105'
+                              }`}
+                              style={{
+                                filter: collection.upcoming 
+                                  ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.1)) grayscale(50%)' 
+                                  : 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
+                              }}
+                            />
+                            <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 ${
+                              collection.upcoming ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
+                            }`} />
+                            
+                            {/* Upcoming Badge */}
+                            {collection.upcoming && (
+                              <div className="absolute top-3 right-3 bg-gray-900/90 text-white text-xs px-3 py-1 rounded-full font-medium">
+                                Coming Soon
+                              </div>
+                            )}
+                            
+                            {/* Hover overlay */}
+                            {!collection.upcoming && (
+                              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                <div className="text-white font-medium text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 bg-gray-900/70">
+                                  View Collection
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Collection Info */}
+                          <div className="text-center px-2">
+                            <h3 className="text-lg font-light text-gray-900 mb-2 tracking-wide leading-tight">
+                              {collection.name}
+                            </h3>
+                            <div className="flex items-center justify-center space-x-2">
+                              {collection.originalPrice && (
+                                <span className="text-gray-500 line-through text-sm">
+                                  {collection.originalPrice}
+                                </span>
+                              )}
+                              <span className={`font-medium text-base ${
+                                collection.upcoming ? 'text-gray-500' : 'text-gray-900'
+                              }`}>
+                                {collection.price}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={goToPrevious}
+                  className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+                  aria-label="Previous collections"
+                >
+                  <ChevronLeft className="w-5 h-5 text-gray-800" />
+                </button>
+
+                <button
+                  onClick={goToNext}
+                  className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+                  aria-label="Next collections"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-800" />
+                </button>
+
+                {/* Slider Indicators */}
+                {collections.length > itemsPerView && (
+                  <div className="flex justify-center mt-8 space-x-2">
+                    {Array.from({ length: collections.length - itemsPerView + 1 }, (_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          index === currentSlide 
+                            ? 'bg-gray-900 scale-125' 
+                            : 'bg-gray-400 hover:bg-gray-600'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            )
           ) : (
-            /* Desktop Grid View - Even Distribution */
-            <div className={`flex flex-wrap items-center ${getDesktopGridClasses()} gap-y-8`}>
+            /* Desktop Grid View */
+            <div className={`flex flex-wrap items-center ${getDesktopGridClasses()} gap-y-12`}>
               {collections.map((collection) => (
                 <div
                   key={collection.id}
@@ -345,12 +457,12 @@ const CollectionsSection: React.FC = () => {
                   onClick={() => handleCollectionClick(collection)}
                 >
                   {/* Collection Image */}
-                  <div className="relative mb-4 md:mb-6 overflow-hidden rounded-lg mx-auto">
+                  <div className="relative mb-6 mx-auto">
                     <img
                       src={collection.image}
                       alt={collection.name}
-                      className={`w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover transition-transform duration-700 rounded-lg ${
-                        collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-110'
+                      className={`w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover transition-transform duration-700 ${
+                        collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-105'
                       }`}
                       style={{
                         filter: collection.upcoming 
@@ -358,21 +470,21 @@ const CollectionsSection: React.FC = () => {
                           : 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                       }}
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 rounded-lg ${
+                    <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 ${
                       collection.upcoming ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
                     }`} />
                     
                     {/* Upcoming Badge */}
                     {collection.upcoming && (
-                      <div className="absolute top-4 right-4 bg-gray-900/90 text-white text-xs md:text-sm px-4 py-2 rounded-full font-medium">
+                      <div className="absolute top-4 right-4 bg-gray-900/90 text-white text-sm px-4 py-2 rounded-full font-medium">
                         Coming Soon
                       </div>
                     )}
                     
-                    {/* Hover overlay - only for non-upcoming */}
+                    {/* Hover overlay */}
                     {!collection.upcoming && (
-                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                        <div className="text-white font-medium text-sm md:text-base px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                        <div className="text-white font-medium text-base px-4 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 bg-gray-900/70">
                           View Collection
                         </div>
                       </div>
@@ -386,11 +498,11 @@ const CollectionsSection: React.FC = () => {
                     </h3>
                     <div className="flex items-center justify-center space-x-2">
                       {collection.originalPrice && (
-                        <span className="text-gray-500 line-through text-xs md:text-sm">
+                        <span className="text-gray-500 line-through text-sm">
                           {collection.originalPrice}
                         </span>
                       )}
-                      <span className={`font-medium text-sm md:text-base ${
+                      <span className={`font-medium text-base ${
                         collection.upcoming ? 'text-gray-500' : 'text-gray-900'
                       }`}>
                         {collection.price}

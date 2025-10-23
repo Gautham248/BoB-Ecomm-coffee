@@ -13,7 +13,7 @@ function BusinessSection() {
       style={{
         // backgroundColor: 'rgb(16, 18, 22)',
         backgroundImage:
-          "url('https://ik.imagekit.io/7ujz6ljli/Story/Rectangle-22-p-1080.png?updatedAt=1760240648560')",
+          "url('https://ik.imagekit.io/beansofbodhi/Business/Rectangle-22-p-1080.png?updatedAt=1761229026758')",
         backgroundBlendMode: 'overlay',
         minHeight: 'calc(500px + 3rem)', // matches carousel height + padding on mobile
       }}

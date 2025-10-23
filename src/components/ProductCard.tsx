@@ -5,7 +5,7 @@ interface Product {
   name: string;
   title: string;
   price: string;
-  heroImage: string;
+  productCardImage: string;
   category: string;
   upcoming?: boolean;
 }
@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick, categoryLab
     >
       <div className="aspect-square bg-gray-100 overflow-hidden relative">
         <img
-          src={product.heroImage}
+          src={product.productCardImage}
           alt={product.title}
           className={`w-full h-full object-cover transition-transform duration-300 ${
             isUpcoming ? 'grayscale' : 'hover:scale-105'

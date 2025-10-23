@@ -22,11 +22,11 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
   const slides: MediaSlide[] = [
     {
       type: 'video',
-      url: 'https://ik.imagekit.io/7ujz6ljli/Videos/Bob_Main_Hero__2.mp4',
+      url: 'https://ik.imagekit.io/beansofbodhi/Videos/Bob_Main_Hero__2-transcode.mp4?updatedAt=1761228804041',
     },
     {
       type: 'video',
-      url: 'https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Desk_01_1.mp4?updatedAt=1760249904962',
+      url: 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
     }
   ];
 
