@@ -35,13 +35,25 @@ const Header: React.FC = () => {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      // Use position fixed instead of overflow hidden for better mobile experience
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.width = '100%';
     } else {
-      document.body.style.overflow = 'unset';
+      // Restore scroll position when menu closes
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      }
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [isMobileMenuOpen]);
 
@@ -203,7 +215,7 @@ const Header: React.FC = () => {
               <img 
                 src={logo} 
                 alt="Beans of Bodhi" 
-                className="h-12 w-auto"
+                className="h-10 w-auto"
               />
             </button>
           </div>

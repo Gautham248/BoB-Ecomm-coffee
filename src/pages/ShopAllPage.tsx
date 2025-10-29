@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { products, getAvailableCategories, categoryLabels } from '../data/collections';
+import ShopAllBanner from '../components/ShopAllBanner';
 
 // Filter Pills Component
 const CategoryFilter = ({ 
@@ -16,7 +17,7 @@ const CategoryFilter = ({
   onClearAll: () => void;
 }) => {
   return (
-    <div className="flex flex-wrap gap-3 mb-8">
+    <div className="flex flex-wrap gap-3 mb-8 justify-center">
       <button
         onClick={onClearAll}
         className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
@@ -160,7 +161,17 @@ const ShopAllPage = () => {
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           All Products
         </h1>
+        <ShopAllBanner 
+        images={[
+          'https://ik.imagekit.io/nzkbravfr/Banner/origin.png?updatedAt=1761489002944',
+          'https://ik.imagekit.io/nzkbravfr/Banner/tornado%20twist.png?updatedAt=1761489002921',
+          'https://ik.imagekit.io/nzkbravfr/Banner/High%20tide.png?updatedAt=1761489002900',
+          'https://ik.imagekit.io/nzkbravfr/Banner/wild%20fire%20rush.png?updatedAt=1761489002944',
+          'https://ik.imagekit.io/nzkbravfr/Banner/eco2.png?updatedAt=1761489002895',
+          'https://ik.imagekit.io/nzkbravfr/Banner/thunder%20fuse.png?updatedAt=1761489002932',
 
+        ]}
+      />
         {/* Category Filters */}
         <CategoryFilter
           categories={availableCategories}

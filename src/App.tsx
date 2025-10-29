@@ -18,6 +18,10 @@ import MovementProduct from './pages/MovementProduct';
 import OurStoryNew from './pages/OurStoryNew';
 import ShopAllPage from './pages/ShopAllPage';
 import MovementPage from './pages/MovementPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
+import RefundAndReturns from './pages/RefundAndReturns';
+import ShippingPolicy from './pages/ShippingPolicy';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,20 +35,18 @@ function ScrollToTop() {
       window.history.scrollRestoration = 'manual';
     }
 
-    // Force immediate scroll to top
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant' // Use 'instant' instead of 'smooth' for immediate scroll
-    });
+    // Force immediate scroll to top with compatibility for all devices
+    window.scrollTo(0, 0);
     
     // Kill all ScrollTrigger instances on route change
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     
-    // Refresh ScrollTrigger after route change
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+    // Refresh ScrollTrigger after route change with a delay to ensure DOM is ready
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh(true); // true forces a recalculation of all positions
+    }, 200);
+    
+    return () => clearTimeout(refreshTimer);
   }, [pathname]);
 
   return null;
@@ -117,6 +119,10 @@ function AppContent() {
               <Route path="/movement" element={<MovementProduct />} />
               <Route path="/our-story" element={<OurStoryNew />} />
               <Route path="/store" element={<ShopAllPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+              <Route path="/refund-and-return" element={<RefundAndReturns />} />
+              <Route path="/shipping-policy" element={<ShippingPolicy />} />
               <Route path="/business-enquiry" element={<BusinessSubscriptionEnquiry />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -137,11 +143,12 @@ function AppContent() {
 
 function App() {
   useEffect(() => {
-    // Apply zoom to html element for proper scaling
-    document.documentElement.style.zoom = '0.97';
+    // Instead of using zoom which causes mobile scrolling issues,
+    // we'll add a class to the html element that we can style with CSS
+    document.documentElement.classList.add('app-scale');
     
     return () => {
-      document.documentElement.style.zoom = '';
+      document.documentElement.classList.remove('app-scale');
     };
   }, []);
 

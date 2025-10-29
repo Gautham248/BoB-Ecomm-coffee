@@ -113,7 +113,7 @@ const FeaturedSection = () => {
             FEATURED PRODUCTS
           </h2>
           
-          {/* Navigation Arrows - Top Right (hidden on mobile) */}
+          {/* Navigation Arrows - Top Right (desktop only) */}
           <div className="hidden md:flex absolute top-0 right-8 gap-3">
             <button
               onClick={prevProduct}
@@ -137,7 +137,7 @@ const FeaturedSection = () => {
         <div className="relative">
           <div 
             ref={carouselRef} 
-            className="relative h-[500px] md:h-[600px] flex items-center justify-center"
+            className="relative h-[450px] md:h-[600px] flex items-center justify-center"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -191,6 +191,25 @@ const FeaturedSection = () => {
                 })}
               </div>
             </div>
+          </div>
+
+          {/* Navigation Arrows - Below Product (mobile only) */}
+          <div className="flex md:hidden justify-center gap-3 mt-1">
+            <button
+              onClick={prevProduct}
+              disabled={isTransitioning}
+              className="w-12 h-10 border border-white/30 rounded flex items-center justify-center hover:bg-white/10 hover:border-white/50 transition-all duration-300 disabled:opacity-50"
+            >
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </button>
+
+            <button
+              onClick={nextProduct}
+              disabled={isTransitioning}
+              className="w-12 h-10 border border-white/30 rounded flex items-center justify-center hover:bg-white/10 hover:border-white/50 transition-all duration-300 disabled:opacity-50"
+            >
+              <ChevronRight className="w-5 h-5 text-white" />
+            </button>
           </div>
         </div>
       </div>

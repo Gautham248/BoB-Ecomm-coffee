@@ -82,7 +82,7 @@ const StorySection: React.FC = () => {
             </div>
             
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-pangaia text-gray-900 mb-4 md:mb-8 leading-tight">
-              Where Coffee becomes Consciousness 
+              Where Coffee Becomes Consciousness 
             </h2>
             
             <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">

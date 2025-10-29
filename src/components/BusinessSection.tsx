@@ -1,42 +1,98 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function BusinessSection() {
+interface BusinessSectionProps {
+  backgroundImage?: string;
+  heading?: string;
+  buttonText?: string;
+  mobileAspectRatio?: string; // e.g., '1 / 1', '4 / 3', '16 / 9'
+  desktopHeight?: string; // e.g., '100vh', '80vh', '600px'
+  mobileObjectFit?: 'cover' | 'contain' | 'fill';
+  desktopObjectFit?: 'cover' | 'contain' | 'fill';
+  overlayOpacity?: number; // 0 to 1
+  headingFontSize?: { mobile: string; desktop: string };
+  buttonPadding?: { mobile: string; desktop: string };
+  buttonFontSize?: { mobile: string; desktop: string };
+}
+
+function BusinessSection({
+  backgroundImage = "https://ik.imagekit.io/beansofbodhi/OurStory/4_1.webp?updatedAt=1761228062760",
+  heading = "<em>Need a</em> <br /> subscription <em>for</em> <br /> Business ?",
+  buttonText = "Enquire Now",
+  mobileAspectRatio = "1 / 1",
+  desktopHeight = "700px",
+  mobileObjectFit = "cover",
+  desktopObjectFit = "cover",
+  overlayOpacity = 0.5,
+  headingFontSize = { mobile: "24px", desktop: "60px" },
+  buttonPadding = { mobile: "8px 24px", desktop: "16px 40px" },
+  buttonFontSize = { mobile: "12px", desktop: "18px" }
+}: BusinessSectionProps) {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleEnquireClick = () => {
-    navigate('/business-enquiry');
+    navigate("/business-enquiry");
   };
 
+  const objectFitClass = isMobile ? `bg-${mobileObjectFit}` : `bg-${desktopObjectFit}`;
+  const currentHeadingFontSize = isMobile ? headingFontSize.mobile : headingFontSize.desktop;
+  const currentButtonPadding = isMobile ? buttonPadding.mobile : buttonPadding.desktop;
+  const currentButtonFontSize = isMobile ? buttonFontSize.mobile : buttonFontSize.desktop;
+
+  const containerStyle: React.CSSProperties = {
+    height: isMobile ? '100vw' : desktopHeight,
+    aspectRatio: isMobile ? mobileAspectRatio : 'auto',
+    backgroundImage: `url('${backgroundImage}')`,
+    backgroundBlendMode: 'overlay',
+  };
+  
   return (
     <section
-      className="relative py-6 md:py-12 w-full bg-cover bg-center flex flex-col justify-center items-center text-white overflow-hidden"
-      style={{
-        // backgroundColor: 'rgb(16, 18, 22)',
-        backgroundImage:
-          "url('https://ik.imagekit.io/beansofbodhi/Business/Rectangle-22-p-1080.png?updatedAt=1761229026758')",
-        backgroundBlendMode: 'overlay',
-        minHeight: 'calc(500px + 3rem)', // matches carousel height + padding on mobile
-      }}
+      className={`relative w-full bg-center flex flex-col justify-center items-center text-white overflow-hidden ${objectFitClass}`}
+      style={containerStyle}
     >
       {/* Overlay for better contrast */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div 
+        className="absolute inset-0 bg-black"
+        style={{ opacity: overlayOpacity }}
+      />
       
-      {/* Content Container - matches carousel dimensions */}
-      <div className="relative z-10 h-[500px] md:h-[600px] flex flex-col justify-center items-center w-full px-4">
+      {/* Content Container */}
+      <div className="relative z-10 h-full flex flex-col justify-center items-center w-full px-4">
         {/* Centered Heading */}
-        <div className="text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 font-pangaia font-medium leading-tight">
-            <em>Need a</em> <br /> subscription <em>for</em> <br /> Business ?
-          </h1>
+        <div className="text-center px-2">
+          <h1 
+            className="font-medium leading-tight mb-4 sm:mb-6 md:mb-6"
+            style={{ 
+              fontSize: currentHeadingFontSize,
+              fontFamily: "'Pangaia', sans-serif"
+            }}
+            dangerouslySetInnerHTML={{ __html: heading }}
+          />
         </div>
         
-        {/* Bottom-Aligned Button within content area */}
-        <div className="absolute bottom-8 flex justify-center w-full">
-          <button 
+        {/* Bottom-Aligned Button */}
+        <div className="absolute bottom-6 sm:bottom-8 flex justify-center w-full">
+          <button
             onClick={handleEnquireClick}
-            className="px-10 py-4 border-2 border-white text-white text-lg md:text-xl font-pangaia font-semibold rounded-full hover:bg-white/10 transition"
+            className="border-2 border-white font-semibold rounded-full hover:bg-white/10 transition"
+            style={{
+              padding: currentButtonPadding,
+              fontSize: currentButtonFontSize,
+              fontFamily: "'Pangaia', sans-serif"
+            }}
           >
-            Enquire Now
+            {buttonText}
           </button>
         </div>
       </div>

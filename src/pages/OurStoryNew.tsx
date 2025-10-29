@@ -34,7 +34,7 @@ const HorizontalSnapSection = ({ children, panelCount = 2 }: HorizontalSnapSecti
   };
 
   return (
-    <div className="h-screen w-full relative">
+    <div className="h-full w-full relative">
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
@@ -45,26 +45,27 @@ const HorizontalSnapSection = ({ children, panelCount = 2 }: HorizontalSnapSecti
       </div>
       
       {panelCount > 1 && (
-        <>
-          {currentIndex > 0 && (
-            <button
-              onClick={() => scroll('left')}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-opacity z-20"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-          )}
-          
-          {currentIndex < panelCount - 1 && (
-            <button
-              onClick={() => scroll('right')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-opacity z-20"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          )}
-        </>
-      )}
+  <>
+    {currentIndex > 0 && (
+      <button
+        onClick={() => scroll('left')}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-opacity z-20 hidden sm:flex"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+    )}
+
+    {currentIndex < panelCount - 1 && (
+      <button
+        onClick={() => scroll('right')}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-opacity z-20"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+    )}
+  </>
+)}
+
 
       {panelCount > 1 && (
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-20">
@@ -195,7 +196,7 @@ export default function OurStoryNew() {
   };
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-[110vh] w-full">
       <style dangerouslySetInnerHTML={{
         __html: `
           .scrollbar-hide::-webkit-scrollbar {
@@ -227,7 +228,7 @@ export default function OurStoryNew() {
         className="h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth snap-container"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-          <section data-section="heritage" className="h-screen w-full snap-start snap-always">
+          <section data-section="heritage" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={1}>
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/0%20Desktop.webp?updatedAt=1761228062335">
                 <div className="text-center px-6 max-w-5xl">
@@ -255,7 +256,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="redefining" className="h-screen w-full snap-start snap-always">
+          <section data-section="redefining" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgVideo="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772">
                 <div className="text-center px-6 max-w-4xl">
@@ -266,8 +267,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/1_2.webp?updatedAt=1761228062782">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     We don't follow trends-we follow purpose. Beans of Bodhi was born to rewrite what coffee stands for. From India to the World, here quality is a lived practice. From the high-altitude farms of Western Ghats to our in-house curing works, we obsess over every detail. We believe coffee should move people-not just with caffeine, but with meaning. That's why we do things differently, not for approval, but for excellence. For us, craft means care, and purpose means progress. And the Youth? They deserve better. We don't just roast beans-we ignite journeys. Rooted in craft, driven by values, and never bound by convention
                   </p>
                 </div>
@@ -275,7 +276,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="promise" className="h-screen w-full snap-start snap-always">
+          <section data-section="promise" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/2_1.webp?updatedAt=1761228062763">
                 <div className="text-center px-6 max-w-4xl">
@@ -286,8 +287,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/2_2.webp?updatedAt=1761228062744">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     Integrity at Beans of Bodhi isn't just an accessory-it's the foundation. We look in the mirror often: questioning, evolving, and never settling. From farm to roast, we maintain full transparency, take accountability, and honor every commitment we make-to farmers, to customers, to the planet. Our promise? That every sip reflects our values, our craft, and our courage to do things differently
                   </p>
                 </div>
@@ -295,7 +296,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="guarantee" className="h-screen w-full snap-start snap-always">
+          <section data-section="guarantee" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/3_1.webp?updatedAt=1761228062682">
                 <div className="text-center px-6 max-w-4xl">
@@ -306,8 +307,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/3_2.webp?updatedAt=1761228062826">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     We stand behind everything we make. If it's not extraordinary, it's not Bodhi. We work directly with trusted farmers who share our passion for sustainability and craftsmanship. Each bean is hand-selected and slow-cured in our own facilities to bring out the natural depth and flavor that defines Beans of Bodhi
                   </p>
                 </div>
@@ -315,7 +316,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="responsibility" className="h-screen w-full snap-start snap-always">
+          <section data-section="responsibility" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/4_1.webp?updatedAt=1761228062760">
                 <div className="text-center px-6 max-w-4xl">
@@ -326,8 +327,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/4_2.webp?updatedAt=1761228062632">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     We're more than a coffee brand-we're a mindful movement driven by quality. We empower the farmers behind our beans and the lives they fuel, supporting fair wages and regenerative farming. Our purpose goes beyond coffee. We believe India's youth find purpose, discipline and impact when they reconnect with nature through action sports and bold movement-because real change begins outside comfort zones
                   </p>
                 </div>
@@ -335,7 +336,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="process" className="h-screen w-full snap-start snap-always">
+          <section data-section="process" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgVideo="https://ik.imagekit.io/beansofbodhi/OurStory/Our-Storr_Kind_-transcode.webm/ik-video.mp4?updatedAt=1761228231849">
                 <div className="text-center px-6 max-w-4xl">
@@ -346,8 +347,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/5_2.webp?updatedAt=1761228062737">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     Because once you understand where your coffee comes from-how it's sourced, cured, and crafted- there's no going back. Our mission is to make Indian coffee extraordinary again. We work from root to roast with intention, crafting high-performance brews that carry culture, complexity, and care. Because the more truth in your cup, the more meaning in your day
                   </p>
                 </div>
@@ -355,7 +356,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="commitment" className="h-screen w-full snap-start snap-always">
+          <section data-section="commitment" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/6_1.webp?updatedAt=1761228062652">
                 <div className="text-center px-6 max-w-4xl">
@@ -366,8 +367,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/6_2.webp?updatedAt=1761228062844">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     Every decision starts with responsibility-to people, planet, and purpose. We're not just building a coffee company-we're shaping a more mindful future. Our vision: a world where every sip fuels not just energy, but impact. With our 1% for the Planet and 1% for the Community pledge, we channel profit into purpose-regenerating ecosystems and uplifting local cultures. Each blend is proof that progress can taste good.
                   </p>
                 </div>
@@ -375,7 +376,7 @@ export default function OurStoryNew() {
             </HorizontalSnapSection>
           </section>
 
-          <section data-section="era" className="h-screen w-full snap-start snap-always">
+          <section data-section="era" className="h-full w-full snap-start snap-always">
             <HorizontalSnapSection panelCount={2}>
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/6_2.webp?updatedAt=1761228062844">
                 <div className="text-center px-6 max-w-4xl">
@@ -386,8 +387,8 @@ export default function OurStoryNew() {
               </HorizontalPanel>
               
               <HorizontalPanel bgImage="https://ik.imagekit.io/beansofbodhi/OurStory/7_2.webp?updatedAt=1761228062721">
-                <div className="text-center px-6 max-w-3xl">
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <div className="text-center px-6 pb-2 md:pb-0 max-w-3xl ">
+                  <p className="text-sm md:text-xl text-white/90 leading-relaxed">
                     This isn't just about coffee. It's a shift in mindset-towards purpose, quality, and conscious consumption. Dedicating to a generation that refuses to compromise
                   </p>
                 </div>

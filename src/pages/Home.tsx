@@ -22,14 +22,46 @@ const Home: React.FC = () => {
         ogImage="https://beansofbodhi.com/og-homepage.jpg"
       />
       
-      <CarouselHeroSection/>
+  
+      <CarouselHeroSection
+        autoPlayInterval={3000}
+        showDots={true}
+        showArrows={true}
+        bannerHeight={{ mobile: 0, desktop: 0 }}
+        bannerOpacity={1}
+        dotIndicatorBottom={{ mobile: 10, desktop: 15 }}
+        dotIndicatorOpacity={0.9}
+        dotSize={{ mobile: 6, desktop: 12 }}
+        dotActiveWidth={{ mobile: 20, desktop: 32 }}
+        mobileAspectRatio="1 / 1"
+        desktopHeight="100vh"
+        mobileObjectFit="cover"
+        desktopObjectFit="cover"
+      />
       {/* <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/Bob_Main_Hero__2.mp4" /> */}
-      <CollectionsSection />
-      <VideoHeroSection videoUrl="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772" 
-      headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
+      {/* <CollectionsSection /> */}
+      <CollectionsSection
+        mobileCarouselItemWidth={60}
+        mobileCarouselSideOpacity={0.9}
+        mobileCarouselSideScale={0.9}
+      />
+
+      <VideoHeroSection 
+        videoUrl="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772" 
+        headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
+        posterUrl="your-poster-image.jpg" // Optional: Add a poster image
+        mobileAspectRatio="1 / 1" // Square on mobile
+        desktopHeight="100vh" // Full viewport height on desktop
+        mobileObjectFit="cover" // Fill container on mobile
+        desktopObjectFit="cover" // Fill container on desktop
+        overlayOpacity={0.3} // Dark overlay opacity (0-1)
+        headlineBorderOpacity={0.3} // Border opacity (0-1)
+        headlinePadding={{ mobile: '10px 20px', desktop: '32px 56px' }}
+        headlineBorderRadius="9999px" // Fully rounded border
+        headlineFontSize={{ mobile: '14px', desktop: '36px' }}
       />
       <FeaturedSection />
-      <HomeMovement/>
+      <HomeMovement />
       <BusinessSection/>
       <StorySection />
       <VideoHeroSection videoUrl="https://ik.imagekit.io/beansofbodhi/Videos/1-Planet_1-transcode.mp4?updatedAt=1761228828643" />

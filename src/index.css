@@ -15,6 +15,22 @@
   .font-serif {
     font-family: 'Playfair Display', serif;
   }
+
+  /* Apply scaling only on desktop devices */
+  @media (min-width: 768px) {
+    html.app-scale {
+      font-size: 85%;
+      transform-origin: top;
+    }
+  }
+
+  /* Ensure proper touch behavior on mobile */
+  @media (max-width: 767px) {
+    html, body {
+      touch-action: manipulation;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
 }
 
 @layer utilities {
@@ -107,4 +123,13 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Aktiv';
+  src: url('/src/assets/fonts/AktivGrotesk-XBoldItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
 

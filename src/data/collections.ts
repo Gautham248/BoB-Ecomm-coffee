@@ -70,10 +70,10 @@ export const products: Product[] = [
     heroImageMobile: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/The_Origin_Mob-p-800.jpg?updatedAt=1761228745108',
     productCardImage: 'https://ik.imagekit.io/beansofbodhi/Product%20Cards/OR.webp?updatedAt=1761230707571',
     galleryImages: [
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/7-p-800.jpg?updatedAt=1761227510274',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR2.webp?updatedAt=1761227480507',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR1.webp?updatedAt=1761227480389',
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR3.webp?updatedAt=1761227480407'
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR3.webp?updatedAt=1761227480407',
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/7-p-800.jpg?updatedAt=1761227510274',
     ],
     
     descriptionContent: {
@@ -108,9 +108,9 @@ export const products: Product[] = [
     productCardImage: 'https://ik.imagekit.io/beansofbodhi/Product%20Cards/WFR.webp?updatedAt=1761230707642',
     galleryImages: [
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Wild%20Fire%20Rush/WFR3.webp?updatedAt=1761227965224',
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Wild%20Fire%20Rush/Wild-Fire-Rush-p-500.png?updatedAt=1761227964915',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Wild%20Fire%20Rush/WFR1.webp?updatedAt=1761227964860',
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Wild%20Fire%20Rush/WFR2.webp?updatedAt=1761227964794'
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Wild%20Fire%20Rush/WFR2.webp?updatedAt=1761227964794',
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Wild%20Fire%20Rush/Wild-Fire-Rush-p-500.png?updatedAt=1761227964915',
     ],
     descriptionContent: {
       title: 'Ignite Your Energy, Unleash the Wild',
@@ -215,10 +215,10 @@ export const products: Product[] = [
     heroImageMobile: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Thunder_Fuse_Mob-p-800.jpg?updatedAt=1761228745070',
     productCardImage: 'https://ik.imagekit.io/beansofbodhi/Product%20Cards/TF.webp?updatedAt=1761230707623',
     galleryImages: [
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Thunder%20Fuse/Thunder-Fuse_2-p-500.png?updatedAt=1761227749007',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Thunder%20Fuse/TF3.webp?updatedAt=1761227694657',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Thunder%20Fuse/TF1.webp?updatedAt=1761227694626',
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Thunder%20Fuse/TF2.webp?updatedAt=1761227694370'
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Thunder%20Fuse/TF2.webp?updatedAt=1761227694370',
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Thunder%20Fuse/Thunder-Fuse_2-p-500.png?updatedAt=1761227749007',
     ],
     descriptionContent: {
       title: 'Feel the surge. Power the future.',
@@ -251,10 +251,10 @@ export const products: Product[] = [
     heroImageMobile: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Tornado_Twist_Mob-p-800.jpg?updatedAt=1761228745098',
     productCardImage: 'https://ik.imagekit.io/beansofbodhi/Product%20Cards/TT.webp?updatedAt=1761230707488',
     galleryImages: [
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT_01-p-800.jpg?updatedAt=1761227860426',
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT_03-p-800.jpg?updatedAt=1761227847940',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT1.webp?updatedAt=1761227832209',
-      'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT2.webp?updatedAt=1761227831959'
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT2.webp?updatedAt=1761227831959',
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT_03-p-800.jpg?updatedAt=1761227847940',
+      'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT_01-p-800.jpg?updatedAt=1761227860426',
     ],
     
     descriptionContent: {
@@ -340,10 +340,10 @@ export const headerProducts: Product[] = [
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/The_Origin_Mob-p-800.jpg?updatedAt=1759650427307',
     productCardImage: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/ORGIN_FD_V002-p-1600.png?updatedAt=1759660224678',
     galleryImages: [
-      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/ORGIN_FD_V002-p-1600.png?updatedAt=1759660224678',
       'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/7-p-800.jpg?updatedAt=1759660224525',
       'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/OR_03-p-1080.jpg?updatedAt=1759660766150',
-      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/OR_05-p-1080.jpg?updatedAt=1759660224460'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/OR_05-p-1080.jpg?updatedAt=1759660224460',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/ORGIN_FD_V002-p-1600.png?updatedAt=1759660224678',
     ],
     descriptionContent: {
       title: 'Rooted in Nature. Preserving its legacy.',
@@ -520,10 +520,10 @@ export const headerProducts: Product[] = [
     heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Tornado_Twist_Mob-p-800.jpg?updatedAt=1759651612432',
     productCardImage: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/Tornoda-Twist-p-500.png?updatedAt=1759661242679',
     galleryImages: [
-      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/Tornoda-Twist-p-500.png?updatedAt=1759661242679',
       'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_03-p-1080.jpg?updatedAt=1759656359706',
       'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_01-p-1080.jpg?updatedAt=1759656359593',
-      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_02-p-1080.jpg?updatedAt=1759656358730'
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/TT_02-p-1080.jpg?updatedAt=1759656358730',
+      'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Tornado%20Twist/Tornoda-Twist-p-500.png?updatedAt=1759661242679',
     ],
     descriptionContent: {
       title: 'Fuel the adventure. Rebuild the future.',
@@ -533,54 +533,7 @@ export const headerProducts: Product[] = [
     category: 'signature-blends',
     featured: true
   },
-  {
-    id: 'gadgets',
-    name: 'Gadgets',
-    title: 'Gadgets',
-    description: 'Coming soon - Gadgets',
-    price: 'INR 1,299.00',
-    traceability: {
-      source: 'N/A',
-      tasteNotes: [],
-      process: 'N/A',
-      elevation: 'N/A'
-    },
-    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Gadget.webp?updatedAt=1761221187018',
-    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Categories/Gadget.webp?updatedAt=1761221187018',
-    productCardImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Gadget.webp?updatedAt=1761221187018',
-    galleryImages: [],
-    descriptionContent: {
-      title: 'Coming Soon',
-      content: 'Premium brewing equipment coming soon.',
-      image: ''
-    },
-    category: 'gadgets',
-    upcoming: true
-  },
-  {
-    id: 'merchandise',
-    name: 'Merchandise',
-    title: 'Merchandise',
-    description: 'Coming soon - Premium cotton t-shirt',
-    price: 'INR 799.00',
-    traceability: {
-      source: 'N/A',
-      tasteNotes: [],
-      process: 'N/A',
-      elevation: 'N/A'
-    },
-    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Merchandise.webp?updatedAt=1761221187036',
-    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Categories/Merchandise.webp?updatedAt=1761221187036',
-    productCardImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Merchandise.webp?updatedAt=1761221187036',
-    galleryImages: [],
-    descriptionContent: {
-      title: 'Coming Soon',
-      content: 'Branded merchandise coming soon.',
-      image: ''
-    },
-    category: 'merchandise',
-    upcoming: true
-  }
+ 
 ];
 // Collections/Categories
 export const collections: Collection[] = [
@@ -590,7 +543,7 @@ export const collections: Collection[] = [
     title: 'Western Ghats Selects',
     description: 'Premium coffee blends sourced from the pristine Western Ghats region, featuring our signature HIGH TIDE, ECO SHOCK, and THUNDER FUSE varieties.',
     price: 'From ₹599',
-    image: 'https://ik.imagekit.io/beansofbodhi/Categories/Western%20Ghats%20Select.webp?updatedAt=1761228570101',
+    image: 'https://ik.imagekit.io/nzkbravfr/Collections/Western%20Ghats%20Select.webp?updatedAt=1761390411685',
     products: ['the-high-tide', 'the-eco-shock', 'the-thunder-fuse'],
     featured: true,
     upcoming: false
@@ -601,7 +554,7 @@ export const collections: Collection[] = [
     title: 'Signature Blends',
     description: 'Bold and adventurous coffee blends including THE ORIGIN, WILD FIRE RUSH, and TORNADO TWIST. Perfect for those seeking intense flavors and unique experiences.',
     price: 'From ₹669',
-    image: 'https://ik.imagekit.io/beansofbodhi/Categories/Signature%20Blends.webp?updatedAt=1761228569913',
+    image: 'https://ik.imagekit.io/nzkbravfr/Collections/Signature%20Blends.webp?updatedAt=1761390411670',
     products: ['the-wild-fire-rush', 'the-origin', 'the-tornado-twist'],
     featured: true,
     upcoming: false
@@ -612,7 +565,7 @@ export const collections: Collection[] = [
     title: 'Gadgets',
     description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
     price: 'Coming Soon',
-    image: 'https://ik.imagekit.io/beansofbodhi/Categories/Gadget.webp?updatedAt=1761228570037',
+    image: 'https://ik.imagekit.io/nzkbravfr/Collections/Gadgets.webp?updatedAt=1761390411909',
     products: ['gadgets'],
     featured: true,
     upcoming: true
@@ -623,7 +576,7 @@ export const collections: Collection[] = [
     title: 'Merchandise',
     description: 'Beans of Bodhi branded merchandise including apparel, mugs, and accessories for the true coffee enthusiast.',
     price: 'Coming Soon',
-    image: 'https://ik.imagekit.io/beansofbodhi/Categories/Merchandise.webp?updatedAt=1761228570197',
+    image: 'https://ik.imagekit.io/nzkbravfr/Collections/Merchandise.webp?updatedAt=1761390411855',
     products: ['merchandise'],
     featured: true,
     upcoming: true

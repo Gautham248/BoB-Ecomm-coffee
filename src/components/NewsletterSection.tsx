@@ -52,10 +52,10 @@ const NewsletterSection: React.FC = () => {
           {/* Left Content */}
           <div className="newsletter-content text-white">
             <h4 className="text-4xl md:text-5xl font-helvetica mb-8 leading-tight">
-              JOIN THE MOVEMENT
+              JOIN THE <br/>MOVEMENT
             </h4>
             
-            <p className="text-xl leading-relaxed mb-12 text-gray-200">
+            <p className="text-md leading-relaxed mb-12 text-gray-200">
               Fuel your adventure, connect with like-minded explorers, and be part of a community that values purpose, sustainability, and exceptional coffee.
             </p>
 

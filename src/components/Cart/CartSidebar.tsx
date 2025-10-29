@@ -16,6 +16,31 @@ const CartSidebar: React.FC = () => {
     proceedToCheckout,
     error
   } = useCart();
+  
+  // Prevent body scroll when cart is open
+  React.useEffect(() => {
+    if (isOpen) {
+      // Use position fixed instead of overflow hidden for better mobile experience
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      // Restore scroll position when cart closes
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      }
+    }
+
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+    };
+  }, [isOpen]);
 
   const formatPrice = (price: string | { amount: string; currencyCode: string }): string => {
     if (typeof price === 'object' && price.amount) {

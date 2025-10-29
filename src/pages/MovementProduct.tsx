@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import VideoHeroSection from '../components/VideoHeroSection';
+import ScrollImageSequence from '../components/Movement/ScrollImageSequence';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,21 +17,27 @@ const MovementProduct: React.FC = () => {
 
   const product = {
     name: 'Movement',
-    title: 'Movement Brewing System',
-    description: 'A revolutionary coffee brewing gadget engineered for precision and sustainability. Designed to extract the full complexity of specialty coffee through controlled water flow and temperature management.',
+    title: 'Movement ',
+    description: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
     price: '$189.99',
     composition: ['Ceramic Filter', 'Stainless Steel', 'Heat-Resistant Glass', 'Eco-Conscious Design'],
     galleryImages: [
-      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1559056199-641a0ac8b3f3?w=500&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1510812431401-41d2cab2707d?w=500&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=500&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1559056199-641a0ac8b3f3?w=500&h=600&fit=crop',
+      'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT1.webp?updatedAt=1761227402101',
+      'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT2.webp?updatedAt=1761227402233',
+      'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT3.webp?updatedAt=1761227402299',
     ],
     descriptionContent: {
-      title: 'Precision in Every Pour',
-      content: 'The Movement brewing system represents a paradigm shift in how we approach coffee preparation. Each component has been meticulously engineered to maintain optimal water temperature, control brew time, and maximize extraction. The ceramic filter ensures a clean cup while retaining the origin-specific characteristics of your coffee beans. Built with stainless steel durability and heat-resistant borosilicate glass, the Movement is designed to be your brewing companion for years to come. Whether you\'re a seasoned coffee aficionado or discovering specialty coffee for the first time, this brewing system delivers consistent, exceptional results with every use.',
-      image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop',
+      title: 'Freedom in Movement',
+      content: `
+      A Symphony of Simplicity  
+      No Electricity. No Limits.  
+      Brew anywhere with our manual, eco-friendly design.  
+      
+      Portability — Compact and lightweight, it slips effortlessly into your backpack, ready for any adventure.  
+      
+      Easy to Use — Because great coffee should never slow you down.
+      `,
+      image: 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Inside_01_1-transcode.mp4?updatedAt=1761287864681',
     }
   };
 
@@ -129,13 +136,16 @@ const MovementProduct: React.FC = () => {
 
   return (
     <>
+     
+     <ScrollImageSequence />
+
       {/* Video Hero Section */}
-      <section ref={heroRef} className="relative w-full bg-black">
+      {/* <section ref={heroRef} className="relative w-full bg-black">
         <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Desk_01_1.mp4?updatedAt=1760249904962" />
-      </section>
+      </section> */}
 
       {/* Product Information Section */}
-      <section className="py-12 md:py-16 lg:py-20 bg-black">
+      <section className="pb-0 pt-12 md:pt-16 lg:pt-20 bg-black">
         <div className="product-info-content text-center text-white space-y-6 px-4 max-w-3xl mx-auto">
           {/* Title */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
@@ -148,7 +158,7 @@ const MovementProduct: React.FC = () => {
           </p>
           
           {/* Composition Tags */}
-          <div className="flex flex-wrap gap-2 justify-center">
+          {/* <div className="flex flex-wrap gap-2 justify-center">
             {product.composition.map((item, index) => (
               <span
                 key={index}
@@ -157,17 +167,17 @@ const MovementProduct: React.FC = () => {
                 {item}
               </span>
             ))}
-          </div>
+          </div> */}
 
           {/* Price and Add to Cart */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-6">
+          {/* <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-6">
             <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
               {product.price}
             </span>
             <button className="px-6 sm:px-8 py-2 sm:py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors duration-300 whitespace-nowrap text-sm sm:text-base">
               Add to Cart
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -293,28 +303,26 @@ const MovementProduct: React.FC = () => {
       )}
 
       {/* Description Section - Black Background */}
-      <section className="py-12 md:py-16 lg:py-20 bg-black">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-          {/* Tab Content */}
-          <div className="tab-content">
-            <div className="text-center">
-              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-white mb-6 md:mb-8 px-4">
-                {product.descriptionContent.title}
-              </h3>
-              <p className="text-sm sm:text-base md:text-lg text-white/80 font-helvetica leading-relaxed mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto px-4">
-                {product.descriptionContent.content}
-              </p>
-              <div className="flex justify-center px-4">
-                <img
-                  src={product.descriptionContent.image}
-                  alt={product.name}
-                  className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-lg bg-gray-800"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Description Section - Black Background */}
+<section className="bg-black">
+  <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 lg:pt-20">
+    {/* Tab Content */}
+    <div className="tab-content">
+      <div className="text-center">
+        <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-white mb-6 md:mb-8 px-4">
+          {product.descriptionContent.title}
+        </h3>
+        <p className="text-sm sm:text-base md:text-lg text-white/80 font-helvetica leading-relaxed max-w-3xl mx-auto px-4">
+          {product.descriptionContent.content}
+        </p>
+        <br />
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* Video Section - Directly attached */}
+<VideoHeroSection videoUrl="https://ik.imagekit.io/nzkbravfr/Movement_Inside_01_1-transcode.mp4?updatedAt=1761288434992" />
     </>
   );
 };

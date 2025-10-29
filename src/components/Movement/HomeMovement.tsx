@@ -6,16 +6,31 @@ interface HomeMovementProps {
   mobileVideoUrl?: string;
   posterUrl?: string;
   scrollHeight?: string;
+  mobileAspectRatio?: string; // e.g., '1 / 1', '4 / 3', '16 / 9'
+  desktopHeight?: string; // e.g., '100vh', '80vh', '600px'
+  mobileObjectFit?: 'cover' | 'contain' | 'fill';
+  desktopObjectFit?: 'cover' | 'contain' | 'fill';
+  overlayOpacity?: number; // 0 to 1
+  buttonPosition?: 'left' | 'right';
+  buttonText?: string;
 }
 
 const HomeMovement: React.FC<HomeMovementProps> = ({
   desktopVideoUrl = 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
   mobileVideoUrl = 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
   posterUrl = 'https://ik.imagekit.io/7ujz6ljli/Movement/Movement_Hero-p-1600.png?updatedAt=1760249831197',
-  scrollHeight = '400vh'
+  scrollHeight = '400vh',
+  mobileAspectRatio = '1 / 1',
+  desktopHeight = '100vh',
+  mobileObjectFit = 'cover',
+  desktopObjectFit = 'cover',
+  overlayOpacity = 0.1,
+  buttonPosition = 'left',
+  buttonText = 'Explore'
 }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const desktopVideoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,6 +40,15 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
   const [isFixed, setIsFixed] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [textOpacity, setTextOpacity] = useState(0);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     // Trigger text animation after component mounts (mobile only)
@@ -108,10 +132,19 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
     navigate('/movement');
   };
 
+  const mobileObjectFitClass = `object-${mobileObjectFit}`;
+  const desktopObjectFitClass = `object-${desktopObjectFit}`;
+
   return (
     <>
       {/* Mobile Version */}
-      <section className="block md:hidden relative w-full min-h-screen bg-black overflow-hidden">
+      <section 
+        className="block md:hidden relative w-full bg-black overflow-hidden flex items-center justify-center"
+        style={{
+          height: '100vw',
+          aspectRatio: mobileAspectRatio
+        }}
+      >
         {/* Mobile Video Background */}
         {!mobileError ? (
           <video
@@ -121,50 +154,52 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
             muted
             playsInline
             poster={posterUrl}
-            className="absolute inset-0 w-full h-full object-cover"
+            className={`absolute inset-0 w-full h-full ${mobileObjectFitClass}`}
             onError={() => setMobileError(true)}
           >
             <source src={mobileVideoUrl} type="video/mp4" />
           </video>
         ) : (
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${mobileObjectFitClass}`}
             style={{ backgroundImage: `url(${posterUrl})` }}
           />
         )}
 
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div 
+          className="absolute inset-0 bg-black"
+          style={{ opacity: overlayOpacity }}
+        />
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
           <div 
-            className={`flex flex-col items-start justify-center min-h-screen transition-opacity duration-1000 ${
+            className={`flex flex-col items-start justify-center h-full transition-opacity duration-1000 ${
               isVisible ? 'opacity-100' : 'opacity-0'
             }`}
           >
             <div className="max-w-2xl">
-              <h1 
-                className="text-white mb-6"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                <span className="block text-2xl font-normal mb-2">THE</span>
-                <span className="block text-5xl font-black italic leading-none mb-2">ART OF</span>
-                <span className="block text-5xl font-black italic leading-none mb-4">ESPRESSO,</span>
-                <span className="inline-block text-4xl font-black italic leading-none px-6 py-3 border-4 border-white rounded-2xl">
-                  LIBERATED
-                </span>
-              </h1>
-            </div>
+            <h1 
+            className="text-white mb-6"
+            style={{ fontFamily: "'Aktiv', sans-serif" }}
+            >
+            <span className="block text-2xl font-normal mb-2">THE</span>
+            <span className="block text-5xl font-black italic leading-none mb-2">ART OF</span>
+            <span className="block text-5xl font-black italic leading-none mb-4">ESPRESSO,</span>
+            <span className="inline-block text-4xl font-black italic leading-none px-6 py-3 border-4 border-white rounded-2xl">
+                LIBERATED
+            </span>
+            </h1>
 
-            <div className="absolute bottom-8 right-8">
+              {/* Button - Below Text */}
               <button
-                onClick={handleExploreClick}
-                className="bg-white text-black font-bold text-sm uppercase px-10 py-4 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Explore
-              </button>
+                    onClick={handleExploreClick}
+                    className="bg-white text-black font-bold text-sm uppercase px-5 py-4 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer mt-2"
+                    style={{ fontFamily: "'Aktiv', sans-serif" }}
+                    >
+                    {buttonText}
+                    </button>
             </div>
           </div>
         </div>
@@ -177,8 +212,9 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
         style={{ height: scrollHeight }}
       >
         <div 
-          className="w-full h-screen flex items-center justify-center overflow-hidden"
+          className="w-full flex items-center justify-center overflow-hidden"
           style={{
+            height: desktopHeight,
             position: isFixed ? 'fixed' : 'absolute',
             top: isFixed || !isComplete ? 0 : 'auto',
             bottom: isComplete && !isFixed ? 0 : 'auto',
@@ -204,14 +240,14 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
                   muted
                   playsInline
                   poster={posterUrl}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full ${desktopObjectFitClass}`}
                   onError={() => setDesktopError(true)}
                 >
                   <source src={desktopVideoUrl} type="video/mp4" />
                 </video>
               ) : (
                 <div 
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${desktopObjectFitClass}`}
                   style={{ backgroundImage: `url(${posterUrl})` }}
                 />
               )}
@@ -219,7 +255,7 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
               {/* Overlays */}
               <div 
                 className="absolute inset-0 bg-black pointer-events-none"
-                style={{ opacity: 0.15 }}
+                style={{ opacity: overlayOpacity }}
               />
               <div 
                 className="absolute inset-0 pointer-events-none"
@@ -238,26 +274,25 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
               >
                 <div className="flex flex-col items-start justify-center h-full">
                   <div className="max-w-2xl">
-                    <h1 
-                      className="text-white mb-6"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      <span className="block text-3xl lg:text-4xl font-normal mb-2">THE</span>
-                      <span className="block text-6xl lg:text-7xl xl:text-8xl font-black italic leading-none mb-2">ART OF</span>
-                      <span className="block text-6xl lg:text-7xl xl:text-8xl font-black italic leading-none mb-4">ESPRESSO,</span>
-                      <span className="inline-block text-5xl lg:text-6xl xl:text-7xl font-black italic leading-none px-6 py-3 border-4 border-white rounded-2xl">
-                        LIBERATED
-                      </span>
+                  <h1 
+    className="text-white mb-6"
+    style={{ fontFamily: "'Aktiv', sans-serif" }}
+    >
+    <span className="block text-3xl lg:text-4xl font-normal mb-2">THE</span>
+    <span className="block text-6xl lg:text-7xl xl:text-8xl font-black italic leading-none mb-2">ART OF</span>
+    <span className="block text-6xl lg:text-7xl xl:text-8xl font-black italic leading-none mb-4">ESPRESSO,</span>
+    <span className="inline-block text-5xl lg:text-6xl xl:text-7xl font-black italic leading-none px-6 py-3 border-4 border-white rounded-2xl">
+        LIBERATED
+  </span>
                     </h1>
-                  </div>
 
-                  <div className="absolute bottom-12 right-12">
+                    {/* Button - Below Text on Left */}
                     <button
-                      onClick={handleExploreClick}
-                      className="bg-white text-black font-bold text-sm uppercase px-10 py-4 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    onClick={handleExploreClick}
+                    className="bg-white text-black font-bold text-sm uppercase px-5 py-4 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer mt-2"
+                    style={{ fontFamily: "'Aktiv', sans-serif" }}
                     >
-                      Explore
+                    {buttonText}
                     </button>
                   </div>
                 </div>

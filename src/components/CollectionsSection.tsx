@@ -12,7 +12,17 @@ const gsap = {
   to: (_targets: any, _toVars: any) => {}
 };
 
-const CollectionsSection: React.FC = () => {
+interface CollectionsSectionProps {
+  mobileCarouselItemWidth?: number; // Percentage (0-100) - default 70
+  mobileCarouselSideOpacity?: number; // Opacity (0-1) - default 0.3
+  mobileCarouselSideScale?: number; // Scale (0-1) - default 0.85
+}
+
+const CollectionsSection: React.FC<CollectionsSectionProps> = ({
+  mobileCarouselItemWidth = 70,
+  mobileCarouselSideOpacity = 0.3,
+  mobileCarouselSideScale = 0.85
+}) => {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -20,12 +30,16 @@ const CollectionsSection: React.FC = () => {
   const [itemsPerView, setItemsPerView] = useState(1);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
-  
-  // Configurable peek percentage (0-100)
-  const PEEK_PERCENTAGE = 15; // 15% peek of next item
-  const CURRENT_PERCENTAGE = 100 - PEEK_PERCENTAGE; // 85% current item
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   const collections = getFeaturedCollections();
+  
+  // Create infinite loop by duplicating collections
+  const infiniteCollections = [...collections, ...collections, ...collections];
+  const startIndex = collections.length; // Start at the middle set
+
+  // Calculate centering offset based on item width
+  const centerOffset = (100 - mobileCarouselItemWidth) / 2;
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,8 +58,13 @@ const CollectionsSection: React.FC = () => {
   }, [collections.length]);
 
   useEffect(() => {
-    setCurrentSlide(0);
-  }, [itemsPerView]);
+    // Initialize to middle set for infinite loop
+    if (itemsPerView === 1) {
+      setCurrentSlide(startIndex);
+    } else {
+      setCurrentSlide(0);
+    }
+  }, [itemsPerView, startIndex]);
 
   useEffect(() => {
     const cards = gsap.utils.toArray('.collection-card');
@@ -138,20 +157,40 @@ const CollectionsSection: React.FC = () => {
   };
 
   const goToPrevious = () => {
-    setCurrentSlide(prev => prev > 0 ? prev - 1 : collections.length - itemsPerView);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide(prev => prev - 1);
   };
 
   const goToNext = () => {
-    setCurrentSlide(prev => {
-      const maxSlide = collections.length - itemsPerView;
-      return prev < maxSlide ? prev + 1 : 0;
-    });
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide(prev => prev + 1);
   };
 
   const goToSlide = (index: number) => {
     const maxSlide = collections.length - itemsPerView;
     setCurrentSlide(Math.min(index, maxSlide));
   };
+
+  // Handle infinite loop reset
+  useEffect(() => {
+    if (itemsPerView !== 1) return;
+
+    const handleTransitionEnd = () => {
+      setIsTransitioning(false);
+      
+      // Reset to middle set when reaching boundaries
+      if (currentSlide >= startIndex + collections.length) {
+        setCurrentSlide(startIndex);
+      } else if (currentSlide < startIndex) {
+        setCurrentSlide(startIndex + collections.length - 1);
+      }
+    };
+
+    const timer = setTimeout(handleTransitionEnd, 500);
+    return () => clearTimeout(timer);
+  }, [currentSlide, itemsPerView, startIndex, collections.length]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -199,6 +238,12 @@ const CollectionsSection: React.FC = () => {
   const needsSlider = itemsPerView < collections.length;
   const isMobile = itemsPerView === 1;
 
+  // Get current collection for display
+  const getCurrentCollection = () => {
+    const index = currentSlide % collections.length;
+    return collections[index];
+  };
+
   return (
     <section ref={sectionRef} className="py-12 md:py-20 bg-gray-50 overflow-hidden w-full">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -213,7 +258,7 @@ const CollectionsSection: React.FC = () => {
         <div className="relative mb-8 md:mb-16">
           {needsSlider ? (
             isMobile ? (
-              /* Mobile Peek View */
+              /* Mobile Infinite Carousel View */
               <>
                 <div 
                   className="relative overflow-hidden"
@@ -223,35 +268,40 @@ const CollectionsSection: React.FC = () => {
                 >
                   <div 
                     ref={sliderRef}
-                    className="flex transition-transform duration-500 ease-out"
+                    className={`flex items-center ${isTransitioning ? 'transition-transform duration-500 ease-out' : ''}`}
                     style={{
-                      transform: `translateX(-${currentSlide * CURRENT_PERCENTAGE}%)`
+                      transform: `translateX(calc(-${currentSlide * mobileCarouselItemWidth}% + ${centerOffset}%))`,
                     }}
                   >
-                    {collections.map((collection, index) => {
-                      const isActive = index === currentSlide;
+                    {infiniteCollections.map((collection, index) => {
+                      const isCenterSlide = index === currentSlide;
+                      const distance = Math.abs(index - currentSlide);
 
                       return (
                         <div
-                          key={collection.id}
-                          className="flex-shrink-0 px-4 transition-all duration-500"
+                          key={`${collection.id}-${index}`}
+                          className="flex-shrink-0 px-3"
                           style={{
-                            width: `${CURRENT_PERCENTAGE}%`
+                            width: `${mobileCarouselItemWidth}%`,
                           }}
                         >
                           <div 
                             className={`collection-card group w-full max-w-md mx-auto ${
                               collection.upcoming ? 'cursor-default' : 'cursor-pointer'
-                            }`}
-                            onClick={() => isActive && handleCollectionClick(collection)}
+                            } transition-all duration-500`}
+                            style={{
+                              opacity: distance === 0 ? 1 : mobileCarouselSideOpacity,
+                              transform: `scale(${distance === 0 ? 1 : mobileCarouselSideScale})`,
+                            }}
+                            onClick={() => isCenterSlide && handleCollectionClick(collection)}
                           >
                             {/* Collection Image */}
                             <div className="relative mb-3">
                               <img
                                 src={collection.image}
                                 alt={collection.name}
-                                className={`w-full h-64 object-cover transition-transform duration-700 ${
-                                  collection.upcoming ? 'group-hover:scale-100' : isActive ? 'group-hover:scale-105' : ''
+                                className={`w-full h-64 object-contain transition-transform duration-700 ${
+                                  collection.upcoming ? 'group-hover:scale-100' : isCenterSlide ? 'group-hover:scale-105' : ''
                                 }`}
                                 style={{
                                   filter: collection.upcoming 
@@ -260,18 +310,18 @@ const CollectionsSection: React.FC = () => {
                                 }}
                               />
                               <div className={`absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent transition-opacity duration-300 ${
-                                collection.upcoming ? 'opacity-0' : isActive ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
+                                collection.upcoming ? 'opacity-0' : isCenterSlide ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
                               }`} />
                               
                               {/* Upcoming Badge */}
-                              {collection.upcoming && isActive && (
+                              {collection.upcoming && isCenterSlide && (
                                 <div className="absolute top-3 right-3 bg-gray-900/90 text-white text-xs px-3 py-1 rounded-full font-medium">
                                   Coming Soon
                                 </div>
                               )}
                               
-                              {/* Hover overlay - only for non-upcoming and active */}
-                              {!collection.upcoming && isActive && (
+                              {/* Hover overlay - only for non-upcoming and center */}
+                              {!collection.upcoming && isCenterSlide && (
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
                                   <div className="text-white font-medium text-sm px-3 py-2 border border-white/50 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 bg-gray-900/70">
                                     View Collection
@@ -286,21 +336,21 @@ const CollectionsSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Collection Info - Centered below slider - Only show for active item */}
+                {/* Collection Info - Centered below slider - Only show for center item */}
                 <div className="text-center px-2 mt-6">
                   <h3 className="text-base font-light text-gray-900 mb-1 tracking-wide leading-tight">
-                    {collections[currentSlide].name}
+                    {infiniteCollections[currentSlide].name}
                   </h3>
                   <div className="flex items-center justify-center space-x-2">
-                    {collections[currentSlide].originalPrice && (
+                    {infiniteCollections[currentSlide].originalPrice && (
                       <span className="text-gray-500 line-through text-sm">
-                        {collections[currentSlide].originalPrice}
+                        {infiniteCollections[currentSlide].originalPrice}
                       </span>
                     )}
                     <span className={`font-medium text-sm ${
-                      collections[currentSlide].upcoming ? 'text-gray-500' : 'text-gray-900'
+                      infiniteCollections[currentSlide].upcoming ? 'text-gray-500' : 'text-gray-900'
                     }`}>
-                      {collections[currentSlide].price}
+                      {infiniteCollections[currentSlide].price}
                     </span>
                   </div>
                 </div>
@@ -310,9 +360,9 @@ const CollectionsSection: React.FC = () => {
                   {collections.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentSlide(index)}
+                      onClick={() => setCurrentSlide(startIndex + index)}
                       className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === currentSlide 
+                        (currentSlide % collections.length) === index
                           ? 'bg-gray-900 scale-125' 
                           : 'bg-gray-400 hover:bg-gray-600'
                       }`}
@@ -461,7 +511,7 @@ const CollectionsSection: React.FC = () => {
                     <img
                       src={collection.image}
                       alt={collection.name}
-                      className={`w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover transition-transform duration-700 ${
+                      className={`w-full h-56 sm:h-64 md:h-72 lg:h-80 object-contain transition-transform duration-700 ${
                         collection.upcoming ? 'group-hover:scale-100' : 'group-hover:scale-105'
                       }`}
                       style={{

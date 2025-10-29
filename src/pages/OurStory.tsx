@@ -276,7 +276,7 @@ const OurStory = () => {
           }
 
           .main-section {
-            height: 100vh;
+            height: 120vh;
             width: 100%;
             scroll-snap-align: start;
             position: relative;
@@ -284,7 +284,7 @@ const OurStory = () => {
 
           .horizontal-container {
             display: flex;
-            height: 100vh;
+            height: 120vh;
             width: 100%;
             overflow-x: scroll;
             scroll-snap-type: x mandatory;
@@ -301,7 +301,7 @@ const OurStory = () => {
           .horizontal-section {
             flex: none;
             width: 100vw;
-            height: 100vh;
+            height: 120vh;
             scroll-snap-align: start;
             position: relative;
             display: flex;
@@ -448,7 +448,7 @@ const OurStory = () => {
           }
 
           .snap-section-new {
-            height: 100vh;
+            height: 120vh;
             width: 100%;
             scroll-snap-align: start;
             position: relative;
