@@ -145,20 +145,20 @@ const MovementProduct: React.FC = () => {
       </section> */}
 
       {/* Product Information Section */}
-      <section className="pb-0 pt-12 md:pt-16 lg:pt-20 bg-black">
+      {/* <section className="pb-0 pt-12 md:pt-16 lg:pt-20 bg-black">
         <div className="product-info-content text-center text-white space-y-6 px-4 max-w-3xl mx-auto">
-          {/* Title */}
-          {/* <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
+          
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
             {product.title}
-          </h1> */}
+          </h1>
           
-          {/* Description */}
-          {/* <p className="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
+      
+          <p className="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
             {product.description}
-          </p> */}
+          </p>
           
-          {/* Composition Tags */}
-          {/* <div className="flex flex-wrap gap-2 justify-center">
+
+          <div className="flex flex-wrap gap-2 justify-center">
             {product.composition.map((item, index) => (
               <span
                 key={index}
@@ -167,19 +167,18 @@ const MovementProduct: React.FC = () => {
                 {item}
               </span>
             ))}
-          </div> */}
+          </div>
 
-          {/* Price and Add to Cart */}
-          {/* <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-6">
             <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
               {product.price}
             </span>
             <button className="px-6 sm:px-8 py-2 sm:py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors duration-300 whitespace-nowrap text-sm sm:text-base">
               Add to Cart
             </button>
-          </div> */}
+          </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Gallery Section - Swipeable with Image Viewer */}
       <section ref={galleryRef} className="pt-12 md:pt-16 lg:pt-20 pb-4 md:pb-6 lg:pb-8 bg-black">

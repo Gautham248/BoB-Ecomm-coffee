@@ -55,6 +55,8 @@ interface AnimationConfig {
 const ScrollImageSequence: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const movementTextRef = useRef<HTMLDivElement>(null);
+  const auraTextRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +64,8 @@ const ScrollImageSequence: React.FC = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [movementWidth, setMovementWidth] = useState(0);
+  const [auraWidth, setAuraWidth] = useState(0);
 
   const frameCount = 202;
   
@@ -76,6 +80,30 @@ const ScrollImageSequence: React.FC = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Measure Movement and AURA text widths
+  useEffect(() => {
+    const measureTextWidths = () => {
+      if (movementTextRef.current) {
+        const rect = movementTextRef.current.getBoundingClientRect();
+        setMovementWidth(rect.width);
+      }
+      if (auraTextRef.current) {
+        const rect = auraTextRef.current.getBoundingClientRect();
+        setAuraWidth(rect.width);
+      }
+    };
+
+    const timer = setTimeout(measureTextWidths, 200);
+    
+    measureTextWidths();
+    window.addEventListener('resize', measureTextWidths);
+
+    return () => {
+      window.removeEventListener('resize', measureTextWidths);
+      clearTimeout(timer);
+    };
+  }, [isMobile, isLoading]);
 
   // ========== CONFIGURATION SECTION ==========
   
@@ -98,6 +126,11 @@ const ScrollImageSequence: React.FC = () => {
     fadeOutDistance: 30,
   };
 
+  // MOVEMENT text configuration - First letter size difference
+  const movementConfig = {
+    firstLetterSizeIncrease: 1.05, // 5% bigger (1.05 = 105% of base size)
+  };
+
   // DESKTOP Configuration
   const desktopTextItems: TextItem[] = [
     {
@@ -116,7 +149,7 @@ const ScrollImageSequence: React.FC = () => {
       text: 'AURA: CNTRL',
       position: {
         x: layoutConfig.desktop.rightSideX,
-        y: 200, // Same Y position as MOVEMENT for horizontal alignment
+        y: 200,
         align: 'left',
         origin: 'top-left',
         scale: 1,
@@ -129,7 +162,7 @@ const ScrollImageSequence: React.FC = () => {
       text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
       position: {
         x: layoutConfig.desktop.rightSideX,
-        y: 200 + layoutConfig.desktop.elementSpacing, // AURA: CNTRL + spacing
+        y: 200 + layoutConfig.desktop.elementSpacing,
         align: 'left',
         origin: 'top-left',
         scale: 1,
@@ -142,7 +175,7 @@ const ScrollImageSequence: React.FC = () => {
       text: '₹7499',
       position: {
         x: layoutConfig.desktop.rightSideX,
-        y: 200 + (layoutConfig.desktop.elementSpacing * 4), // Description + pills + spacing
+        y: 200 + (layoutConfig.desktop.elementSpacing * 4),
         align: 'left',
         origin: 'top-left',
         scale: 1,
@@ -155,7 +188,7 @@ const ScrollImageSequence: React.FC = () => {
       text: 'Coming Soon',
       position: {
         x: layoutConfig.desktop.rightSideX,
-        y: 200 + (layoutConfig.desktop.elementSpacing * 5), // Price + spacing
+        y: 200 + (layoutConfig.desktop.elementSpacing * 5),
         align: 'left',
         origin: 'top-left',
         scale: 1
@@ -167,10 +200,10 @@ const ScrollImageSequence: React.FC = () => {
 
   // Desktop Pills Configuration
   const desktopPillsItem: PillsItem = {
-    pills: ['9 Bars', 'Compact', 'Precision'], // Add or remove items here
+    pills: ['9 Bars', 'Compact', 'Precision'],
     position: {
       x: layoutConfig.desktop.rightSideX,
-      y: 200 + (layoutConfig.desktop.elementSpacing * 3), // Description + spacing
+      y: 200 + (layoutConfig.desktop.elementSpacing * 3),
       align: 'left',
       origin: 'top-left',
       scale: 1,
@@ -180,65 +213,80 @@ const ScrollImageSequence: React.FC = () => {
   };
 
   // MOBILE Configuration
-  const mobileTextItems: TextItem[] = [
-    {
-      text: 'Movement',
-      position: {
-        x: layoutConfig.mobile.leftMargin,
-        y: layoutConfig.mobile.topMargin,
-        align: 'left',
-        origin: 'top-left',
-        scale: 0.75
+  const getMobileTextItems = (): TextItem[] => {
+    return [
+      {
+        text: 'Movement',
+        position: {
+          x: layoutConfig.mobile.leftMargin,
+          y: layoutConfig.mobile.topMargin,
+          align: 'left',
+          origin: 'top-left',
+          scale: 0.75
+        },
+        showAtFrame: 50,
+        className: 'text-5xl font-aviano font-bold'
       },
-      showAtFrame: 50,
-      className: 'text-5xl font-aviano font-bold'
-    },
-    {
-      text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
-      position: {
-        x: layoutConfig.mobile.leftMargin,
-        y: layoutConfig.mobile.topMargin + layoutConfig.mobile.elementSpacing, // MOVEMENT + spacing
-        align: 'left',
-        origin: 'top-left',
-        scale: 1,
-        maxWidth: 320
+      {
+        text: 'AURA: CNTRL',
+        position: {
+          x: layoutConfig.mobile.leftMargin + (movementWidth > 0 && auraWidth > 0 ? movementWidth - auraWidth : 0),
+          y: layoutConfig.mobile.topMargin + 45,
+          align: 'left',
+          origin: 'top-left',
+          scale: 1,
+          maxWidth: 300
+        },
+        showAtFrame: 50,
+        className: 'text-lg font-aviano font-semibold'
       },
-      showAtFrame: 50,
-      className: 'text-sm font-helvetica leading-relaxed'
-    },
-    {
-      text: '₹7499',
-      position: {
-        x: layoutConfig.mobile.leftMargin,
-        y: layoutConfig.mobile.topMargin + (layoutConfig.mobile.elementSpacing * 4), // Description + pills + spacing
-        align: 'left',
-        origin: 'top-left',
-        scale: 1.2,
-        maxWidth: 320
+      {
+        text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
+        position: {
+          x: layoutConfig.mobile.leftMargin,
+          y: layoutConfig.mobile.topMargin + 110,
+          align: 'left',
+          origin: 'top-left',
+          scale: 1,
+          maxWidth: 320
+        },
+        showAtFrame: 50,
+        className: 'text-sm font-helvetica leading-relaxed'
       },
-      showAtFrame: 50,
-      className: 'text-4xl font-bold font-pangaia'
-    },
-    {
-      text: 'Coming Soon',
-      position: {
-        x: layoutConfig.mobile.leftMargin,
-        y: layoutConfig.mobile.topMargin + (layoutConfig.mobile.elementSpacing * 5), // Price + spacing
-        align: 'left',
-        origin: 'top-left',
-        scale: 1
+      {
+        text: '₹7499',
+        position: {
+          x: layoutConfig.mobile.leftMargin,
+          y: layoutConfig.mobile.topMargin + 320,
+          align: 'left',
+          origin: 'top-left',
+          scale: 1,
+          maxWidth: 320
+        },
+        showAtFrame: 50,
+        className: 'text-3xl font-bold font-pangaia'
       },
-      showAtFrame: 50,
-      className: 'text-lg font-aviano font-bold border-2 border-white px-8 py-3 inline-block'
-    }
-  ];
+      {
+        text: 'Coming Soon',
+        position: {
+          x: layoutConfig.mobile.leftMargin,
+          y: layoutConfig.mobile.topMargin + 385,
+          align: 'left',
+          origin: 'top-left',
+          scale: 1
+        },
+        showAtFrame: 50,
+        className: 'text-base font-aviano font-bold border-2 border-white px-6 py-2 inline-block'
+      }
+    ];
+  };
 
   // Mobile Pills Configuration
   const mobilePillsItem: PillsItem = {
-    pills: ['9 Bars', 'Compact', 'Precision'], // Add or remove items here
+    pills: ['9 Bars', 'Compact', 'Precision'],
     position: {
       x: layoutConfig.mobile.leftMargin,
-      y: layoutConfig.mobile.topMargin + (layoutConfig.mobile.elementSpacing * 3), // Description + spacing
+      y: layoutConfig.mobile.topMargin + 260,
       align: 'left',
       origin: 'top-left',
       scale: 1,
@@ -249,7 +297,7 @@ const ScrollImageSequence: React.FC = () => {
 
   // ========== END CONFIGURATION SECTION ==========
 
-  const textItems = isMobile ? mobileTextItems : desktopTextItems;
+  const textItems = isMobile ? getMobileTextItems() : desktopTextItems;
   const pillsItem = isMobile ? mobilePillsItem : desktopPillsItem;
 
   const getTransformOrigin = (origin?: string) => {
@@ -351,7 +399,7 @@ const ScrollImageSequence: React.FC = () => {
     canvas.height = window.innerHeight;
 
     const isMobileView = window.innerWidth < 768;
-    const mobileScale = 0.8;
+    const mobileScale = 1.0;
     const desktopScale = 1.0;
     const scaleFactor = isMobileView ? mobileScale : desktopScale;
 
@@ -480,10 +528,18 @@ const ScrollImageSequence: React.FC = () => {
               {textItems.map((item, index) => (
                 <div
                   key={`text-${index}`}
+                  ref={item.text === 'Movement' ? movementTextRef : item.text === 'AURA: CNTRL' ? auraTextRef : null}
                   style={getTextStyle(item)}
                   className={`text-white ${item.className || ''}`}
                 >
-                  {item.text}
+                  {item.text === 'Movement' ? (
+                    <>
+                      <span style={{ fontSize: `${movementConfig.firstLetterSizeIncrease * 100}%` }}>M</span>
+                      <span>ovement</span>
+                    </>
+                  ) : (
+                    item.text
+                  )}
                 </div>
               ))}
 
