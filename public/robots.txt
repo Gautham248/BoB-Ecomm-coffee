@@ -4,11 +4,11 @@ Disallow: /admin
 Disallow: /checkout
 Disallow: /*?*utm_*
 Disallow: /*?*ref=*
+Disallow: /cart
 
 # Sitemap locations
 Sitemap: https://beansofbodhi.com/sitemap.xml
 Sitemap: https://beansofbodhi.com/sitemap-products.xml
-Sitemap: https://beansofbodhi.com/sitemap-images.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
