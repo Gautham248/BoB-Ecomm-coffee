@@ -196,11 +196,11 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
 
                 {/* Button - Below Text */}
                 <button
-                  onClick={handleExploreClick}
-                  className="bg-white text-black font-bold text-xs uppercase px-4 py-2 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer mt-1"
-                  style={{ fontFamily: "'Aktiv', sans-serif" }}
+                onClick={handleExploreClick}
+                className="bg-white text-black font-bold text-xs uppercase px-4 py-2 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer mt-1 flex items-center justify-center"
+                style={{ fontFamily: "'Aktiv', sans-serif" }}
                 >
-                  {buttonText}
+                {buttonText}
                 </button>
               </div>
             </div>
@@ -301,11 +301,11 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
 
                     {/* Button - Below Text on Left */}
                     <button
-                      onClick={handleExploreClick}
-                      className="bg-white text-black font-bold text-sm uppercase px-5 py-4 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer mt-2"
-                      style={{ fontFamily: "'Aktiv', sans-serif" }}
+                    onClick={handleExploreClick}
+                    className="bg-white text-black font-bold text-sm uppercase px-5 py-4 rounded-md hover:bg-gray-200 transition-colors duration-300 cursor-pointer mt-2 flex items-center justify-center"
+                    style={{ fontFamily: "'Aktiv', sans-serif" }}
                     >
-                      {buttonText}
+                    {buttonText}
                     </button>
                   </div>
                 </div>

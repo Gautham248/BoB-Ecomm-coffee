@@ -81,7 +81,7 @@ const ScrollImageSequence: React.FC = () => {
   
   const layoutConfig: LayoutConfig = {
     desktop: {
-      rightSideX: 900,
+      rightSideX: 850,
       rightSideStartY: 250,
       elementSpacing: 60,
     },
@@ -101,7 +101,7 @@ const ScrollImageSequence: React.FC = () => {
   // DESKTOP Configuration
   const desktopTextItems: TextItem[] = [
     {
-      text: 'MOVEMENT',
+      text: 'Movement',
       position: {
         x: 100,
         y: 200,
@@ -113,7 +113,7 @@ const ScrollImageSequence: React.FC = () => {
       className: 'text-7xl font-aviano font-bold'
     },
     {
-      text: 'THE PRESSO',
+      text: 'AURA: CNTRL',
       position: {
         x: layoutConfig.desktop.rightSideX,
         y: 200, // Same Y position as MOVEMENT for horizontal alignment
@@ -129,7 +129,7 @@ const ScrollImageSequence: React.FC = () => {
       text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
       position: {
         x: layoutConfig.desktop.rightSideX,
-        y: 200 + layoutConfig.desktop.elementSpacing, // THE PRESSO + spacing
+        y: 200 + layoutConfig.desktop.elementSpacing, // AURA: CNTRL + spacing
         align: 'left',
         origin: 'top-left',
         scale: 1,
@@ -145,11 +145,11 @@ const ScrollImageSequence: React.FC = () => {
         y: 200 + (layoutConfig.desktop.elementSpacing * 4), // Description + pills + spacing
         align: 'left',
         origin: 'top-left',
-        scale: 1.2,
+        scale: 1,
         maxWidth: 500
       },
       showAtFrame: 50,
-      className: 'text-5xl font-bold font-pangaia'
+      className: 'text-3xl font-bold font-pangaia'
     },
     {
       text: 'Coming Soon',
@@ -182,7 +182,7 @@ const ScrollImageSequence: React.FC = () => {
   // MOBILE Configuration
   const mobileTextItems: TextItem[] = [
     {
-      text: 'MOVEMENT',
+      text: 'Movement',
       position: {
         x: layoutConfig.mobile.leftMargin,
         y: layoutConfig.mobile.topMargin,
