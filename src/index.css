@@ -126,7 +126,21 @@
 
 @font-face {
   font-family: 'Aktiv';
-  src: url('/src/assets/fonts/AktivGrotesk-XBoldItalic.otf') format('opentype');
+  src: url('/src/assets/fonts/AktivGrotesk-BlackItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aktiv';
+  src: url('/src/assets/fonts/AktivGrotesk-XBold.otf') format('opentype');
+  font-weight: 100;
+  font-style: bold;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aviano';
+  src: url('/fonts/Aviano\ Future\ W01\ Heavy\ Fast.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;

@@ -1,32 +1,58 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// Configuration interface for text items
+// Configuration interface for text items with advanced positioning
 interface TextItem {
   text: string;
-  type: 'title' | 'subtitle' | 'description' | 'custom';
+  position: {
+    x: number;
+    y: number;
+    align?: 'left' | 'center' | 'right';
+    origin?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+    scale?: number;
+    maxWidth?: number;
+  };
   showAtFrame: number;
-  hideAtFrame?: number; // Optional: frame at which text should fade out
-  className?: string; // Custom styling
+  hideAtFrame?: number;
+  className?: string;
+}
+
+// Pills/Tags item interface
+interface PillsItem {
+  pills: string[];
+  position: {
+    x: number;
+    y: number;
+    align?: 'left' | 'center' | 'right';
+    origin?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+    scale?: number;
+    maxWidth?: number;
+  };
+  showAtFrame: number;
+  hideAtFrame?: number;
+}
+
+// Layout configuration
+interface LayoutConfig {
+  desktop: {
+    rightSideX: number;
+    rightSideStartY: number;
+    elementSpacing: number;
+  };
+  mobile: {
+    leftMargin: number;
+    topMargin: number;
+    elementSpacing: number;
+  };
 }
 
 // Animation configuration
 interface AnimationConfig {
-  moveUpDistance: number; // in pixels
-  fadeOutAfterShow: boolean; // whether text should fade out after being shown
-  fadeOutDistance: number; // how many frames after showAtFrame should it fade out
+  moveUpDistance: number;
+  fadeOutAfterShow: boolean;
+  fadeOutDistance: number;
 }
 
-interface ScrollImageSequenceProps {
-  textItems?: TextItem[]; // Optional text items
-  animationConfig?: Partial<AnimationConfig>; // Optional animation config
-  showText?: boolean; // Toggle to show/hide all text
-}
-
-const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
-  textItems = [],
-  animationConfig: customAnimationConfig,
-  showText = true
-}) => {
+const ScrollImageSequence: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -35,48 +61,220 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
   const [loadProgress, setLoadProgress] = useState(0);
   const [isFixed, setIsFixed] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const frameCount = 202;
   
   const imageKitBaseUrl = 'https://ik.imagekit.io/beansofbodhi/Movement-Lottie';
   const imageKitTransform = 'tr:w-1920,q-80';
 
-  // Default animation configuration
-  const defaultAnimationConfig: AnimationConfig = {
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // ========== CONFIGURATION SECTION ==========
+  
+  const layoutConfig: LayoutConfig = {
+    desktop: {
+      rightSideX: 900,
+      rightSideStartY: 250,
+      elementSpacing: 60,
+    },
+    mobile: {
+      leftMargin: 30,
+      topMargin: 230,
+      elementSpacing: 85,
+    }
+  };
+
+  const animationConfig: AnimationConfig = {
     moveUpDistance: 20,
     fadeOutAfterShow: false,
     fadeOutDistance: 30,
   };
 
-  // Merge custom config with defaults
-  const animationConfig = {
-    ...defaultAnimationConfig,
-    ...customAnimationConfig
+  // DESKTOP Configuration
+  const desktopTextItems: TextItem[] = [
+    {
+      text: 'MOVEMENT',
+      position: {
+        x: 100,
+        y: 200,
+        align: 'left',
+        origin: 'top-left',
+        scale: 1
+      },
+      showAtFrame: 50,
+      className: 'text-7xl font-aviano font-bold'
+    },
+    {
+      text: 'THE PRESSO',
+      position: {
+        x: layoutConfig.desktop.rightSideX,
+        y: 200, // Same Y position as MOVEMENT for horizontal alignment
+        align: 'left',
+        origin: 'top-left',
+        scale: 1,
+        maxWidth: 500
+      },
+      showAtFrame: 50,
+      className: 'text-3xl font-aviano font-semibold'
+    },
+    {
+      text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
+      position: {
+        x: layoutConfig.desktop.rightSideX,
+        y: 200 + layoutConfig.desktop.elementSpacing, // THE PRESSO + spacing
+        align: 'left',
+        origin: 'top-left',
+        scale: 1,
+        maxWidth: 450
+      },
+      showAtFrame: 50,
+      className: 'text-base font-helvetica leading-relaxed'
+    },
+    {
+      text: '₹7499',
+      position: {
+        x: layoutConfig.desktop.rightSideX,
+        y: 200 + (layoutConfig.desktop.elementSpacing * 4), // Description + pills + spacing
+        align: 'left',
+        origin: 'top-left',
+        scale: 1.2,
+        maxWidth: 500
+      },
+      showAtFrame: 50,
+      className: 'text-5xl font-bold font-pangaia'
+    },
+    {
+      text: 'Coming Soon',
+      position: {
+        x: layoutConfig.desktop.rightSideX,
+        y: 200 + (layoutConfig.desktop.elementSpacing * 5), // Price + spacing
+        align: 'left',
+        origin: 'top-left',
+        scale: 1
+      },
+      showAtFrame: 50,
+      className: 'text-lg font-aviano font-bold border-2 border-white px-8 py-3 inline-block'
+    }
+  ];
+
+  // Desktop Pills Configuration
+  const desktopPillsItem: PillsItem = {
+    pills: ['9 Bars', 'Compact', 'Precision'], // Add or remove items here
+    position: {
+      x: layoutConfig.desktop.rightSideX,
+      y: 200 + (layoutConfig.desktop.elementSpacing * 3), // Description + spacing
+      align: 'left',
+      origin: 'top-left',
+      scale: 1,
+      maxWidth: 450
+    },
+    showAtFrame: 50
   };
 
-  // Calculate opacity and position for each text item
-  const getTextStyle = (item: TextItem) => {
-    const { showAtFrame, hideAtFrame } = item;
+  // MOBILE Configuration
+  const mobileTextItems: TextItem[] = [
+    {
+      text: 'MOVEMENT',
+      position: {
+        x: layoutConfig.mobile.leftMargin,
+        y: layoutConfig.mobile.topMargin,
+        align: 'left',
+        origin: 'top-left',
+        scale: 0.75
+      },
+      showAtFrame: 50,
+      className: 'text-5xl font-aviano font-bold'
+    },
+    {
+      text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
+      position: {
+        x: layoutConfig.mobile.leftMargin,
+        y: layoutConfig.mobile.topMargin + layoutConfig.mobile.elementSpacing, // MOVEMENT + spacing
+        align: 'left',
+        origin: 'top-left',
+        scale: 1,
+        maxWidth: 320
+      },
+      showAtFrame: 50,
+      className: 'text-sm font-helvetica leading-relaxed'
+    },
+    {
+      text: '₹7499',
+      position: {
+        x: layoutConfig.mobile.leftMargin,
+        y: layoutConfig.mobile.topMargin + (layoutConfig.mobile.elementSpacing * 4), // Description + pills + spacing
+        align: 'left',
+        origin: 'top-left',
+        scale: 1.2,
+        maxWidth: 320
+      },
+      showAtFrame: 50,
+      className: 'text-4xl font-bold font-pangaia'
+    },
+    {
+      text: 'Coming Soon',
+      position: {
+        x: layoutConfig.mobile.leftMargin,
+        y: layoutConfig.mobile.topMargin + (layoutConfig.mobile.elementSpacing * 5), // Price + spacing
+        align: 'left',
+        origin: 'top-left',
+        scale: 1
+      },
+      showAtFrame: 50,
+      className: 'text-lg font-aviano font-bold border-2 border-white px-8 py-3 inline-block'
+    }
+  ];
+
+  // Mobile Pills Configuration
+  const mobilePillsItem: PillsItem = {
+    pills: ['9 Bars', 'Compact', 'Precision'], // Add or remove items here
+    position: {
+      x: layoutConfig.mobile.leftMargin,
+      y: layoutConfig.mobile.topMargin + (layoutConfig.mobile.elementSpacing * 3), // Description + spacing
+      align: 'left',
+      origin: 'top-left',
+      scale: 1,
+      maxWidth: 320
+    },
+    showAtFrame: 50
+  };
+
+  // ========== END CONFIGURATION SECTION ==========
+
+  const textItems = isMobile ? mobileTextItems : desktopTextItems;
+  const pillsItem = isMobile ? mobilePillsItem : desktopPillsItem;
+
+  const getTransformOrigin = (origin?: string) => {
+    if (!origin) return 'top left';
+    return origin.replace('-', ' ');
+  };
+
+  const getTextStyle = (item: TextItem | PillsItem) => {
+    const { showAtFrame, hideAtFrame, position } = item;
     const { moveUpDistance, fadeOutAfterShow, fadeOutDistance } = animationConfig;
     
     let opacity = 0;
     let translateY = moveUpDistance;
 
-    // Fade in logic (20 frames before showAtFrame to showAtFrame)
     const fadeInStart = Math.max(0, showAtFrame - 20);
     if (currentFrame >= fadeInStart && currentFrame <= showAtFrame) {
       const progress = (currentFrame - fadeInStart) / 20;
       opacity = progress;
       translateY = moveUpDistance * (1 - progress);
     } else if (currentFrame > showAtFrame) {
-      // After showAtFrame
       if (hideAtFrame && currentFrame >= hideAtFrame) {
-        // Explicit hide at frame
         const fadeOutProgress = Math.min(1, (currentFrame - hideAtFrame) / 20);
         opacity = 1 - fadeOutProgress;
         translateY = -fadeOutProgress * moveUpDistance;
       } else if (fadeOutAfterShow) {
-        // Auto fade out after fadeOutDistance frames
         const fadeOutFrame = showAtFrame + fadeOutDistance;
         if (currentFrame >= fadeOutFrame) {
           const fadeOutProgress = Math.min(1, (currentFrame - fadeOutFrame) / 20);
@@ -87,33 +285,28 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
           translateY = 0;
         }
       } else {
-        // Stay visible
         opacity = 1;
         translateY = 0;
       }
     }
 
+    const scale = position.scale || 1;
+
     return {
+      position: 'absolute' as const,
+      left: position.x >= 0 ? `${position.x}px` : 'auto',
+      right: position.x < 0 ? `${Math.abs(position.x)}px` : 'auto',
+      top: position.y >= 0 ? `${position.y}px` : 'auto',
+      bottom: position.y < 0 ? `${Math.abs(position.y)}px` : 'auto',
+      textAlign: position.align || 'left',
+      transformOrigin: getTransformOrigin(position.origin),
+      maxWidth: position.maxWidth ? `${position.maxWidth}px` : 'none',
       opacity,
-      transform: `translateY(${translateY}px)`,
+      transform: `translateY(${translateY}px) scale(${scale})`,
       transition: 'opacity 0.1s ease-out, transform 0.1s ease-out'
     };
   };
 
-  // Get text element classes based on type
-  const getTextClasses = (item: TextItem) => {
-    const baseClasses = 'text-white mb-4';
-    const typeClasses = {
-      title: 'text-4xl md:text-6xl font-bold',
-      subtitle: 'text-2xl md:text-3xl font-semibold',
-      description: 'text-base md:text-lg leading-relaxed',
-      custom: ''
-    };
-    
-    return `${baseClasses} ${item.className || typeClasses[item.type]}`;
-  };
-
-  // Preload all images
   useEffect(() => {
     const imageArray: HTMLImageElement[] = [];
     let loadedCount = 0;
@@ -146,7 +339,6 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
     setImages(imageArray);
   }, []);
 
-  // Draw image on canvas
   const drawImage = (index: number) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -158,10 +350,10 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const isMobile = window.innerWidth < 768;
+    const isMobileView = window.innerWidth < 768;
     const mobileScale = 0.8;
-    const desktopScale = 0.85;
-    const scaleFactor = isMobile ? mobileScale : desktopScale;
+    const desktopScale = 1.0;
+    const scaleFactor = isMobileView ? mobileScale : desktopScale;
 
     const imgRatio = img.width / img.height;
     const canvasRatio = canvas.width / canvas.height;
@@ -175,7 +367,7 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
       drawWidth = (img.width * (canvas.height / img.height)) * scaleFactor;
       const horizontalSpace = canvas.width - drawWidth;
       
-      if (isMobile) {
+      if (isMobileView) {
         offsetX = horizontalSpace * mobileHorizontalPosition;
       } else {
         offsetX = horizontalSpace / 2;
@@ -192,7 +384,6 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
-  // Handle scroll with scroll-jacking
   useEffect(() => {
     if (isLoading || images.length === 0) return;
 
@@ -248,7 +439,6 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
 
   return (
     <div className="relative">
-      {/* Loading Screen */}
       {isLoading && (
         <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
           <h2 className="text-2xl font-bold text-white mb-4">Loading Product...</h2>
@@ -262,13 +452,11 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
         </div>
       )}
 
-      {/* Scroll Container */}
       <div 
         ref={containerRef}
         className="relative bg-black"
         style={{ height: '400vh' }}
       >
-        {/* Fixed Canvas Container */}
         <div 
           className="w-full h-screen flex items-center justify-center bg-black overflow-hidden"
           style={{
@@ -286,18 +474,32 @@ const ScrollImageSequence: React.FC<ScrollImageSequenceProps> = ({
             style={{ objectFit: 'cover' }}
           />
 
-          {/* Text Overlay - Left Side (Only if showText is true and textItems exist) */}
-          {!isLoading && showText && textItems.length > 0 && (
-            <div className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 z-20 pointer-events-none max-w-xl">
+          {!isLoading && (
+            <div className="absolute inset-0 z-20 pointer-events-none">
+              {/* Text Items */}
               {textItems.map((item, index) => (
                 <div
-                  key={index}
+                  key={`text-${index}`}
                   style={getTextStyle(item)}
-                  className={getTextClasses(item)}
+                  className={`text-white ${item.className || ''}`}
                 >
                   {item.text}
                 </div>
               ))}
+
+              {/* Pills Item */}
+              <div style={getTextStyle(pillsItem)}>
+                <div className="flex flex-wrap gap-2">
+                  {pillsItem.pills.map((pill, index) => (
+                    <span
+                      key={index}
+                      className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm md:text-base text-white/90"
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </div>

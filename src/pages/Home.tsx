@@ -24,11 +24,9 @@ const Home: React.FC = () => {
       
   
       <CarouselHeroSection
-        autoPlayInterval={3000}
+        imageDisplayDuration={5000} // Changed from autoPlayInterval={3000}
         showDots={true}
         showArrows={true}
-        bannerHeight={{ mobile: 0, desktop: 0 }}
-        bannerOpacity={1}
         dotIndicatorBottom={{ mobile: 10, desktop: 15 }}
         dotIndicatorOpacity={0.9}
         dotSize={{ mobile: 6, desktop: 12 }}

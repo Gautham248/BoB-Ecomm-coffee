@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         pangaia: ['Pangaia', 'system-ui', 'sans-serif','Helvetica'],
         helvetica: ['Helvetica', 'sans-serif'],
+        aviano:['Aviano','sans-serif'],
       },
     },
   },

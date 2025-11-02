@@ -148,14 +148,14 @@ const MovementProduct: React.FC = () => {
       <section className="pb-0 pt-12 md:pt-16 lg:pt-20 bg-black">
         <div className="product-info-content text-center text-white space-y-6 px-4 max-w-3xl mx-auto">
           {/* Title */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
+          {/* <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
             {product.title}
-          </h1>
+          </h1> */}
           
           {/* Description */}
-          <p className="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
+          {/* <p className="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
             {product.description}
-          </p>
+          </p> */}
           
           {/* Composition Tags */}
           {/* <div className="flex flex-wrap gap-2 justify-center">
@@ -182,9 +182,9 @@ const MovementProduct: React.FC = () => {
       </section>
 
       {/* Gallery Section - Swipeable with Image Viewer */}
-      <section ref={galleryRef} className="py-12 md:py-16 lg:py-20 bg-black">
+      <section ref={galleryRef} className="pt-12 md:pt-16 lg:pt-20 pb-4 md:pb-6 lg:pb-8 bg-black">
         <div className="w-full">
-          <div className="text-center mb-10 md:mb-14 lg:mb-16 px-4 sm:px-6 md:px-8">
+          <div className="text-center mb-10 md:mb-14 lg:mb-10 px-4 sm:px-6 md:px-8">
             <p className="text-white text-xs sm:text-sm font-medium tracking-wider mb-3 md:mb-4">GALLERY</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-helvetica text-white">{product.name.toUpperCase()}</h2>
           </div>
@@ -305,7 +305,7 @@ const MovementProduct: React.FC = () => {
       {/* Description Section - Black Background */}
       {/* Description Section - Black Background */}
 <section className="bg-black">
-  <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-12 md:pt-16 lg:pt-20">
+  <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-4 md:pt-6 lg:pt-8">
     {/* Tab Content */}
     <div className="tab-content">
       <div className="text-center">
@@ -322,7 +322,17 @@ const MovementProduct: React.FC = () => {
 </section>
 
 {/* Video Section - Directly attached */}
-<VideoHeroSection videoUrl="https://ik.imagekit.io/nzkbravfr/Movement_Inside_01_1-transcode.mp4?updatedAt=1761288434992" />
+{/* <VideoHeroSection videoUrl="https://ik.imagekit.io/nzkbravfr/Movement_Inside_01_1-transcode.mp4?updatedAt=1761288434992" 
+/> */}
+<section className="w-full bg-black">
+  <div className="w-full h-auto md:h-screen flex items-center justify-center">
+    <img
+      src="https://ik.imagekit.io/nzkbravfr/Movement/IMG_9065.JPG?updatedAt=1762052719316"
+      alt="Movement product detail"
+      className="w-full h-auto md:h-full object-contain"
+    />
+  </div>
+</section>
     </>
   );
 };

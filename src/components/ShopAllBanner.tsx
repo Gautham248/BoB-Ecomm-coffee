@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const ShopAllBanner = ({ images = [] }: { images?: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   // Auto-play functionality
   useEffect(() => {
@@ -15,6 +17,34 @@ const ShopAllBanner = ({ images = [] }: { images?: string[] }) => {
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, images.length]);
+
+  // Touch handlers for swipe functionality
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      // Swiped left - go to next
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      // Swiped right - go to previous
+      handlePrevious();
+    }
+
+    // Reset touch values
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) => 
@@ -52,7 +82,12 @@ const ShopAllBanner = ({ images = [] }: { images?: string[] }) => {
   return (
     <div className="mb-8 rounded-2xl overflow-hidden bg-gray-900 relative group">
       {/* Image Display */}
-      <div className="relative w-full h-64 md:h-80 lg:h-96">
+      <div 
+        className="relative w-full h-64 md:h-80 lg:h-96"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {images.map((image, index) => (
           <div
             key={index}

@@ -11,17 +11,15 @@ interface MediaSlide {
 
 interface MediaHeroSliderProps {
   slides: MediaSlide[];
-  autoPlayInterval?: number;
+  imageDisplayDuration?: number; // Duration for images in milliseconds
   showDots?: boolean;
   showArrows?: boolean;
-  bannerHeight?: { mobile: number; desktop: number };
-  bannerOpacity?: number;
   dotIndicatorBottom?: { mobile: number; desktop: number };
   dotIndicatorOpacity?: number;
   dotSize?: { mobile: number; desktop: number };
   dotActiveWidth?: { mobile: number; desktop: number };
-  mobileAspectRatio?: string; // e.g., '1 / 1', '4 / 3', '16 / 9'
-  desktopHeight?: string; // e.g., '100vh', '80vh', '600px'
+  mobileAspectRatio?: string;
+  desktopHeight?: string;
   mobileObjectFit?: 'cover' | 'contain' | 'fill';
   desktopObjectFit?: 'cover' | 'contain' | 'fill';
 }
@@ -31,12 +29,12 @@ interface MediaSlideItemProps {
   isActive: boolean;
   index: number;
   isMobile: boolean;
-  bannerHeight: number;
   currentIndex: number;
   mobileAspectRatio: string;
   desktopHeight: string;
   mobileObjectFit: 'cover' | 'contain' | 'fill';
   desktopObjectFit: 'cover' | 'contain' | 'fill';
+  onSlideComplete: () => void;
 }
 
 const MediaSlideItem: React.FC<MediaSlideItemProps> = ({ 
@@ -44,21 +42,19 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
   isActive, 
   index, 
   isMobile, 
-  bannerHeight, 
   currentIndex,
   mobileAspectRatio,
   desktopHeight,
   mobileObjectFit,
-  desktopObjectFit
+  desktopObjectFit,
+  onSlideComplete
 }) => {
   const [isMediaLoaded, setIsMediaLoaded] = useState(false);
   const [shouldLoadMedia, setShouldLoadMedia] = useState(false);
   const [error, setError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const itemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load media for current slide and adjacent slides (previous and next)
     const isAdjacent = Math.abs(index - currentIndex) <= 1;
     if (isActive || isAdjacent) {
       setShouldLoadMedia(true);
@@ -67,15 +63,13 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
 
   useEffect(() => {
     if (isActive && videoRef.current && slide.type === 'video') {
-      // Reset video state when becoming active
       videoRef.current.currentTime = 0;
-      videoRef.current.load(); // Force reload
+      videoRef.current.load();
       
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.log('Video play failed:', err);
-          // Try to play again after a short delay
           setTimeout(() => {
             if (videoRef.current) {
               videoRef.current.play().catch(e => console.log('Retry failed:', e));
@@ -89,38 +83,19 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
     }
   }, [isActive, slide.type]);
 
-  // Handle video end event for auto-advance
   useEffect(() => {
     const video = videoRef.current;
     if (!video || slide.type !== 'video') return;
 
     const handleVideoEnd = () => {
       if (isActive) {
-        // Trigger parent to move to next slide
-        const event = new CustomEvent('slideComplete', { 
-          detail: { slideIndex: index } 
-        });
-        window.dispatchEvent(event);
+        onSlideComplete();
       }
     };
 
     video.addEventListener('ended', handleVideoEnd);
     return () => video.removeEventListener('ended', handleVideoEnd);
-  }, [isActive, slide.type, index]);
-
-  // Handle image timer for auto-advance
-  useEffect(() => {
-    if (isActive && slide.type === 'image' && isMediaLoaded) {
-      const timer = setTimeout(() => {
-        const event = new CustomEvent('slideComplete', { 
-          detail: { slideIndex: index } 
-        });
-        window.dispatchEvent(event);
-      }, 5000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isActive, slide.type, isMediaLoaded, index]);
+  }, [isActive, slide.type, onSlideComplete]);
 
   const handleMediaLoaded = () => {
     setIsMediaLoaded(true);
@@ -136,14 +111,12 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
 
   return (
     <div
-      ref={itemRef}
       className="relative w-full flex-shrink-0 bg-gray-900 flex items-center justify-center"
       style={{ 
-        height: isMobile ? '100vw' : desktopHeight,
+        height: isMobile ? 'auto' : desktopHeight,
         aspectRatio: isMobile ? mobileAspectRatio : 'auto'
       }}
     >
-      {/* Poster/Placeholder - Shows while media loads */}
       {slide.posterUrl && !isMediaLoaded && !error && (
         <img
           src={slide.posterUrl}
@@ -153,7 +126,6 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
         />
       )}
 
-      {/* Video Content */}
       {slide.type === 'video' && shouldLoadMedia && (
         <video
           ref={videoRef}
@@ -174,7 +146,6 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
         </video>
       )}
 
-      {/* Image Content */}
       {slide.type === 'image' && shouldLoadMedia && (
         <img
           src={slide.url}
@@ -188,17 +159,14 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
         />
       )}
 
-      {/* Error State */}
       {error && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
           <p className="text-white text-lg">Failed to load media</p>
         </div>
       )}
 
-      {/* Overlay for better contrast */}
       <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
 
-      {/* Headline and Text */}
       {(slide.headline || slide.text) && (
         <div className="absolute inset-0 z-20 flex items-center justify-center px-4 md:px-6 pointer-events-none">
           <div className="inline-block bg-white/10 backdrop-blur-md border border-white/30 rounded-full px-6 py-3 md:px-10 md:py-6">
@@ -223,11 +191,9 @@ const MediaSlideItem: React.FC<MediaSlideItemProps> = ({
 
 const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   slides,
-  autoPlayInterval = 5000,
+  imageDisplayDuration = 5000,
   showDots = true,
   showArrows = true,
-  bannerHeight = { mobile: 60, desktop: 80 },
-  bannerOpacity = 1,
   dotIndicatorBottom = { mobile: 20, desktop: 32 },
   dotIndicatorOpacity = 1,
   dotSize = { mobile: 8, desktop: 12 },
@@ -242,7 +208,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const imageTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -253,36 +219,47 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Handle image auto-advance
   useEffect(() => {
-    if (!isPaused && autoPlayInterval > 0 && slides.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % slides.length);
-      }, autoPlayInterval);
-      return () => clearInterval(interval);
-    }
-  }, [isPaused, autoPlayInterval, slides.length]);
-
-  // Listen for slide completion events
-  useEffect(() => {
-    const handleSlideComplete = (e: CustomEvent) => {
-      if (e.detail.slideIndex === currentIndex && !isPaused) {
+    const currentSlide = slides[currentIndex];
+    
+    if (currentSlide.type === 'image' && !isPaused) {
+      imageTimerRef.current = setTimeout(() => {
         goToNext();
+      }, imageDisplayDuration);
+    }
+
+    return () => {
+      if (imageTimerRef.current) {
+        clearTimeout(imageTimerRef.current);
       }
     };
+  }, [currentIndex, isPaused, imageDisplayDuration]);
 
-    window.addEventListener('slideComplete', handleSlideComplete as EventListener);
-    return () => window.removeEventListener('slideComplete', handleSlideComplete as EventListener);
-  }, [currentIndex, isPaused]);
+  const handleSlideComplete = () => {
+    if (!isPaused) {
+      goToNext();
+    }
+  };
 
   const goToSlide = (index: number) => {
+    if (imageTimerRef.current) {
+      clearTimeout(imageTimerRef.current);
+    }
     setCurrentIndex(index);
   };
 
   const goToPrevious = () => {
+    if (imageTimerRef.current) {
+      clearTimeout(imageTimerRef.current);
+    }
     setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   const goToNext = () => {
+    if (imageTimerRef.current) {
+      clearTimeout(imageTimerRef.current);
+    }
     setCurrentIndex((prev) => (prev + 1) % slides.length);
   };
 
@@ -312,31 +289,20 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
     setTouchEnd(0);
   };
 
-  const currentBannerHeight = isMobile ? bannerHeight.mobile : bannerHeight.desktop;
   const currentDotBottom = isMobile ? dotIndicatorBottom.mobile : dotIndicatorBottom.desktop;
   const currentDotSize = isMobile ? dotSize.mobile : dotSize.desktop;
   const currentDotActiveWidth = isMobile ? dotActiveWidth.mobile : dotActiveWidth.desktop;
 
-  // Calculate container height based on mobile aspect ratio
-  const getContainerHeight = () => {
-    if (isMobile) {
-      return 'auto';
-    }
-    return desktopHeight;
-  };
-
   return (
     <section
-      ref={sliderRef}
       className="relative w-full overflow-hidden"
-      style={{ height: getContainerHeight() }}
+      style={{ height: isMobile ? 'auto' : desktopHeight }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Slides Container */}
       <div
         className="flex transition-transform duration-700 ease-in-out"
         style={{ 
@@ -351,28 +317,16 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
             isActive={index === currentIndex}
             index={index}
             isMobile={isMobile}
-            bannerHeight={currentBannerHeight}
             currentIndex={currentIndex}
             mobileAspectRatio={mobileAspectRatio}
             desktopHeight={desktopHeight}
             mobileObjectFit={mobileObjectFit}
             desktopObjectFit={desktopObjectFit}
+            onSlideComplete={handleSlideComplete}
           />
         ))}
       </div>
 
-      {/* Black Banner at Bottom */}
-      {currentBannerHeight > 0 && (
-        <div 
-          className="absolute bottom-0 left-0 right-0 bg-black z-20"
-          style={{ 
-            height: `${currentBannerHeight}px`,
-            opacity: bannerOpacity
-          }}
-        />
-      )}
-
-      {/* Navigation Arrows - Desktop Only */}
       {showArrows && slides.length > 1 && !isMobile && (
         <>
           <button
@@ -392,7 +346,6 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
         </>
       )}
 
-      {/* Dot Navigation */}
       {showDots && slides.length > 1 && (
         <div 
           className="absolute left-1/2 -translate-x-1/2 z-30 flex gap-2"
