@@ -17,7 +17,6 @@ import NewsletterSection from './components/NewsletterSection';
 import MovementProduct from './pages/MovementProduct';
 import OurStoryNew from './pages/OurStoryNew';
 import ShopAllPage from './pages/ShopAllPage';
-import MovementPage from './pages/MovementPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import RefundAndReturns from './pages/RefundAndReturns';

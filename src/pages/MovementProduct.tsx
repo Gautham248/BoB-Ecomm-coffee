@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import VideoHeroSection from '../components/VideoHeroSection';
+// import VideoHeroSection from '../components/VideoHeroSection';
 import ScrollImageSequence from '../components/Movement/ScrollImageSequence';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,9 +22,9 @@ const MovementProduct: React.FC = () => {
     price: '$189.99',
     composition: ['Ceramic Filter', 'Stainless Steel', 'Heat-Resistant Glass', 'Eco-Conscious Design'],
     galleryImages: [
-      'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT1.webp?updatedAt=1761227402101',
       'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT2.webp?updatedAt=1761227402233',
       'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT3.webp?updatedAt=1761227402299',
+      'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT1.webp?updatedAt=1761227402101',
     ],
     descriptionContent: {
       title: 'Freedom in Movement',

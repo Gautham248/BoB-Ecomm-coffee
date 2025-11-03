@@ -204,7 +204,6 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   desktopObjectFit = 'cover'
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
@@ -223,7 +222,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   useEffect(() => {
     const currentSlide = slides[currentIndex];
     
-    if (currentSlide.type === 'image' && !isPaused) {
+    if (currentSlide.type === 'image') {
       imageTimerRef.current = setTimeout(() => {
         goToNext();
       }, imageDisplayDuration);
@@ -234,12 +233,10 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
         clearTimeout(imageTimerRef.current);
       }
     };
-  }, [currentIndex, isPaused, imageDisplayDuration]);
+  }, [currentIndex, imageDisplayDuration]);
 
   const handleSlideComplete = () => {
-    if (!isPaused) {
-      goToNext();
-    }
+    goToNext();
   };
 
   const goToSlide = (index: number) => {
@@ -297,8 +294,6 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
     <section
       className="relative w-full overflow-hidden"
       style={{ height: isMobile ? 'auto' : desktopHeight }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}

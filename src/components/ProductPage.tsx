@@ -22,25 +22,52 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
   const [viewerIndex, setViewerIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Reset animations when product changes
   useEffect(() => {
     window.scrollTo(0, 0);
-    setTimeout(() => {
+    
+    // Kill all existing ScrollTriggers first
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    
+    // Reset all animated elements to visible state immediately
+    gsap.set(['.product-hero-image', '.product-hero-content', '.gallery-item', '.tab-content'], {
+      clearProps: 'all'
+    });
+    
+    // Small delay to ensure DOM is ready, then refresh ScrollTrigger
+    const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 50);
-  }, [product.name]);
+    }, 100);
+    
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [product.id]); // Use product.id instead of product.name for more reliable detection
 
+  // Separate effect for animations
   useEffect(() => {
-    gsap.fromTo('.product-hero-image',
+    // Kill any existing animations first
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    
+    // Ensure elements are visible before animating
+    gsap.set(['.product-hero-image', '.product-hero-content', '.gallery-item', '.tab-content'], {
+      opacity: 1
+    });
+
+    // Hero Image Animation
+    const heroImageAnim = gsap.fromTo('.product-hero-image',
       { scale: 1.1, opacity: 0 },
       { scale: 1, opacity: 1, duration: 1.5, ease: 'power3.out' }
     );
 
-    gsap.fromTo('.product-hero-content',
+    // Hero Content Animation
+    const heroContentAnim = gsap.fromTo('.product-hero-content',
       { x: 100, opacity: 0 },
       { x: 0, opacity: 1, duration: 1.2, delay: 0.3, ease: 'power3.out' }
     );
 
-    gsap.fromTo('.gallery-item',
+    // Gallery Animation with ScrollTrigger
+    const galleryAnim = gsap.fromTo('.gallery-item',
       { y: 100, opacity: 0 },
       {
         y: 0,
@@ -57,7 +84,8 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
       }
     );
 
-    gsap.fromTo('.tab-content',
+    // Tab Content Animation with ScrollTrigger
+    const tabAnim = gsap.fromTo('.tab-content',
       { y: 50, opacity: 0 },
       {
         y: 0,
@@ -74,9 +102,14 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
     );
 
     return () => {
+      // Cleanup animations
+      heroImageAnim.kill();
+      heroContentAnim.kill();
+      galleryAnim.kill();
+      tabAnim.kill();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [product.id]);
 
   const tabs = ['TRACEABILITY','DESCRIPTION',  'REVIEW'];
 
@@ -381,59 +414,60 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
             )}
             
             {activeTab === 'TRACEABILITY' && (
-  <div className="max-w-5xl mx-auto">
-    <div className="text-center mb-10 md:mb-12 px-4">
-      <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-gray-900 mb-4">
-        Know Your Coffee
-      </h3>
-      <p className="text-sm sm:text-base md:text-lg text-gray-700 font-helvetica max-w-2xl mx-auto">
-        {product.title} sourced from the finest estates in the Western Ghats
-      </p>
-    </div>
+              <div className="max-w-5xl mx-auto">
+                <div className="text-center mb-10 md:mb-12 px-4">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-gray-900 mb-4">
+                    Know Your Coffee
+                  </h3>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-700 font-helvetica max-w-2xl mx-auto">
+                    {product.title} sourced from the finest estates in the Western Ghats
+                  </p>
+                </div>
 
-    {/* Traceability Grid */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-4">
-      {/* Source Card */}
-      <div className="bg-[#f5f0e8] p-6 md:p-8 rounded-lg border-b-4 border-gray-900 hover:shadow-lg transition-shadow duration-300">
-        <div className="flex justify-center mb-6">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-            <MapPin className="w-6 h-6 text-gray-900" />
-          </div>
-        </div>
-        <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">SOURCE</h4>
-        <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
-          {product.traceability.source}
-        </p>
-      </div>
+                {/* Traceability Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-4">
+                  {/* Source Card */}
+                  <div className="bg-[#f5f0e8] p-6 md:p-8 rounded-lg border-b-4 border-gray-900 hover:shadow-lg transition-shadow duration-300">
+                    <div className="flex justify-center mb-6">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <MapPin className="w-6 h-6 text-gray-900" />
+                      </div>
+                    </div>
+                    <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">SOURCE</h4>
+                    <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
+                      {product.traceability.source}
+                    </p>
+                  </div>
 
-      {/* Elevation Card */}
-      <div className="bg-[#f5f0e8] p-6 md:p-8 rounded-lg border-b-4 border-gray-900 hover:shadow-lg transition-shadow duration-300">
-        <div className="flex justify-center mb-6">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-            <Mountain className="w-6 h-6 text-gray-900" />
-          </div>
-        </div>
-        <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">ELEVATION</h4>
-        <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
-          {product.traceability.elevation}
-        </p>
-      </div>
+                  {/* Elevation Card */}
+                  <div className="bg-[#f5f0e8] p-6 md:p-8 rounded-lg border-b-4 border-gray-900 hover:shadow-lg transition-shadow duration-300">
+                    <div className="flex justify-center mb-6">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <Mountain className="w-6 h-6 text-gray-900" />
+                      </div>
+                    </div>
+                    <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">ELEVATION</h4>
+                    <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
+                      {product.traceability.elevation}
+                    </p>
+                  </div>
 
-      {/* Process Card */}
-      <div className="bg-[#f5f0e8] p-6 md:p-8 rounded-lg border-b-4 border-gray-900 hover:shadow-lg transition-shadow duration-300">
-        <div className="flex justify-center mb-6">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-            <Droplet className="w-6 h-6 text-gray-900" />
-          </div>
-        </div>
-        <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">PROCESS</h4>
-        <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
-          {product.traceability.process}
-        </p>
-      </div>
-    </div>
-  </div>
-)}
+                  {/* Process Card */}
+                  <div className="bg-[#f5f0e8] p-6 md:p-8 rounded-lg border-b-4 border-gray-900 hover:shadow-lg transition-shadow duration-300">
+                    <div className="flex justify-center mb-6">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <Droplet className="w-6 h-6 text-gray-900" />
+                      </div>
+                    </div>
+                    <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">PROCESS</h4>
+                    <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
+                      {product.traceability.process}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeTab === 'REVIEW' && (
               <div className="text-center px-4 max-w-4xl mx-auto">
                 <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-gray-900 mb-8 md:mb-10">

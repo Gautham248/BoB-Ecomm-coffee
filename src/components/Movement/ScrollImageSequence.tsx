@@ -231,10 +231,10 @@ const ScrollImageSequence: React.FC = () => {
         text: 'AURA: CNTRL',
         position: {
           x: layoutConfig.mobile.leftMargin + (movementWidth > 0 && auraWidth > 0 ? movementWidth - auraWidth : 0),
-          y: layoutConfig.mobile.topMargin + 45,
+          y: layoutConfig.mobile.topMargin + 30,
           align: 'left',
           origin: 'top-left',
-          scale: 1,
+          scale: 0.8,
           maxWidth: 300
         },
         showAtFrame: 50,
@@ -244,7 +244,7 @@ const ScrollImageSequence: React.FC = () => {
         text: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
         position: {
           x: layoutConfig.mobile.leftMargin,
-          y: layoutConfig.mobile.topMargin + 110,
+          y: layoutConfig.mobile.topMargin + 90,
           align: 'left',
           origin: 'top-left',
           scale: 1,
@@ -257,7 +257,7 @@ const ScrollImageSequence: React.FC = () => {
         text: '₹7499',
         position: {
           x: layoutConfig.mobile.leftMargin,
-          y: layoutConfig.mobile.topMargin + 320,
+          y: layoutConfig.mobile.topMargin + 325,
           align: 'left',
           origin: 'top-left',
           scale: 1,
@@ -286,7 +286,7 @@ const ScrollImageSequence: React.FC = () => {
     pills: ['9 Bars', 'Compact', 'Precision'],
     position: {
       x: layoutConfig.mobile.leftMargin,
-      y: layoutConfig.mobile.topMargin + 260,
+      y: layoutConfig.mobile.topMargin + 255,
       align: 'left',
       origin: 'top-left',
       scale: 1,
