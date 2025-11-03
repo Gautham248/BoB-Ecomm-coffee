@@ -11,7 +11,7 @@ interface MediaSlide {
 
 interface MediaHeroSliderProps {
   slides: MediaSlide[];
-  imageDisplayDuration?: number; // Duration for images in milliseconds
+  imageDisplayDuration?: number;
   showDots?: boolean;
   showArrows?: boolean;
   dotIndicatorBottom?: { mobile: number; desktop: number };
@@ -23,171 +23,6 @@ interface MediaHeroSliderProps {
   mobileObjectFit?: 'cover' | 'contain' | 'fill';
   desktopObjectFit?: 'cover' | 'contain' | 'fill';
 }
-
-interface MediaSlideItemProps {
-  slide: MediaSlide;
-  isActive: boolean;
-  index: number;
-  isMobile: boolean;
-  currentIndex: number;
-  mobileAspectRatio: string;
-  desktopHeight: string;
-  mobileObjectFit: 'cover' | 'contain' | 'fill';
-  desktopObjectFit: 'cover' | 'contain' | 'fill';
-  onSlideComplete: () => void;
-}
-
-const MediaSlideItem: React.FC<MediaSlideItemProps> = ({ 
-  slide, 
-  isActive, 
-  index, 
-  isMobile, 
-  currentIndex,
-  mobileAspectRatio,
-  desktopHeight,
-  mobileObjectFit,
-  desktopObjectFit,
-  onSlideComplete
-}) => {
-  const [isMediaLoaded, setIsMediaLoaded] = useState(false);
-  const [shouldLoadMedia, setShouldLoadMedia] = useState(false);
-  const [error, setError] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const isAdjacent = Math.abs(index - currentIndex) <= 1;
-    if (isActive || isAdjacent) {
-      setShouldLoadMedia(true);
-    }
-  }, [isActive, index, currentIndex]);
-
-  useEffect(() => {
-    if (isActive && videoRef.current && slide.type === 'video') {
-      videoRef.current.currentTime = 0;
-      videoRef.current.load();
-      
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(err => {
-          console.log('Video play failed:', err);
-          setTimeout(() => {
-            if (videoRef.current) {
-              videoRef.current.play().catch(e => console.log('Retry failed:', e));
-            }
-          }, 100);
-        });
-      }
-    } else if (!isActive && videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  }, [isActive, slide.type]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || slide.type !== 'video') return;
-
-    const handleVideoEnd = () => {
-      if (isActive) {
-        onSlideComplete();
-      }
-    };
-
-    video.addEventListener('ended', handleVideoEnd);
-    return () => video.removeEventListener('ended', handleVideoEnd);
-  }, [isActive, slide.type, onSlideComplete]);
-
-  const handleMediaLoaded = () => {
-    setIsMediaLoaded(true);
-    setError(false);
-  };
-
-  const handleError = (e: any) => {
-    console.error('Media failed to load:', slide.url, e);
-    setError(true);
-  };
-
-  const objectFitClass = isMobile ? `object-${mobileObjectFit}` : `object-${desktopObjectFit}`;
-
-  return (
-    <div
-      className="relative w-full flex-shrink-0 bg-gray-900 flex items-center justify-center"
-      style={{ 
-        height: isMobile ? 'auto' : desktopHeight,
-        aspectRatio: isMobile ? mobileAspectRatio : 'auto'
-      }}
-    >
-      {slide.posterUrl && !isMediaLoaded && !error && (
-        <img
-          src={slide.posterUrl}
-          alt={`Slide ${index + 1}`}
-          className={`w-full h-full ${objectFitClass}`}
-          loading={isActive ? "eager" : "lazy"}
-        />
-      )}
-
-      {slide.type === 'video' && shouldLoadMedia && (
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          autoPlay={isActive}
-          preload="auto"
-          poster={slide.posterUrl}
-          onLoadedData={handleMediaLoaded}
-          onCanPlay={handleMediaLoaded}
-          onError={handleError}
-          className={`w-full h-full ${objectFitClass} transition-opacity duration-500 ${
-            isMediaLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <source src={slide.url} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      )}
-
-      {slide.type === 'image' && shouldLoadMedia && (
-        <img
-          src={slide.url}
-          alt={`Slide ${index + 1}`}
-          onLoad={handleMediaLoaded}
-          onError={handleError}
-          className={`w-full h-full ${objectFitClass} transition-opacity duration-500 ${
-            isMediaLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-          loading={isActive ? "eager" : "lazy"}
-        />
-      )}
-
-      {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
-          <p className="text-white text-lg">Failed to load media</p>
-        </div>
-      )}
-
-      <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
-
-      {(slide.headline || slide.text) && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center px-4 md:px-6 pointer-events-none">
-          <div className="inline-block bg-white/10 backdrop-blur-md border border-white/30 rounded-full px-6 py-3 md:px-10 md:py-6">
-            {slide.headline && (
-              <h1
-                className="text-lg md:text-4xl lg:text-4xl font-medium tracking-wide text-white leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: slide.headline }}
-              />
-            )}
-            {slide.text && (
-              <p
-                className="text-sm md:text-xl lg:text-2xl text-white/90 leading-relaxed mt-2"
-                dangerouslySetInnerHTML={{ __html: slide.text }}
-              />
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
 
 const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   slides,
@@ -207,6 +42,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const imageTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -218,26 +54,52 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Handle image auto-advance
+  // Handle video playback and auto-advance
   useEffect(() => {
     const currentSlide = slides[currentIndex];
-    
-    if (currentSlide.type === 'image') {
-      imageTimerRef.current = setTimeout(() => {
-        goToNext();
-      }, imageDisplayDuration);
-    }
+    const currentVideo = videoRefs.current[currentIndex];
 
-    return () => {
-      if (imageTimerRef.current) {
-        clearTimeout(imageTimerRef.current);
+    if (currentSlide.type === 'video' && currentVideo) {
+      // Reset and play video
+      currentVideo.currentTime = 0;
+      const playPromise = currentVideo.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.log('Video autoplay failed:', err);
+          // Retry after short delay
+          setTimeout(() => {
+            if (currentVideo) {
+              currentVideo.play().catch(e => console.log('Video retry failed:', e));
+            }
+          }, 100);
+        });
       }
-    };
-  }, [currentIndex, imageDisplayDuration]);
 
-  const handleSlideComplete = () => {
-    goToNext();
-  };
+      // Set up video ended listener
+      const handleVideoEnded = () => {
+        setCurrentIndex((prev) => (prev + 1) % slides.length);
+      };
+
+      currentVideo.addEventListener('ended', handleVideoEnded);
+      
+      return () => {
+        currentVideo.removeEventListener('ended', handleVideoEnded);
+        currentVideo.pause();
+      };
+    } else if (currentSlide.type === 'image') {
+      // Set timer for image slides
+      imageTimerRef.current = setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % slides.length);
+      }, imageDisplayDuration);
+
+      return () => {
+        if (imageTimerRef.current) {
+          clearTimeout(imageTimerRef.current);
+        }
+      };
+    }
+  }, [currentIndex, slides, imageDisplayDuration]);
 
   const goToSlide = (index: number) => {
     if (imageTimerRef.current) {
@@ -289,6 +151,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   const currentDotBottom = isMobile ? dotIndicatorBottom.mobile : dotIndicatorBottom.desktop;
   const currentDotSize = isMobile ? dotSize.mobile : dotSize.desktop;
   const currentDotActiveWidth = isMobile ? dotActiveWidth.mobile : dotActiveWidth.desktop;
+  const objectFitClass = isMobile ? `object-${mobileObjectFit}` : `object-${desktopObjectFit}`;
 
   return (
     <section
@@ -298,6 +161,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Slides Container */}
       <div
         className="flex transition-transform duration-700 ease-in-out"
         style={{ 
@@ -306,22 +170,66 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
         }}
       >
         {slides.map((slide, index) => (
-          <MediaSlideItem
+          <div
             key={`${slide.url}-${index}`}
-            slide={slide}
-            isActive={index === currentIndex}
-            index={index}
-            isMobile={isMobile}
-            currentIndex={currentIndex}
-            mobileAspectRatio={mobileAspectRatio}
-            desktopHeight={desktopHeight}
-            mobileObjectFit={mobileObjectFit}
-            desktopObjectFit={desktopObjectFit}
-            onSlideComplete={handleSlideComplete}
-          />
+            className="relative w-full flex-shrink-0 bg-gray-900 flex items-center justify-center"
+            style={{ 
+              height: isMobile ? 'auto' : desktopHeight,
+              aspectRatio: isMobile ? mobileAspectRatio : 'auto'
+            }}
+          >
+            {/* Video Content */}
+            {slide.type === 'video' && (
+              <video
+                ref={(el) => (videoRefs.current[index] = el)}
+                muted
+                playsInline
+                preload="auto"
+                poster={slide.posterUrl}
+                className={`w-full h-full ${objectFitClass}`}
+              >
+                <source src={slide.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+
+            {/* Image Content */}
+            {slide.type === 'image' && (
+              <img
+                src={slide.url}
+                alt={`Slide ${index + 1}`}
+                className={`w-full h-full ${objectFitClass}`}
+                loading="eager"
+              />
+            )}
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
+
+            {/* Headline and Text */}
+            {(slide.headline || slide.text) && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center px-4 md:px-6 pointer-events-none">
+                <div className="inline-block bg-white/10 backdrop-blur-md border border-white/30 rounded-full px-6 py-3 md:px-10 md:py-6">
+                  {slide.headline && (
+                    <h1
+                      className="text-lg md:text-4xl lg:text-4xl font-medium tracking-wide text-white leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: slide.headline }}
+                    />
+                  )}
+                  {slide.text && (
+                    <p
+                      className="text-sm md:text-xl lg:text-2xl text-white/90 leading-relaxed mt-2"
+                      dangerouslySetInnerHTML={{ __html: slide.text }}
+                    />
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         ))}
       </div>
 
+      {/* Navigation Arrows - Desktop Only */}
       {showArrows && slides.length > 1 && !isMobile && (
         <>
           <button
@@ -341,6 +249,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
         </>
       )}
 
+      {/* Dot Navigation */}
       {showDots && slides.length > 1 && (
         <div 
           className="absolute left-1/2 -translate-x-1/2 z-30 flex gap-2"
