@@ -58,11 +58,9 @@ interface MediaSlide {
 }
 
 interface CarouselHeroSectionProps {
-  autoPlayInterval?: number;
+  imageDisplayDuration?: number; // Changed from autoPlayInterval
   showDots?: boolean;
   showArrows?: boolean;
-  bannerHeight?: { mobile: number; desktop: number };
-  bannerOpacity?: number;
   dotIndicatorBottom?: { mobile: number; desktop: number };
   dotIndicatorOpacity?: number;
   dotSize?: { mobile: number; desktop: number };
@@ -74,11 +72,9 @@ interface CarouselHeroSectionProps {
 }
 
 const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
-  autoPlayInterval = 5000,
+  imageDisplayDuration = 5000, // Changed from autoPlayInterval
   showDots = true,
   showArrows = true,
-  bannerHeight,
-  bannerOpacity,
   dotIndicatorBottom,
   dotIndicatorOpacity,
   dotSize,
@@ -92,25 +88,19 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
     {
       type: 'video',
       url: 'https://ik.imagekit.io/beansofbodhi/Videos/Bob_Main_Hero__2-transcode.mp4?updatedAt=1761228804041',
-      // headline: 'Welcome',
-      // text: 'Optional description text'
     },
     {
       type: 'video',
       url: 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
-      // headline: 'Movement',
-      // text: 'Experience the flow'
     }
   ];
   
   return (
     <MediaHeroSlider
       slides={slides}
-      autoPlayInterval={autoPlayInterval}
+      imageDisplayDuration={imageDisplayDuration} // Changed from autoPlayInterval
       showDots={showDots}
       showArrows={showArrows}
-      bannerHeight={bannerHeight}
-      bannerOpacity={bannerOpacity}
       dotIndicatorBottom={dotIndicatorBottom}
       dotIndicatorOpacity={dotIndicatorOpacity}
       dotSize={dotSize}

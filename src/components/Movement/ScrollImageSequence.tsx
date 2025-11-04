@@ -107,6 +107,13 @@ const ScrollImageSequence: React.FC = () => {
 
   // ========== CONFIGURATION SECTION ==========
   
+  // Frame range configuration - Control which frames are shown during scroll
+  const frameRange = {
+    start: 0,      // Starting frame (0 to frameCount-1) - Change this to start from a different frame
+    end: 101       // Ending frame (0 to frameCount-1) - Change this to end at a different frame
+    // Example: start: 50, end: 150 will only show frames 50 to 150
+  };
+  
   const layoutConfig: LayoutConfig = {
     desktop: {
       rightSideX: 850,
@@ -444,16 +451,16 @@ const ScrollImageSequence: React.FC = () => {
       if (rect.top > 0) {
         setIsFixed(false);
         setIsComplete(false);
-        setCurrentFrame(0);
-        drawImage(0);
+        setCurrentFrame(frameRange.start);
+        drawImage(frameRange.start);
         return;
       }
       
       if (rect.bottom <= windowHeight) {
         setIsFixed(false);
         setIsComplete(true);
-        setCurrentFrame(frameCount - 1);
-        drawImage(frameCount - 1);
+        setCurrentFrame(frameRange.end);
+        drawImage(frameRange.end);
         return;
       }
       
@@ -463,7 +470,11 @@ const ScrollImageSequence: React.FC = () => {
       const scrolledIntoContainer = Math.abs(rect.top);
       const containerHeight = containerRef.current.offsetHeight - windowHeight;
       const progress = Math.min(1, scrolledIntoContainer / containerHeight);
-      const frameIndex = Math.floor(progress * (frameCount - 1));
+      
+      // Calculate frame index within the specified range
+      const frameIndex = Math.floor(
+        frameRange.start + (progress * (frameRange.end - frameRange.start))
+      );
       
       setCurrentFrame(frameIndex);
       drawImage(frameIndex);
@@ -473,7 +484,7 @@ const ScrollImageSequence: React.FC = () => {
       drawImage(currentFrame);
     };
 
-    drawImage(0);
+    drawImage(frameRange.start);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);

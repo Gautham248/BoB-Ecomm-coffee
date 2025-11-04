@@ -239,10 +239,10 @@ const CollectionsSection: React.FC<CollectionsSectionProps> = ({
   const isMobile = itemsPerView === 1;
 
   // Get current collection for display
-  const getCurrentCollection = () => {
-    const index = currentSlide % collections.length;
-    return collections[index];
-  };
+  // const getCurrentCollection = () => {
+  //   const index = currentSlide % collections.length;
+  //   return collections[index];
+  // };
 
   return (
     <section ref={sectionRef} className="py-12 md:py-20 bg-gray-50 overflow-hidden w-full">
