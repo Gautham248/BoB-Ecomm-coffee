@@ -87,7 +87,7 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
   const slides: MediaSlide[] = [
     {
       type: 'video',
-      url: 'https://ik.imagekit.io/beansofbodhi/Videos/Bob_Main_Hero__2-transcode.mp4?updatedAt=1761228804041',
+      url: '/videos/Bob_Main_Hero__2-transcode.mp4',
     },
     {
       type: 'video',
