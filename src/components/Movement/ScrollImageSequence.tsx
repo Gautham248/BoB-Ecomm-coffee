@@ -68,7 +68,7 @@ const ScrollImageSequence: React.FC = () => {
   const [auraWidth, setAuraWidth] = useState(0);
 
   const frameCount = 202;
-  
+
   const imageKitBaseUrl = 'https://ik.imagekit.io/beansofbodhi/Movement-Lottie';
   const imageKitTransform = 'tr:w-1920,q-80';
 
@@ -95,7 +95,7 @@ const ScrollImageSequence: React.FC = () => {
     };
 
     const timer = setTimeout(measureTextWidths, 200);
-    
+
     measureTextWidths();
     window.addEventListener('resize', measureTextWidths);
 
@@ -106,14 +106,14 @@ const ScrollImageSequence: React.FC = () => {
   }, [isMobile, isLoading]);
 
   // ========== CONFIGURATION SECTION ==========
-  
+
   // Frame range configuration - Control which frames are shown during scroll
   const frameRange = {
     start: 0,      // Starting frame (0 to frameCount-1) - Change this to start from a different frame
     end: 101       // Ending frame (0 to frameCount-1) - Change this to end at a different frame
     // Example: start: 50, end: 150 will only show frames 50 to 150
   };
-  
+
   const layoutConfig: LayoutConfig = {
     desktop: {
       rightSideX: 850,
@@ -191,18 +191,18 @@ const ScrollImageSequence: React.FC = () => {
       showAtFrame: 50,
       className: 'text-3xl font-bold font-pangaia'
     },
-    {
-      text: 'Coming Soon',
-      position: {
-        x: layoutConfig.desktop.rightSideX,
-        y: 200 + (layoutConfig.desktop.elementSpacing * 5),
-        align: 'left',
-        origin: 'top-left',
-        scale: 1
-      },
-      showAtFrame: 50,
-      className: 'text-lg font-aviano font-bold border-2 border-white px-8 py-3 inline-block'
-    }
+    // {
+    //   text: 'Coming Soon',
+    //   position: {
+    //     x: layoutConfig.desktop.rightSideX,
+    //     y: 200 + (layoutConfig.desktop.elementSpacing * 5),
+    //     align: 'left',
+    //     origin: 'top-left',
+    //     scale: 1
+    //   },
+    //   showAtFrame: 50,
+    //   className: 'text-lg font-aviano font-bold border-2 border-white px-8 py-3 inline-block'
+    // }
   ];
 
   // Desktop Pills Configuration
@@ -273,18 +273,18 @@ const ScrollImageSequence: React.FC = () => {
         showAtFrame: 50,
         className: 'text-3xl font-bold font-pangaia'
       },
-      {
-        text: 'Coming Soon',
-        position: {
-          x: layoutConfig.mobile.leftMargin,
-          y: layoutConfig.mobile.topMargin + 385,
-          align: 'left',
-          origin: 'top-left',
-          scale: 1
-        },
-        showAtFrame: 50,
-        className: 'text-base font-aviano font-bold border-2 border-white px-6 py-2 inline-block'
-      }
+      // {
+      //   text: 'Coming Soon',
+      //   position: {
+      //     x: layoutConfig.mobile.leftMargin,
+      //     y: layoutConfig.mobile.topMargin + 385,
+      //     align: 'left',
+      //     origin: 'top-left',
+      //     scale: 1
+      //   },
+      //   showAtFrame: 50,
+      //   className: 'text-base font-aviano font-bold border-2 border-white px-6 py-2 inline-block'
+      // }
     ];
   };
 
@@ -315,7 +315,7 @@ const ScrollImageSequence: React.FC = () => {
   const getTextStyle = (item: TextItem | PillsItem) => {
     const { showAtFrame, hideAtFrame, position } = item;
     const { moveUpDistance, fadeOutAfterShow, fadeOutDistance } = animationConfig;
-    
+
     let opacity = 0;
     let translateY = moveUpDistance;
 
@@ -371,11 +371,11 @@ const ScrollImageSequence: React.FC = () => {
         const img = new Image();
         const frameNumber = i.toString().padStart(5, '0');
         img.src = `${imageKitBaseUrl}/CFE_MKR_RNDR.png_${frameNumber}.png?${imageKitTransform}`;
-        
+
         img.onload = () => {
           loadedCount++;
           setLoadProgress(Math.round((loadedCount / frameCount) * 100));
-          
+
           if (loadedCount === frameCount) {
             setIsLoading(false);
           }
@@ -397,11 +397,11 @@ const ScrollImageSequence: React.FC = () => {
   const drawImage = (index: number) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
-    
+
     if (!canvas || !ctx || !images[index]) return;
 
     const img = images[index];
-    
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -412,16 +412,16 @@ const ScrollImageSequence: React.FC = () => {
 
     const imgRatio = img.width / img.height;
     const canvasRatio = canvas.width / canvas.height;
-    
+
     const mobileHorizontalPosition = 0.45;
-    
+
     let drawWidth, drawHeight, offsetX, offsetY;
-    
+
     if (imgRatio > canvasRatio) {
       drawHeight = canvas.height * scaleFactor;
       drawWidth = (img.width * (canvas.height / img.height)) * scaleFactor;
       const horizontalSpace = canvas.width - drawWidth;
-      
+
       if (isMobileView) {
         offsetX = horizontalSpace * mobileHorizontalPosition;
       } else {
@@ -444,10 +444,10 @@ const ScrollImageSequence: React.FC = () => {
 
     const handleScroll = () => {
       if (!containerRef.current) return;
-      
+
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
+
       if (rect.top > 0) {
         setIsFixed(false);
         setIsComplete(false);
@@ -455,7 +455,7 @@ const ScrollImageSequence: React.FC = () => {
         drawImage(frameRange.start);
         return;
       }
-      
+
       if (rect.bottom <= windowHeight) {
         setIsFixed(false);
         setIsComplete(true);
@@ -463,19 +463,19 @@ const ScrollImageSequence: React.FC = () => {
         drawImage(frameRange.end);
         return;
       }
-      
+
       setIsFixed(true);
       setIsComplete(false);
-      
+
       const scrolledIntoContainer = Math.abs(rect.top);
       const containerHeight = containerRef.current.offsetHeight - windowHeight;
       const progress = Math.min(1, scrolledIntoContainer / containerHeight);
-      
+
       // Calculate frame index within the specified range
       const frameIndex = Math.floor(
         frameRange.start + (progress * (frameRange.end - frameRange.start))
       );
-      
+
       setCurrentFrame(frameIndex);
       drawImage(frameIndex);
     };
@@ -489,7 +489,7 @@ const ScrollImageSequence: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
     handleScroll();
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
@@ -502,7 +502,7 @@ const ScrollImageSequence: React.FC = () => {
         <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
           <h2 className="text-2xl font-bold text-white mb-4">Loading Product...</h2>
           <div className="w-80 h-2 bg-gray-800 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300"
               style={{ width: `${loadProgress}%` }}
             />
@@ -511,12 +511,12 @@ const ScrollImageSequence: React.FC = () => {
         </div>
       )}
 
-      <div 
+      <div
         ref={containerRef}
         className="relative bg-black"
         style={{ height: '400vh' }}
       >
-        <div 
+        <div
           className="w-full h-screen flex items-center justify-center bg-black overflow-hidden"
           style={{
             position: isFixed ? 'fixed' : 'absolute',
@@ -527,7 +527,7 @@ const ScrollImageSequence: React.FC = () => {
             zIndex: 10
           }}
         >
-          <canvas 
+          <canvas
             ref={canvasRef}
             className="w-full h-full"
             style={{ objectFit: 'cover' }}

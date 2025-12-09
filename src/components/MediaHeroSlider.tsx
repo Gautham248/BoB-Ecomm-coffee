@@ -186,7 +186,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
                 playsInline
                 preload="auto"
                 poster={slide.posterUrl}
-                className={`w-full h-full ${objectFitClass}`}
+                className="w-full h-full object-contain"
               >
                 <source src={slide.url} type="video/mp4" />
                 Your browser does not support the video tag.

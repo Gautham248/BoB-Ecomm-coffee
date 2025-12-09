@@ -4,6 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 // import VideoHeroSection from '../components/VideoHeroSection';
 import ScrollImageSequence from '../components/Movement/ScrollImageSequence';
+import DarkHeroAddToCartSection from '../components/Cart/DarkHeroAddToCartSection';
+import { products as movementProducts } from '../data/movement';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,11 +17,12 @@ const MovementProduct: React.FC = () => {
   const [viewerIndex, setViewerIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const productData = movementProducts[0];
   const product = {
-    name: 'Movement',
-    title: 'Movement ',
-    description: 'Your companion between destinations, a mindset for the climbers, surfers and dreamers and the ones who carry rhythm. Crafted for the road and in between. Small enough to fit in your pack, powerful enough to pull a shot, No cords, no limits, just espresso.',
-    price: '$189.99',
+    name: productData.name,
+    title: productData.title,
+    description: productData.description,
+    price: productData.price,
     composition: ['Ceramic Filter', 'Stainless Steel', 'Heat-Resistant Glass', 'Eco-Conscious Design'],
     galleryImages: [
       'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT2.webp?updatedAt=1761227402233',
@@ -27,7 +30,7 @@ const MovementProduct: React.FC = () => {
       'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT1.webp?updatedAt=1761227402101',
     ],
     descriptionContent: {
-      title: 'Freedom in Movement',
+      title: productData.descriptionContent.title,
       content: `
       A Symphony of Simplicity  
       No Electricity. No Limits.  
@@ -52,10 +55,10 @@ const MovementProduct: React.FC = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -136,8 +139,8 @@ const MovementProduct: React.FC = () => {
 
   return (
     <>
-     
-     <ScrollImageSequence />
+
+      <ScrollImageSequence />
 
       {/* Video Hero Section */}
       {/* <section ref={heroRef} className="relative w-full bg-black">
@@ -145,18 +148,19 @@ const MovementProduct: React.FC = () => {
       </section> */}
 
       {/* Product Information Section */}
-      {/* <section className="pb-0 pt-12 md:pt-16 lg:pt-20 bg-black">
+      {/* Product Information Section */}
+      <section className="pb-0 pt-12 md:pt-16 lg:pt-20 bg-black">
         <div className="product-info-content text-center text-white space-y-6 px-4 max-w-3xl mx-auto">
-          
+
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pangaia font-bold tracking-wide leading-tight">
             {product.title}
           </h1>
-          
-      
+
+
           <p className="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
             {product.description}
           </p>
-          
+
 
           <div className="flex flex-wrap gap-2 justify-center">
             {product.composition.map((item, index) => (
@@ -169,16 +173,11 @@ const MovementProduct: React.FC = () => {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-6">
-            <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-              {product.price}
-            </span>
-            <button className="px-6 sm:px-8 py-2 sm:py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors duration-300 whitespace-nowrap text-sm sm:text-base">
-              Add to Cart
-            </button>
+          <div className="pt-6 max-w-md mx-auto">
+            <DarkHeroAddToCartSection product={productData} />
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Gallery Section - Swipeable with Image Viewer */}
       <section ref={galleryRef} className="pt-12 md:pt-16 lg:pt-20 pb-4 md:pb-6 lg:pb-8 bg-black">
@@ -190,7 +189,7 @@ const MovementProduct: React.FC = () => {
 
           {/* Swipeable Gallery Container */}
           <div className="relative w-full">
-            <div 
+            <div
               ref={scrollContainerRef}
               className="flex gap-3 md:gap-4 overflow-x-auto snap-x snap-mandatory pb-4 justify-start md:justify-center px-4"
               style={{
@@ -208,7 +207,7 @@ const MovementProduct: React.FC = () => {
               </style>
               {/* Spacer for mobile centering */}
               <div className="flex-shrink-0 w-[calc((100vw-280px)/2)] md:hidden" />
-              
+
               {product.galleryImages.map((image, index) => (
                 <div
                   key={index}
@@ -230,7 +229,7 @@ const MovementProduct: React.FC = () => {
                   </div>
                 </div>
               ))}
-              
+
               {/* Spacer for mobile centering */}
               <div className="flex-shrink-0 w-[calc((100vw-280px)/2)] md:hidden" />
             </div>
@@ -303,35 +302,35 @@ const MovementProduct: React.FC = () => {
 
       {/* Description Section - Black Background */}
       {/* Description Section - Black Background */}
-<section className="bg-black">
-  <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-4 md:pt-6 lg:pt-8">
-    {/* Tab Content */}
-    <div className="tab-content">
-      <div className="text-center">
-        <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-white mb-6 md:mb-8 px-4">
-          {product.descriptionContent.title}
-        </h3>
-        <p className="text-sm sm:text-base md:text-lg text-white/80 font-helvetica leading-relaxed max-w-3xl mx-auto px-4">
-          {product.descriptionContent.content}
-        </p>
-        <br />
-      </div>
-    </div>
-  </div>
-</section>
+      <section className="bg-black">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-4 md:pt-6 lg:pt-8">
+          {/* Tab Content */}
+          <div className="tab-content">
+            <div className="text-center">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-white mb-6 md:mb-8 px-4">
+                {product.descriptionContent.title}
+              </h3>
+              <p className="text-sm sm:text-base md:text-lg text-white/80 font-helvetica leading-relaxed max-w-3xl mx-auto px-4">
+                {product.descriptionContent.content}
+              </p>
+              <br />
+            </div>
+          </div>
+        </div>
+      </section>
 
-{/* Video Section - Directly attached */}
-{/* <VideoHeroSection videoUrl="https://ik.imagekit.io/nzkbravfr/Movement_Inside_01_1-transcode.mp4?updatedAt=1761288434992" 
+      {/* Video Section - Directly attached */}
+      {/* <VideoHeroSection videoUrl="https://ik.imagekit.io/nzkbravfr/Movement_Inside_01_1-transcode.mp4?updatedAt=1761288434992" 
 /> */}
-<section className="w-full bg-black">
-  <div className="w-full h-auto md:h-screen flex items-center justify-center">
-    <img
-      src="https://ik.imagekit.io/nzkbravfr/Movement/IMG_9065.JPG?updatedAt=1762052719316"
-      alt="Movement product detail"
-      className="w-full h-auto md:h-full object-contain"
-    />
-  </div>
-</section>
+      <section className="w-full bg-black">
+        <div className="w-full h-auto md:h-screen flex items-center justify-center">
+          <img
+            src="https://ik.imagekit.io/nzkbravfr/Movement/IMG_9065.JPG?updatedAt=1762052719316"
+            alt="Movement product detail"
+            className="w-full h-auto md:h-full object-contain"
+          />
+        </div>
+      </section>
     </>
   );
 };

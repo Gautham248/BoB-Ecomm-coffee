@@ -9,6 +9,29 @@ const client = Client.buildClient({
 
 export default client;
 
+export const fetchAllProductsAndDownload = async () => {
+  try {
+    const products = await client.product.fetchAll();
+
+    // Create a blob and download link
+    const dataStr = JSON.stringify(products, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "shopify_products.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    console.log("Products downloaded successfully");
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+};
+
+
 // Updated Types to match Shopify Buy SDK response structure
 export interface ShopifyProduct {
   id: string;

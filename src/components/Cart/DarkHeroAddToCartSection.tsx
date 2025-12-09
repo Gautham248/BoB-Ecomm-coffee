@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Plus, Minus } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { Product } from '../../data/collections';
+// import { fetchAllProductsAndDownload } from '../../utils/shopify';
 
 interface DarkHeroAddToCartSectionProps {
   product: Product;
@@ -30,15 +31,19 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
     if (!selectedVariant || !selectedVariantData?.available) {
       return;
     }
-    
+
     if (localLoading || loading) {
       return;
     }
-    
+
     setLocalLoading(true);
-    
+
     try {
       await addToCart(selectedVariant, quantity);
+
+      // Trigger product download for debugging
+      // fetchAllProductsAndDownload();
+
       setTimeout(() => {
         toggleCart();
       }, 500);
@@ -85,10 +90,10 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
     <div className="space-y-6 mt-1">
 
       {/* Price Display */}
-      
+
       <div className="text-white">
         <div className="text-3xl font-pangaia font-medium mb-1">
-        {selectedVariantData ? formatPrice(selectedVariantData.price) : formatPrice(product.price)}
+          {selectedVariantData ? formatPrice(selectedVariantData.price) : formatPrice(product.price)}
         </div>
       </div>
 
@@ -108,7 +113,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
               <span>{selectedVariantData?.title || '400ml'}</span>
               <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
-            
+
             {isDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 bg-gray-900 border border-white/20 rounded-lg shadow-xl z-10 w-full">
                 {product.shopifyVariants.map((variant) => (
@@ -118,9 +123,8 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
                       setSelectedVariant(variant.id);
                       setIsDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 hover:bg-white/10 transition-colors first:rounded-t-lg last:rounded-b-lg ${
-                      selectedVariant === variant.id ? 'bg-white/10 text-white' : 'text-white/80'
-                    }`}
+                    className={`w-full text-left px-4 py-3 hover:bg-white/10 transition-colors first:rounded-t-lg last:rounded-b-lg ${selectedVariant === variant.id ? 'bg-white/10 text-white' : 'text-white/80'
+                      }`}
                     disabled={!variant.available}
                   >
                     <div className="flex items-center justify-between">
@@ -137,7 +141,7 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
         </div>
       )}
 
-    
+
       {/* Quantity and Add to Cart Row */}
       <div className="flex items-center space-x-4">
         {/* Quantity Selector */}
@@ -149,11 +153,11 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
           >
             <Minus className="w-4 h-4 text-white" />
           </button>
-          
+
           <span className="w-12 text-center text-lg font-medium text-white">
             {quantity}
           </span>
-          
+
           <button
             onClick={incrementQuantity}
             className="p-3 hover:bg-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-r-lg"
