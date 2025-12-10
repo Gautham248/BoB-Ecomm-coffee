@@ -21,8 +21,8 @@ const Home: React.FC = () => {
         keywords="specialty coffee, premium coffee, Western Ghats coffee, sustainable coffee, arabica coffee, robusta coffee, adventure coffee, eco-friendly coffee"
         ogImage="https://beansofbodhi.com/og-homepage.jpg"
       />
-      
-  
+
+
       <CarouselHeroSection
         imageDisplayDuration={5000} // Changed from autoPlayInterval={3000}
         showDots={true}
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
         dotSize={{ mobile: 6, desktop: 12 }}
         dotActiveWidth={{ mobile: 20, desktop: 32 }}
         mobileAspectRatio="1 / 1"
-        desktopHeight="100vh"
+        desktopAspectRatio="16 / 9"
         mobileObjectFit="cover"
         desktopObjectFit="cover"
       />
@@ -44,8 +44,8 @@ const Home: React.FC = () => {
         mobileCarouselSideScale={0.9}
       />
 
-      <VideoHeroSection 
-        videoUrl="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772" 
+      <VideoHeroSection
+        videoUrl="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772"
         headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
         posterUrl="your-poster-image.jpg" // Optional: Add a poster image
         mobileAspectRatio="1 / 1" // Square on mobile
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
       />
       <FeaturedSection />
       <HomeMovement />
-      <BusinessSection/>
+      <BusinessSection />
       <StorySection />
       <VideoHeroSection videoUrl="https://ik.imagekit.io/beansofbodhi/Videos/1-Planet_1-transcode.mp4?updatedAt=1761228828643" />
 

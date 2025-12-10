@@ -23,7 +23,7 @@ const MovementProduct: React.FC = () => {
     title: productData.title,
     description: productData.description,
     price: productData.price,
-    composition: ['Ceramic Filter', 'Stainless Steel', 'Heat-Resistant Glass', 'Eco-Conscious Design'],
+    composition: ['Stainless Steel', 'Eco-Conscious Design'],
     galleryImages: [
       'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT2.webp?updatedAt=1761227402233',
       'https://ik.imagekit.io/beansofbodhi/Products/Movement/MVT3.webp?updatedAt=1761227402299',

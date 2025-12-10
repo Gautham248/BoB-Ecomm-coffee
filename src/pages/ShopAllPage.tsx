@@ -5,12 +5,12 @@ import { products, getAvailableCategories, categoryLabels } from '../data/collec
 import ShopAllBanner from '../components/ShopAllBanner';
 
 // Filter Pills Component
-const CategoryFilter = ({ 
-  categories, 
-  selectedCategories, 
+const CategoryFilter = ({
+  categories,
+  selectedCategories,
   onToggleCategory,
-  onClearAll 
-}: { 
+  onClearAll
+}: {
   categories: Array<{ id: string; label: string; upcoming: boolean }>;
   selectedCategories: string[];
   onToggleCategory: (categoryId: string) => void;
@@ -20,11 +20,10 @@ const CategoryFilter = ({
     <div className="flex flex-wrap gap-3 mb-8 justify-center">
       <button
         onClick={onClearAll}
-        className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-          selectedCategories.length === 0
+        className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategories.length === 0
             ? 'bg-gray-900 text-white'
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        }`}
+          }`}
       >
         All Products
       </button>
@@ -32,11 +31,10 @@ const CategoryFilter = ({
         <button
           key={category.id}
           onClick={() => onToggleCategory(category.id)}
-          className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-            selectedCategories.includes(category.id)
+          className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategories.includes(category.id)
               ? 'bg-gray-900 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
+            }`}
         >
           {category.label}
           {category.upcoming && (
@@ -55,17 +53,17 @@ const UpcomingProductCard: React.FC<{ categoryLabel: string }> = ({ categoryLabe
       <div className="aspect-square bg-gray-100 flex items-center justify-center">
         <div className="text-center p-6">
           <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-full flex items-center justify-center">
-            <svg 
-              className="w-8 h-8 text-gray-400" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-8 h-8 text-gray-400"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
               />
             </svg>
           </div>
@@ -107,9 +105,9 @@ const ShopAllPage = () => {
     const newCategories = selectedCategories.includes(categoryId)
       ? selectedCategories.filter(id => id !== categoryId)
       : [...selectedCategories, categoryId];
-    
+
     setSelectedCategories(newCategories);
-    
+
     // Update URL
     if (newCategories.length === 0) {
       setSearchParams({});
@@ -124,14 +122,18 @@ const ShopAllPage = () => {
   };
 
   const handleProductClick = (productId: string) => {
-    navigate(`/product/${productId}`);
+    if (productId === 'gadgets') {
+      navigate('/movement');
+    } else {
+      navigate(`/product/${productId}`);
+    }
   };
 
   const filteredProducts = useMemo(() => {
     if (selectedCategories.length === 0) {
       return products;
     }
-    return products.filter(product => 
+    return products.filter(product =>
       selectedCategories.includes(product.category)
     );
   }, [selectedCategories]);
@@ -161,17 +163,17 @@ const ShopAllPage = () => {
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           All Products
         </h1>
-        <ShopAllBanner 
-        images={[
-          'https://ik.imagekit.io/nzkbravfr/Banner/origin.png?updatedAt=1761489002944',
-          'https://ik.imagekit.io/nzkbravfr/Banner/tornado%20twist.png?updatedAt=1761489002921',
-          'https://ik.imagekit.io/nzkbravfr/Banner/High%20tide.png?updatedAt=1761489002900',
-          'https://ik.imagekit.io/nzkbravfr/Banner/wild%20fire%20rush.png?updatedAt=1761489002944',
-          'https://ik.imagekit.io/nzkbravfr/Banner/eco2.png?updatedAt=1761489002895',
-          'https://ik.imagekit.io/nzkbravfr/Banner/thunder%20fuse.png?updatedAt=1761489002932',
+        <ShopAllBanner
+          images={[
+            'https://ik.imagekit.io/nzkbravfr/Banner/origin.png?updatedAt=1761489002944',
+            'https://ik.imagekit.io/nzkbravfr/Banner/tornado%20twist.png?updatedAt=1761489002921',
+            'https://ik.imagekit.io/nzkbravfr/Banner/High%20tide.png?updatedAt=1761489002900',
+            'https://ik.imagekit.io/nzkbravfr/Banner/wild%20fire%20rush.png?updatedAt=1761489002944',
+            'https://ik.imagekit.io/nzkbravfr/Banner/eco2.png?updatedAt=1761489002895',
+            'https://ik.imagekit.io/nzkbravfr/Banner/thunder%20fuse.png?updatedAt=1761489002932',
 
-        ]}
-      />
+          ]}
+        />
         {/* Category Filters */}
         <CategoryFilter
           categories={availableCategories}
@@ -183,14 +185,14 @@ const ShopAllPage = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
           {filteredProducts.map(product => (
-            <ProductCard 
-              key={product.id} 
+            <ProductCard
+              key={product.id}
               product={product}
               onClick={() => handleProductClick(product.id)}
               categoryLabel={categoryLabels[product.category]}
             />
           ))}
-          
+
           {/* Show upcoming cards if upcoming categories are selected */}
           {/* {hasUpcomingCategories && upcomingCategoryLabels.map((label, index) => (
             <UpcomingProductCard 

@@ -1,61 +1,5 @@
-// import React from 'react';
-// import MediaHeroSlider from './MediaHeroSlider';
-
-// interface MediaSlide {
-//   type: 'video' | 'image';
-//   url: string;
-//   headline?: string;
-//   posterUrl?: string;
-// }
-
-// interface CarouselHeroSectionProps {
-//   autoPlayInterval?: number;
-//   showDots?: boolean;
-//   showArrows?: boolean;
-// }
-
-// const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
-//   autoPlayInterval = 5000,
-//   showDots = true,
-//   showArrows = true
-// }) => {
-//   const slides: MediaSlide[] = [
-//     {
-//       type: 'video',
-//       url: 'https://ik.imagekit.io/beansofbodhi/Videos/Bob_Main_Hero__2-transcode.mp4?updatedAt=1761228804041',
-//     },
-//     {
-//       type: 'video',
-//       url: 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
-//     }
-//   ];
-  
-
-//   return (
-//     <MediaHeroSlider
-//   slides={slides}
-//   autoPlayInterval={5000}
-//   showDots={true}
-//   showArrows={true}
-//   bannerHeight={{ mobile: 60, desktop: 80 }}
-//   bannerOpacity={0.9}
-//   dotIndicatorBottom={{ mobile: 20, desktop: 32 }}
-//   dotIndicatorOpacity={1}
-// />
-//   );
-// };
-
-// export default CarouselHeroSection;
 import React from 'react';
-import MediaHeroSlider from './MediaHeroSlider';
-
-interface MediaSlide {
-  type: 'video' | 'image';
-  url: string;
-  headline?: string;
-  text?: string;
-  posterUrl?: string;
-}
+import MediaHeroSlider, { MediaSlide } from './MediaHeroSlider';
 
 interface CarouselHeroSectionProps {
   imageDisplayDuration?: number; // Changed from autoPlayInterval
@@ -66,13 +10,14 @@ interface CarouselHeroSectionProps {
   dotSize?: { mobile: number; desktop: number };
   dotActiveWidth?: { mobile: number; desktop: number };
   mobileAspectRatio?: string;
+  desktopAspectRatio?: string; // New prop
   desktopHeight?: string;
   mobileObjectFit?: 'cover' | 'contain' | 'fill';
   desktopObjectFit?: 'cover' | 'contain' | 'fill';
 }
 
 const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
-  imageDisplayDuration = 5000, // Changed from autoPlayInterval
+  imageDisplayDuration = 5000,
   showDots = true,
   showArrows = true,
   dotIndicatorBottom,
@@ -80,6 +25,7 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
   dotSize,
   dotActiveWidth,
   mobileAspectRatio = '1 / 1',
+  desktopAspectRatio, // New prop
   desktopHeight = '100vh',
   mobileObjectFit = 'cover',
   desktopObjectFit = 'cover'
@@ -88,17 +34,20 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
     {
       type: 'video',
       url: '/videos/Bob_Main_Hero__2-transcode.mp4',
+      mobileUrl: 'https://ik.imagekit.io/beansofbodhi/Hero/title_video.mp4',
     },
     {
       type: 'video',
       url: 'https://ik.imagekit.io/beansofbodhi/Videos/Movement_Desk_01_1-transcode.mp4?updatedAt=1761228869362',
+      mobileUrl: 'https://ik.imagekit.io/beansofbodhi/Hero/movement.mp4',
     }
+
   ];
-  
+
   return (
     <MediaHeroSlider
       slides={slides}
-      imageDisplayDuration={imageDisplayDuration} // Changed from autoPlayInterval
+      imageDisplayDuration={imageDisplayDuration}
       showDots={showDots}
       showArrows={showArrows}
       dotIndicatorBottom={dotIndicatorBottom}
@@ -106,6 +55,7 @@ const CarouselHeroSection: React.FC<CarouselHeroSectionProps> = ({
       dotSize={dotSize}
       dotActiveWidth={dotActiveWidth}
       mobileAspectRatio={mobileAspectRatio}
+      desktopAspectRatio={desktopAspectRatio}
       desktopHeight={desktopHeight}
       mobileObjectFit={mobileObjectFit}
       desktopObjectFit={desktopObjectFit}

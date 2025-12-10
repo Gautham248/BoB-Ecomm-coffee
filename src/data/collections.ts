@@ -75,7 +75,7 @@ export const products: Product[] = [
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR3.webp?updatedAt=1761227480407',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/7-p-800.jpg?updatedAt=1761227510274',
     ],
-    
+
     descriptionContent: {
       title: 'Rooted in Nature. Preserving its legacy.',
       content: 'The Origin is more than a coffee-it\'s a pledge to preserve the untamed wilderness and vibrant landscapes of the Western Ghats. Every cup supports initiatives aimed at protecting these vital eco systems and the forest communities who call them home.',
@@ -256,7 +256,7 @@ export const products: Product[] = [
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT_03-p-800.jpg?updatedAt=1761227847940',
       'https://ik.imagekit.io/beansofbodhi/Products/The%20Tornado%20Twist/TT_01-p-800.jpg?updatedAt=1761227860426',
     ],
-    
+
     descriptionContent: {
       title: 'Fuel the adventure. Rebuild the future.',
       content: 'Tornado Twist is more than a bold brew - it\'s a catalyst for change. Every sip fuels efforts to rebuild communities hit by floods, helping them rise stronger after the storm.',
@@ -268,9 +268,9 @@ export const products: Product[] = [
   {
     id: 'gadgets',
     name: 'Gadgets',
-    title: 'Gadgets',
+    title: 'Movement',
     description: 'Coming soon - Gadgets',
-    price: 'INR 1,299.00',
+    price: 'INR 7,499.00',
     traceability: {
       source: 'N/A',
       tasteNotes: [],
@@ -287,7 +287,7 @@ export const products: Product[] = [
       image: ''
     },
     category: 'gadgets',
-    upcoming: true
+    upcoming: false
   },
   {
     id: 'merchandise',
@@ -533,7 +533,7 @@ export const headerProducts: Product[] = [
     category: 'signature-blends',
     featured: true
   },
- 
+
 ];
 // Collections/Categories
 export const collections: Collection[] = [
@@ -568,7 +568,7 @@ export const collections: Collection[] = [
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Gadgets.webp?updatedAt=1761390411909',
     products: ['gadgets'],
     featured: true,
-    upcoming: true
+    upcoming: false
   },
   {
     id: 'merchandise',
@@ -627,7 +627,7 @@ export const getFeaturedCollections = (): Collection[] => {
 export const getProductsInCollection = (collectionId: string): Product[] => {
   const collection = getCollectionById(collectionId);
   if (!collection) return [];
-  
+
   return collection.products.map(productId => getProductById(productId)).filter(Boolean) as Product[];
 };
 

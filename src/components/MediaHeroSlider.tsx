@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface MediaSlide {
+export interface MediaSlide {
   type: 'video' | 'image';
   url: string;
+  mobileUrl?: string; // Optional URL for mobile specific content
   headline?: string;
   text?: string;
   posterUrl?: string;
@@ -19,6 +20,7 @@ interface MediaHeroSliderProps {
   dotSize?: { mobile: number; desktop: number };
   dotActiveWidth?: { mobile: number; desktop: number };
   mobileAspectRatio?: string;
+  desktopAspectRatio?: string;
   desktopHeight?: string;
   mobileObjectFit?: 'cover' | 'contain' | 'fill';
   desktopObjectFit?: 'cover' | 'contain' | 'fill';
@@ -34,6 +36,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   dotSize = { mobile: 8, desktop: 12 },
   dotActiveWidth = { mobile: 24, desktop: 32 },
   mobileAspectRatio = '1 / 1',
+  desktopAspectRatio, // New prop
   desktopHeight = '100vh',
   mobileObjectFit = 'cover',
   desktopObjectFit = 'cover'
@@ -63,7 +66,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
       // Reset and play video
       currentVideo.currentTime = 0;
       const playPromise = currentVideo.play();
-      
+
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.log('Video autoplay failed:', err);
@@ -82,7 +85,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
       };
 
       currentVideo.addEventListener('ended', handleVideoEnded);
-      
+
       return () => {
         currentVideo.removeEventListener('ended', handleVideoEnded);
         currentVideo.pause();
@@ -132,7 +135,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
 
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
@@ -156,7 +159,10 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ height: isMobile ? 'auto' : desktopHeight }}
+      style={{
+        height: isMobile ? 'auto' : (desktopAspectRatio ? 'auto' : desktopHeight),
+        aspectRatio: isMobile ? mobileAspectRatio : (desktopAspectRatio || 'auto')
+      }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -164,7 +170,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
       {/* Slides Container */}
       <div
         className="flex transition-transform duration-700 ease-in-out"
-        style={{ 
+        style={{
           transform: `translateX(-${currentIndex * 100}%)`,
           height: '100%'
         }}
@@ -173,9 +179,9 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
           <div
             key={`${slide.url}-${index}`}
             className="relative w-full flex-shrink-0 bg-gray-900 flex items-center justify-center"
-            style={{ 
-              height: isMobile ? 'auto' : desktopHeight,
-              aspectRatio: isMobile ? mobileAspectRatio : 'auto'
+            style={{
+              height: isMobile ? 'auto' : (desktopAspectRatio ? 'auto' : desktopHeight),
+              aspectRatio: isMobile ? mobileAspectRatio : (desktopAspectRatio || 'auto')
             }}
           >
             {/* Video Content */}
@@ -187,8 +193,10 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
                 preload="auto"
                 poster={slide.posterUrl}
                 className="w-full h-full object-contain"
+                // Key forces re-render when switching between mobile/desktop URLs if they differ
+                key={`video-${index}-${isMobile ? 'mobile' : 'desktop'}`}
               >
-                <source src={slide.url} type="video/mp4" />
+                <source src={isMobile && slide.mobileUrl ? slide.mobileUrl : slide.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             )}
@@ -248,9 +256,9 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
 
       {/* Dot Navigation */}
       {showDots && slides.length > 1 && (
-        <div 
+        <div
           className="absolute left-1/2 -translate-x-1/2 z-30 flex gap-2"
-          style={{ 
+          style={{
             bottom: `${currentDotBottom}px`,
             opacity: dotIndicatorOpacity
           }}
