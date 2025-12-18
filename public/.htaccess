@@ -1,134 +1,46 @@
 # Apache Configuration for React SPA
 # Managed by Antigravity
 
+# Option 1: Modern FallbackResource (Simplest, works on most Apache 2.2.16+)
+<IfModule mod_dir.c>
+  FallbackResource /index.html
+</IfModule>
+
+# Option 2: Mod ReWrite (Backup if FallbackResource fails)
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
-
-  # Don't rewrite files or directories
+  
+  # If FallbackResource above is working, we don't strictly need this, 
+  # but it's good safety.
+  
+  # 1. If the request is a file or directory, serve it.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Rewrite everything else to index.html for SPA routing
+  # 2. Otherwise, serve index.html
+  # We use a RELATIVE path 'index.html' here to be safer with subdirectories
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Enable compression
-<IfModule mod_deflate.c>
-  # Compress HTML, CSS, JavaScript, Text, XML and fonts
-  AddOutputFilterByType DEFLATE text/html
-  AddOutputFilterByType DEFLATE text/css
-  AddOutputFilterByType DEFLATE text/plain
-  AddOutputFilterByType DEFLATE text/xml
-  AddOutputFilterByType DEFLATE application/javascript
-  AddOutputFilterByType DEFLATE application/x-javascript
-  AddOutputFilterByType DEFLATE application/json
-  AddOutputFilterByType DEFLATE application/xml
-  AddOutputFilterByType DEFLATE application/xhtml+xml
-  AddOutputFilterByType DEFLATE application/rss+xml
-  AddOutputFilterByType DEFLATE image/svg+xml
-  
-  # Compress fonts
-  AddOutputFilterByType DEFLATE application/font-woff
-  AddOutputFilterByType DEFLATE application/font-woff2
-  AddOutputFilterByType DEFLATE application/x-font-woff
-  AddOutputFilterByType DEFLATE application/x-font-opentype
-  AddOutputFilterByType DEFLATE application/x-font-otf
-  AddOutputFilterByType DEFLATE application/x-font-truetype
-  AddOutputFilterByType DEFLATE application/x-font-ttf
-</IfModule>
-
-# Browser caching
-<IfModule mod_expires.c>
-  ExpiresActive On
-  
-  # Images - Cache for 1 year
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/avif "access plus 1 year"
-  ExpiresByType image/jpg "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/gif "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType image/x-icon "access plus 1 year"
-  ExpiresByType image/ico "access plus 1 year"
-  
-  # CSS and JavaScript - Cache for 1 year (use versioning/hashing for updates)
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-  ExpiresByType application/x-javascript "access plus 1 year"
-  ExpiresByType text/javascript "access plus 1 year"
-  
-  # Fonts - Cache for 1 year
-  ExpiresByType application/font-woff "access plus 1 year"
-  ExpiresByType application/font-woff2 "access plus 1 year"
-  ExpiresByType application/x-font-woff "access plus 1 year"
-  ExpiresByType application/x-font-ttf "access plus 1 year"
-  ExpiresByType application/x-font-truetype "access plus 1 year"
-  ExpiresByType application/x-font-opentype "access plus 1 year"
-  ExpiresByType font/woff "access plus 1 year"
-  ExpiresByType font/woff2 "access plus 1 year"
-  
-  # Data files - Cache for 1 week
-  ExpiresByType application/json "access plus 1 week"
-  ExpiresByType application/xml "access plus 1 week"
-  ExpiresByType text/xml "access plus 1 week"
-  
-  # HTML - No caching (or minimal)
-  ExpiresByType text/html "access plus 0 seconds"
-  
-  # Default - Cache for 1 month
-  ExpiresDefault "access plus 1 month"
-</IfModule>
-
-# Security headers
+# Security and Performance Headers
 <IfModule mod_headers.c>
   # Prevent MIME type sniffing
   Header always set X-Content-Type-Options "nosniff"
-  
   # Prevent clickjacking
   Header always set X-Frame-Options "DENY"
-  
   # Enable XSS protection
   Header always set X-XSS-Protection "1; mode=block"
   
-  # Referrer policy
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Cache Control for Static Assets
+  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|avif|svg|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
   
-  # Permissions policy (restrict features)
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
-  
-  # Remove X-Powered-By header (if present)
-  Header unset X-Powered-By
-  
-  # Prevent caching of HTML files
+  # No Cache for HTML
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "0"
   </FilesMatch>
-  
-  # Cache static assets with immutable flag
-  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|avif|svg|woff|woff2|ttf|otf)$">
-    Header set Cache-Control "public, max-age=31536000, immutable"
-  </FilesMatch>
 </IfModule>
-
-# Prevent directory browsing
-Options -Indexes
-
-# Protect sensitive files
-<FilesMatch "(^\.htaccess|^\.env|^\.git|composer\.json|package\.json|package-lock\.json|yarn\.lock)">
-  Order Allow,Deny
-  Deny from all
-</FilesMatch>
-
-# UTF-8 encoding
-AddDefaultCharset UTF-8
-AddCharset UTF-8 .html .css .js .xml .json .rss .atom
-
-# Error pages
-# Error pages are handled by the SPA
-# ErrorDocument 404 /index.html
-# ErrorDocument 500 /index.html
