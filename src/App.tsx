@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { gsap } from 'gsap';
@@ -9,18 +9,18 @@ import Footer from './components/Footer';
 import StructuredData from './components/SEO/StructuredData';
 import CartSidebar from './components/Cart/CartSidebar';
 import BusinessSubscriptionEnquiry from './pages/BusinessSubscriptionEnquiry';
-// Pages
-import Home from './pages/Home';
-import Product from './pages/Product';
-import NotFound from './pages/NotFound';
 import NewsletterSection from './components/NewsletterSection';
-import MovementProduct from './pages/MovementProduct';
-import OurStoryNew from './pages/OurStoryNew';
-import ShopAllPage from './pages/ShopAllPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicy';
-import TermsAndConditions from './pages/TermsAndConditions';
-import RefundAndReturns from './pages/RefundAndReturns';
-import ShippingPolicy from './pages/ShippingPolicy';
+// Pages
+const Home = lazy(() => import('./pages/Home'));
+const Product = lazy(() => import('./pages/Product'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const MovementProduct = lazy(() => import('./pages/MovementProduct'));
+const OurStoryNew = lazy(() => import('./pages/OurStoryNew'));
+const ShopAllPage = lazy(() => import('./pages/ShopAllPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const RefundAndReturns = lazy(() => import('./pages/RefundAndReturns'));
+const ShippingPolicy = lazy(() => import('./pages/ShippingPolicy'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,20 +36,27 @@ function ScrollToTop() {
 
     // Force immediate scroll to top with compatibility for all devices
     window.scrollTo(0, 0);
-    
+
     // Kill all ScrollTrigger instances on route change
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    
+
     // Refresh ScrollTrigger after route change with a delay to ensure DOM is ready
     const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh(true); // true forces a recalculation of all positions
     }, 200);
-    
+
     return () => clearTimeout(refreshTimer);
   }, [pathname]);
 
   return null;
 }
+
+// Simple loading component
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-[50vh]">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+  </div>
+);
 
 function AppContent() {
   const [isLoading] = useState(false);
@@ -57,7 +64,7 @@ function AppContent() {
 
   useEffect(() => {
     // Page load animation
-    gsap.fromTo('body', 
+    gsap.fromTo('body',
       { opacity: 0 },
       { opacity: 1, duration: 0.5, ease: 'power2.out' }
     );
@@ -98,40 +105,42 @@ function AppContent() {
       {/* Global Structured Data */}
       <StructuredData type="organization" />
       <StructuredData type="website" />
-      
+
       {!isLoading && (
         <>
           {/* Skip to main content link for accessibility */}
-          <a 
-            href="#main-content" 
+          <a
+            href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white px-4 py-2 rounded z-50"
           >
             Skip to main content
           </a>
-          
+
           <Header />
-          
+
           <main id="main-content" className="min-h-[calc(100vh-160px)]">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/product/:productId" element={<Product />} />
-              <Route path="/movement" element={<MovementProduct />} />
-              <Route path="/our-story" element={<OurStoryNew />} />
-              <Route path="/store" element={<ShopAllPage />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-              <Route path="/refund-and-return" element={<RefundAndReturns />} />
-              <Route path="/shipping-policy" element={<ShippingPolicy />} />
-              <Route path="/business-enquiry" element={<BusinessSubscriptionEnquiry />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/product/:productId" element={<Product />} />
+                <Route path="/movement" element={<MovementProduct />} />
+                <Route path="/our-story" element={<OurStoryNew />} />
+                <Route path="/store" element={<ShopAllPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                <Route path="/refund-and-return" element={<RefundAndReturns />} />
+                <Route path="/shipping-policy" element={<ShippingPolicy />} />
+                <Route path="/business-enquiry" element={<BusinessSubscriptionEnquiry />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </main>
-          
+
           {/* Always render Newsletter Section */}
           <NewsletterSection key={location.pathname} />
-          
+
           <Footer />
-          
+
           {/* Cart Sidebar */}
           <CartSidebar />
         </>
@@ -145,7 +154,7 @@ function App() {
     // Instead of using zoom which causes mobile scrolling issues,
     // we'll add a class to the html element that we can style with CSS
     document.documentElement.classList.add('app-scale');
-    
+
     return () => {
       document.documentElement.classList.remove('app-scale');
     };

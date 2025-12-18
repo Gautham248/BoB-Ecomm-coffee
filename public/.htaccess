@@ -1,29 +1,17 @@
 # Apache Configuration for React SPA
-# Place this file in your public folder or build/dist output folder
+# Managed by Antigravity
 
-# Enable Rewrite Engine
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # Force HTTPS
-  RewriteCond %{HTTPS} off
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Don't rewrite files or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
 
-  # Remove trailing slashes (except for directories)
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{THE_REQUEST} /+([^?\s]*?)/?(?:\?[^\s]*)?(?:\s|\?|$)
-  RewriteRule ^ /%1%2 [R=301,L]
-
-  # Handle React Router - Redirect all requests to index.html
-  # Skip if the request is for an actual file
-  RewriteCond %{REQUEST_FILENAME} !-f
-  # Skip if the request is for an actual directory
-  RewriteCond %{REQUEST_FILENAME} !-d
-  # Skip if the request is for index.html itself
-  RewriteRule ^index\.html$ - [L]
-  # Redirect everything else to index.html
-  RewriteRule . /index.html [L]
+  # Rewrite everything else to index.html for SPA routing
+  RewriteRule ^ index.html [L]
 </IfModule>
 
 # Enable compression
@@ -141,5 +129,6 @@ AddDefaultCharset UTF-8
 AddCharset UTF-8 .html .css .js .xml .json .rss .atom
 
 # Error pages
-ErrorDocument 404 /index.html
-ErrorDocument 500 /index.html
+# Error pages are handled by the SPA
+# ErrorDocument 404 /index.html
+# ErrorDocument 500 /index.html

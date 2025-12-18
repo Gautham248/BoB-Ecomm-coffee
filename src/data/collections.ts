@@ -564,7 +564,7 @@ export const collections: Collection[] = [
     name: 'Gadgets',
     title: 'Gadgets',
     description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
-    price: 'Coming Soon',
+    price: 'From ₹7499',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Gadgets.webp?updatedAt=1761390411909',
     products: ['gadgets'],
     featured: true,

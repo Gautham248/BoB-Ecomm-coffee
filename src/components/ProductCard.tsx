@@ -20,19 +20,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick, categoryLab
   const isUpcoming = product.upcoming || false;
 
   return (
-    <div 
+    <div
       onClick={isUpcoming ? undefined : onClick}
-      className={`bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 ${
-        isUpcoming ? 'cursor-default opacity-75' : 'cursor-pointer'
-      }`}
+      className={`bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 ${isUpcoming ? 'cursor-default opacity-75' : 'cursor-pointer'
+        }`}
     >
       <div className="aspect-square bg-gray-100 overflow-hidden relative">
         <img
+          loading="lazy"
           src={product.productCardImage}
           alt={product.title}
-          className={`w-full h-full object-cover transition-transform duration-300 ${
-            isUpcoming ? 'grayscale' : 'hover:scale-105'
-          }`}
+          className={`w-full h-full object-cover transition-transform duration-300 ${isUpcoming ? 'grayscale' : 'hover:scale-105'
+            }`}
         />
         {isUpcoming && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
@@ -46,14 +45,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick, categoryLab
         <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
           {categoryLabel || product.category}
         </p>
-        <h3 className={`text-sm font-medium mb-2 ${
-          isUpcoming ? 'text-gray-500' : 'text-gray-900'
-        }`}>
+        <h3 className={`text-sm font-medium mb-2 ${isUpcoming ? 'text-gray-500' : 'text-gray-900'
+          }`}>
           {product.title}
         </h3>
-        <p className={`text-sm font-semibold ${
-          isUpcoming ? 'text-gray-400' : 'text-gray-900'
-        }`}>
+        <p className={`text-sm font-semibold ${isUpcoming ? 'text-gray-400' : 'text-gray-900'
+          }`}>
           {isUpcoming ? 'Stay Tuned' : product.price}
         </p>
       </div>

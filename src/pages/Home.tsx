@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import SEOHead from '../components/SEO/SEOHead';
 // import HeroSection from '../components/HeroSection';
-import CollectionsSection from '../components/CollectionsSection';
-import FeaturedSection from '../components/FeaturedSection';
-import StorySection from '../components/StorySection';
-// import NewsletterSection from '../components/NewsletterSection';
+// Lazy load heavy components
+const CollectionsSection = lazy(() => import('../components/CollectionsSection'));
+const FeaturedSection = lazy(() => import('../components/FeaturedSection'));
+const StorySection = lazy(() => import('../components/StorySection'));
+const VideoHeroSection = lazy(() => import('../components/VideoHeroSection'));
+const BusinessSection = lazy(() => import('../components/BusinessSection'));
+const HomeMovement = lazy(() => import('../components/Movement/HomeMovement'));
+
 import CarouselHeroSection from '../components/CarouselHeroSection';
-// import FeaturedProducts from '../components/FeaturedProducts';
-import VideoHeroSection from '../components/VideoHeroSection';
-import BusinessSection from '../components/BusinessSection';
-import HomeMovement from '../components/Movement/HomeMovement';
 
 const Home: React.FC = () => {
   return (
@@ -38,31 +38,34 @@ const Home: React.FC = () => {
       />
       {/* <VideoHeroSection videoUrl="https://ik.imagekit.io/7ujz6ljli/Videos/Bob_Main_Hero__2.mp4" /> */}
       {/* <CollectionsSection /> */}
-      <CollectionsSection
-        mobileCarouselItemWidth={60}
-        mobileCarouselSideOpacity={0.9}
-        mobileCarouselSideScale={0.9}
-      />
 
-      <VideoHeroSection
-        videoUrl="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772"
-        headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
-        posterUrl="your-poster-image.jpg" // Optional: Add a poster image
-        mobileAspectRatio="1 / 1" // Square on mobile
-        desktopHeight="100vh" // Full viewport height on desktop
-        mobileObjectFit="cover" // Fill container on mobile
-        desktopObjectFit="cover" // Fill container on desktop
-        overlayOpacity={0.3} // Dark overlay opacity (0-1)
-        headlineBorderOpacity={0.3} // Border opacity (0-1)
-        headlinePadding={{ mobile: '10px 20px', desktop: '32px 56px' }}
-        headlineBorderRadius="9999px" // Fully rounded border
-        headlineFontSize={{ mobile: '14px', desktop: '36px' }}
-      />
-      <FeaturedSection />
-      <HomeMovement />
-      <BusinessSection />
-      <StorySection />
-      <VideoHeroSection videoUrl="https://ik.imagekit.io/beansofbodhi/Videos/1-Planet_1-transcode.mp4?updatedAt=1761228828643" />
+      <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-10 h-10 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div></div>}>
+        <CollectionsSection
+          mobileCarouselItemWidth={60}
+          mobileCarouselSideOpacity={0.9}
+          mobileCarouselSideScale={0.9}
+        />
+
+        <VideoHeroSection
+          videoUrl="https://ik.imagekit.io/beansofbodhi/OurStory/Home_Video_02-transcode.mp4?updatedAt=1761228289772"
+          headline="Responsibly <em>Sourced,</em><br/><em>Rooted in</em> Purpose"
+          posterUrl="your-poster-image.jpg" // Optional: Add a poster image
+          mobileAspectRatio="1 / 1" // Square on mobile
+          desktopHeight="100vh" // Full viewport height on desktop
+          mobileObjectFit="cover" // Fill container on mobile
+          desktopObjectFit="cover" // Fill container on desktop
+          overlayOpacity={0.3} // Dark overlay opacity (0-1)
+          headlineBorderOpacity={0.3} // Border opacity (0-1)
+          headlinePadding={{ mobile: '10px 20px', desktop: '32px 56px' }}
+          headlineBorderRadius="9999px" // Fully rounded border
+          headlineFontSize={{ mobile: '14px', desktop: '36px' }}
+        />
+        <FeaturedSection />
+        <HomeMovement />
+        <BusinessSection />
+        <StorySection />
+        <VideoHeroSection videoUrl="https://ik.imagekit.io/beansofbodhi/Videos/1-Planet_1-transcode.mp4?updatedAt=1761228828643" />
+      </Suspense>
 
     </>
   );

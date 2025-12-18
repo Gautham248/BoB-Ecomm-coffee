@@ -25,20 +25,20 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
   // Reset animations when product changes
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     // Kill all existing ScrollTriggers first
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    
+
     // Reset all animated elements to visible state immediately
     gsap.set(['.product-hero-image', '.product-hero-content', '.gallery-item', '.tab-content'], {
       clearProps: 'all'
     });
-    
+
     // Small delay to ensure DOM is ready, then refresh ScrollTrigger
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);
-    
+
     return () => {
       clearTimeout(timer);
     };
@@ -48,7 +48,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
   useEffect(() => {
     // Kill any existing animations first
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    
+
     // Ensure elements are visible before animating
     gsap.set(['.product-hero-image', '.product-hero-content', '.gallery-item', '.tab-content'], {
       opacity: 1
@@ -111,7 +111,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
     };
   }, [product.id]);
 
-  const tabs = ['TRACEABILITY','DESCRIPTION',  'REVIEW'];
+  const tabs = ['TRACEABILITY', 'DESCRIPTION', 'REVIEW'];
 
   const openViewer = (index: number) => {
     setViewerIndex(index);
@@ -156,9 +156,14 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
               src={product.heroImageMobile}
               alt={product.name}
               className="w-full h-auto product-hero-image"
+              loading="eager"
+              width="600"
+              height="600"
+              // @ts-ignore
+              fetchpriority="high"
             />
           </div>
-          
+
           {/* Mobile Content Section - Below Image */}
           <div className="bg-black text-white px-4 py-8">
             <div className="product-hero-content space-y-4 max-w-xl mx-auto">
@@ -199,6 +204,11 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
               src={product.heroImage}
               alt={product.name}
               className="w-full h-auto product-hero-image"
+              loading="eager"
+              width="1200"
+              height="800"
+              // @ts-ignore
+              fetchpriority="high"
             />
             {/* Dark gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/60"></div>
@@ -260,7 +270,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
 
           {/* Swipeable Gallery Container */}
           <div className="relative w-full">
-            <div 
+            <div
               ref={scrollContainerRef}
               className="flex gap-3 md:gap-4 overflow-x-auto snap-x snap-mandatory pb-4 justify-start md:justify-center px-4"
               style={{
@@ -278,7 +288,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
               </style>
               {/* Spacer for mobile centering */}
               <div className="flex-shrink-0 w-[calc((100vw-280px)/2)] md:hidden" />
-              
+
               {product.galleryImages.map((image, index) => (
                 <div
                   key={index}
@@ -290,6 +300,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                       src={image}
                       alt={`${product.name} gallery ${index + 1}`}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
                     />
                   </div>
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
@@ -300,7 +311,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                   </div>
                 </div>
               ))}
-              
+
               {/* Spacer for mobile centering */}
               <div className="flex-shrink-0 w-[calc((100vw-280px)/2)] md:hidden" />
             </div>
@@ -381,11 +392,10 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 text-xs sm:text-sm md:text-base font-medium transition-colors duration-300 ${
-                    activeTab === tab
-                      ? 'bg-black text-white'
-                      : 'bg-white text-black border border-gray-300 hover:bg-gray-100'
-                  }`}
+                  className={`px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 text-xs sm:text-sm md:text-base font-medium transition-colors duration-300 ${activeTab === tab
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black border border-gray-300 hover:bg-gray-100'
+                    }`}
                 >
                   {tab}
                 </button>
@@ -408,11 +418,12 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                     src={product.descriptionContent.image}
                     alt={product.name}
                     className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-lg"
+                    loading="lazy"
                   />
                 </div>
               </div>
             )}
-            
+
             {activeTab === 'TRACEABILITY' && (
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-10 md:mb-12 px-4">
@@ -473,7 +484,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                 <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-pangaia font-bold text-gray-900 mb-8 md:mb-10">
                   Customer Reviews
                 </h3>
-                
+
                 {/* Placeholder Review Structure */}
                 <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 mb-6">
                   <div className="flex items-center justify-center mb-4">
@@ -486,7 +497,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                     </div>
                   </div>
                   <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed italic mb-4">
-                    "{product.name} has become my daily ritual. The rich, complex flavors transport me to the misty mountains 
+                    "{product.name} has become my daily ritual. The rich, complex flavors transport me to the misty mountains
                     of the Western Ghats with every sip. It's more than just coffee - it's an experience."
                   </p>
                   <p className="text-xs sm:text-sm text-gray-500 font-medium">- Coffee Enthusiast</p>
@@ -502,7 +513,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
       </section>
 
       {/* You May Also Like Section */}
-      <YouMayAlsoLike 
+      <YouMayAlsoLike
         currentProductId={product.id}
         onProductClick={onProductClick}
         maxProducts={4}

@@ -37,24 +37,24 @@ const NewsletterSection: React.FC = () => {
   };
 
   return (
-    <section 
-  ref={sectionRef} 
-  className="relative py-32 bg-cover bg-center bg-no-repeat"
-  style={{
-    backgroundColor: 'rgb(12, 12, 12)'
-  }}
->
+    <section
+      ref={sectionRef}
+      className="relative py-32 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundColor: 'rgb(12, 12, 12)'
+      }}
+    >
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div className="newsletter-content text-white">
             <h4 className="text-4xl md:text-5xl font-helvetica mb-8 leading-tight">
-              JOIN THE <br/>MOVEMENT
+              JOIN THE <br />MOVEMENT
             </h4>
-            
+
             <p className="text-md leading-relaxed mb-12 text-gray-200">
               Fuel your adventure, connect with like-minded explorers, and be part of a community that values purpose, sustainability, and exceptional coffee.
             </p>
@@ -62,10 +62,11 @@ const NewsletterSection: React.FC = () => {
             {/* 1% for the Planet */}
             <div className="flex items-center space-x-6 mb-16">
               <div>
-                <img 
+                <img
                   src={planetLogo}
-                  alt="1% for the Planet" 
+                  alt="1% for the Planet"
                   className="h-25 w-auto"
+                  loading="lazy"
                 />
               </div>
             </div>

@@ -207,7 +207,7 @@ const MediaHeroSlider: React.FC<MediaHeroSliderProps> = ({
                 src={slide.url}
                 alt={`Slide ${index + 1}`}
                 className={`w-full h-full ${objectFitClass}`}
-                loading="eager"
+                loading={index === 0 ? "eager" : "lazy"}
               />
             )}
 
