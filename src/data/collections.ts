@@ -51,15 +51,15 @@ export const products: Product[] = [
     id: 'the-origin',
     shopifyId: 'gid://shopify/Product/9746812141850',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107592986', title: 'Filter Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107625754', title: 'Cold Brew Grind', price: '689.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618107592986', title: 'Filter Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618107625754', title: 'Cold Brew Grind', price: '789.0', available: true }
     ],
     name: 'THE ORIGIN',
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
-    price: 'INR 689.00',
+    price: 'INR 789.00',
     traceability: {
       source: 'Sholayur, Attapadi, Wayanad',
       tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
@@ -88,15 +88,15 @@ export const products: Product[] = [
     id: 'the-wild-fire-rush',
     shopifyId: 'gid://shopify/Product/9746812338458',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098712858', title: 'Filter Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098745626', title: 'Cold Brew Grind', price: '689.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618098712858', title: 'Filter Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618098745626', title: 'Cold Brew Grind', price: '789.0', available: true }
     ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
-    price: 'INR 689.00',
+    price: 'INR 789.00',
     traceability: {
       source: 'Wayanad, Anaikatti',
       tasteNotes: ['Ripe Fruit', 'Cashew'],
@@ -124,15 +124,15 @@ export const products: Product[] = [
     id: 'the-eco-shock',
     shopifyId: 'gid://shopify/Product/9746812076314',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '749.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '749.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113786138', title: 'Filter Grind', price: '749.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113818906', title: 'Cold Brew Grind', price: '749.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618113786138', title: 'Filter Grind', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618113818906', title: 'Cold Brew Grind', price: '849.0', available: true }
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
     description: 'Step into a world of vibrant energy with Echo Shock,a playful blend of light roasted 100% Peaberry designed to awaken your senses. Bright, lively flavors meet a smooth, balanced finish, crafted for those who thrive on curiosity and boundless enthusiasm.',
-    price: 'INR 749.00',
+    price: 'INR 849.00',
     traceability: {
       source: 'Attapadi',
       tasteNotes: ['Spice', 'Chocolate', 'Jaggery'],
@@ -160,15 +160,15 @@ export const products: Product[] = [
     id: 'the-high-tide',
     shopifyId: 'gid://shopify/Product/9725860413722',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122338586', title: 'Filter Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122371354', title: 'Cold Brew Grind', price: '789.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '889.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '889.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618122338586', title: 'Filter Grind', price: '889.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618122371354', title: 'Cold Brew Grind', price: '889.0', available: true }
     ],
     name: 'THE HIGH TIDE',
     title: 'The High Tide',
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
-    price: 'INR 789.00',
+    price: 'INR 889.00',
     traceability: {
       source: 'Sholayur',
       tasteNotes: ['Sweet', 'Citric'],
@@ -196,15 +196,15 @@ export const products: Product[] = [
     id: 'the-thunder-fuse',
     shopifyId: 'gid://shopify/Product/9746812469530',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '599.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '599.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096714010', title: 'Filter Grind', price: '599.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096746778', title: 'Cold Brew Grind', price: '599.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '699.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '699.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618096714010', title: 'Filter Grind', price: '699.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618096746778', title: 'Cold Brew Grind', price: '699.0', available: true }
     ],
     name: 'THE THUNDER FUSE',
     title: 'The Thunder Fuse',
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
-    price: 'INR 599.00',
+    price: 'INR 699.00',
     traceability: {
       source: 'Wayanad',
       tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
@@ -232,15 +232,15 @@ export const products: Product[] = [
     id: 'the-tornado-twist',
     shopifyId: 'gid://shopify/Product/9746812535066',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '669.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '669.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990185242', title: 'Filter Grind', price: '669.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990218010', title: 'Cold Brew Grind', price: '669.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '769.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '769.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50617990185242', title: 'Filter Grind', price: '769.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50617990218010', title: 'Cold Brew Grind', price: '769.0', available: true }
     ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
-    price: 'INR 669.00',
+    price: 'INR 769.00',
     traceability: {
       source: 'Yercaud, Wayanad',
       tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
@@ -321,15 +321,15 @@ export const headerProducts: Product[] = [
     id: 'the-origin',
     shopifyId: 'gid://shopify/Product/9746812141850',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107592986', title: 'Filter Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107625754', title: 'Cold Brew Grind', price: '689.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618107592986', title: 'Filter Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618107625754', title: 'Cold Brew Grind', price: '789.0', available: true }
     ],
     name: 'THE ORIGIN',
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
-    price: 'INR 689.00',
+    price: 'INR 789.00',
     traceability: {
       source: 'Sholayur, Attapadi, Wayanad',
       tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
@@ -357,15 +357,15 @@ export const headerProducts: Product[] = [
     id: 'the-wild-fire-rush',
     shopifyId: 'gid://shopify/Product/9746812338458',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098712858', title: 'Filter Grind', price: '689.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098745626', title: 'Cold Brew Grind', price: '689.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618098712858', title: 'Filter Grind', price: '789.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618098745626', title: 'Cold Brew Grind', price: '789.0', available: true }
     ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
-    price: 'INR 689.00',
+    price: 'INR 789.00',
     traceability: {
       source: 'Wayanad, Anaikatti',
       tasteNotes: ['Ripe Fruit', 'Cashew'],
@@ -393,15 +393,15 @@ export const headerProducts: Product[] = [
     id: 'the-eco-shock',
     shopifyId: 'gid://shopify/Product/9746812076314',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '749.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '749.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113786138', title: 'Filter Grind', price: '749.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113818906', title: 'Cold Brew Grind', price: '749.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618113786138', title: 'Filter Grind', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618113818906', title: 'Cold Brew Grind', price: '849.0', available: true }
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
     description: 'Step into a world of vibrant energy with Echo Shock,a playful blend of light roasted 100% Peaberry designed to awaken your senses. Bright, lively flavors meet a smooth, balanced finish, crafted for those who thrive on curiosity and boundless enthusiasm.',
-    price: 'INR 749.00',
+    price: 'INR 849.00',
     traceability: {
       source: 'Attapadi',
       tasteNotes: ['Spice', 'Chocolate', 'Jaggery'],
@@ -429,15 +429,15 @@ export const headerProducts: Product[] = [
     id: 'the-high-tide',
     shopifyId: 'gid://shopify/Product/9725860413722',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122338586', title: 'Filter Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122371354', title: 'Cold Brew Grind', price: '789.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '889.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '889.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618122338586', title: 'Filter Grind', price: '889.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618122371354', title: 'Cold Brew Grind', price: '889.0', available: true }
     ],
     name: 'THE HIGH TIDE',
     title: 'The High Tide',
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
-    price: 'INR 789.00',
+    price: 'INR 889.00',
     traceability: {
       source: 'Sholayur',
       tasteNotes: ['Sweet', 'Citric'],
@@ -465,15 +465,15 @@ export const headerProducts: Product[] = [
     id: 'the-thunder-fuse',
     shopifyId: 'gid://shopify/Product/9746812469530',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '599.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '599.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096714010', title: 'Filter Grind', price: '599.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096746778', title: 'Cold Brew Grind', price: '599.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '699.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '699.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618096714010', title: 'Filter Grind', price: '699.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50618096746778', title: 'Cold Brew Grind', price: '699.0', available: true }
     ],
     name: 'THE THUNDER FUSE',
     title: 'The Thunder Fuse',
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
-    price: 'INR 599.00',
+    price: 'INR 699.00',
     traceability: {
       source: 'Wayanad',
       tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
@@ -501,15 +501,15 @@ export const headerProducts: Product[] = [
     id: 'the-tornado-twist',
     shopifyId: 'gid://shopify/Product/9746812535066',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '669.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '669.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990185242', title: 'Filter Grind', price: '669.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990218010', title: 'Cold Brew Grind', price: '669.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '769.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '769.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50617990185242', title: 'Filter Grind', price: '769.0', available: true },
+      { id: 'gid://shopify/ProductVariant/50617990218010', title: 'Cold Brew Grind', price: '769.0', available: true }
     ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
-    price: 'INR 669.00',
+    price: 'INR 769.00',
     traceability: {
       source: 'Yercaud, Wayanad',
       tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
@@ -542,7 +542,7 @@ export const collections: Collection[] = [
     name: 'Western Ghats Selects',
     title: 'Western Ghats Selects',
     description: 'Premium coffee blends sourced from the pristine Western Ghats region, featuring our signature HIGH TIDE, ECO SHOCK, and THUNDER FUSE varieties.',
-    price: 'From ₹599',
+    price: 'From ₹699',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Western%20Ghats%20Select.webp?updatedAt=1761390411685',
     products: ['the-high-tide', 'the-eco-shock', 'the-thunder-fuse'],
     featured: true,
@@ -553,7 +553,7 @@ export const collections: Collection[] = [
     name: 'Signature Blends',
     title: 'Signature Blends',
     description: 'Bold and adventurous coffee blends including THE ORIGIN, WILD FIRE RUSH, and TORNADO TWIST. Perfect for those seeking intense flavors and unique experiences.',
-    price: 'From ₹669',
+    price: 'From ₹769',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Signature%20Blends.webp?updatedAt=1761390411670',
     products: ['the-wild-fire-rush', 'the-origin', 'the-tornado-twist'],
     featured: true,
