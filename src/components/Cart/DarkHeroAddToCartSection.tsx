@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Plus, Minus } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { Product } from '../../data/collections';
+import { pixelEvent } from '../../utils/pixel';
 // import { fetchAllProductsAndDownload } from '../../utils/shopify';
 
 interface DarkHeroAddToCartSectionProps {
@@ -40,6 +41,15 @@ const DarkHeroAddToCartSection: React.FC<DarkHeroAddToCartSectionProps> = ({ pro
 
     try {
       await addToCart(selectedVariant, quantity);
+
+      // Meta Pixel — fire AddToCart on successful add
+      pixelEvent('AddToCart', {
+        content_name: product.title,
+        content_type: 'product',
+        content_ids: [product.id],
+        currency: 'INR',
+        value: parseFloat(selectedVariantData?.price || '0') || 0,
+      });
 
       // Trigger product download for debugging
       // fetchAllProductsAndDownload();

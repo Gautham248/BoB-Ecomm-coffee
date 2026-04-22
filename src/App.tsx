@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CartProvider } from './context/CartContext';
+import { pixelPageView } from './utils/pixel'; // Meta Pixel — fire PageView on every route change
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StructuredData from './components/SEO/StructuredData';
@@ -61,6 +62,11 @@ const LoadingSpinner = () => (
 function AppContent() {
   const [isLoading] = useState(false);
   const location = useLocation();
+
+  // Meta Pixel — track every client-side navigation as a PageView
+  useEffect(() => {
+    pixelPageView();
+  }, [location.pathname]);
 
   useEffect(() => {
     // Page load animation

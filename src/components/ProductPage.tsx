@@ -5,6 +5,7 @@ import { Plus, X, ChevronLeft, ChevronRight, MapPin, Mountain, Droplet } from 'l
 import DarkHeroAddToCartSection from './Cart/DarkHeroAddToCartSection';
 import YouMayAlsoLike from './YouMayAlsoLike';
 import { Product } from '../data/collections';
+import { pixelEvent } from '../utils/pixel';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -143,6 +144,18 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isViewerOpen, product.galleryImages.length]);
+
+  // Meta Pixel — fire ViewContent once product detail page is visible with data
+  useEffect(() => {
+    const variantPrice = parseFloat(product.shopifyVariants?.[0]?.price || '0') || 0;
+    pixelEvent('ViewContent', {
+      content_name: product.title,
+      content_type: 'product',
+      content_ids: [product.id],
+      currency: 'INR',
+      value: variantPrice,
+    });
+  }, [product.id]);
 
   return (
     <>

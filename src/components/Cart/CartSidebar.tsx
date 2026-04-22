@@ -2,6 +2,7 @@
 import React from 'react';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { pixelEvent } from '../../utils/pixel';
 
 const CartSidebar: React.FC = () => {
   const { 
@@ -200,7 +201,10 @@ const CartSidebar: React.FC = () => {
 
               {/* Checkout Button */}
               <button
-                onClick={proceedToCheckout}
+                onClick={() => {
+                  pixelEvent('InitiateCheckout'); // Meta Pixel — track checkout initiation
+                  proceedToCheckout();
+                }}
                 disabled={loading}
                 className="w-full bg-black text-white py-3 px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
