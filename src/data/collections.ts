@@ -51,15 +51,18 @@ export const products: Product[] = [
     id: 'the-origin',
     shopifyId: 'gid://shopify/Product/9746812141850',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107592986', title: 'Filter Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107625754', title: 'Cold Brew Grind', price: '789.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199334682', title: 'Coarse (French Press / Cold Brew)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199367450', title: 'Medium Coarse (Chemex)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199400218', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199432986', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199465754', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199498522', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
     name: 'THE ORIGIN',
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
-    price: 'INR 789.00',
+    price: 'INR 799.00',
     traceability: {
       source: 'Sholayur, Attapadi, Wayanad',
       tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
@@ -88,15 +91,18 @@ export const products: Product[] = [
     id: 'the-wild-fire-rush',
     shopifyId: 'gid://shopify/Product/9746812338458',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098712858', title: 'Filter Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098745626', title: 'Cold Brew Grind', price: '789.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207493914', title: 'Coarse (French Press / Cold Brew)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207526682', title: 'Medium Coarse (Chemex)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207559450', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207592218', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207624986', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207657754', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
-    price: 'INR 789.00',
+    price: 'INR 799.00',
     traceability: {
       source: 'Wayanad, Anaikatti',
       tasteNotes: ['Ripe Fruit', 'Cashew'],
@@ -125,9 +131,12 @@ export const products: Product[] = [
     shopifyId: 'gid://shopify/Product/9746812076314',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '849.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '849.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113786138', title: 'Filter Grind', price: '849.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113818906', title: 'Cold Brew Grind', price: '849.0', available: true }
+      { id: 'gid://shopify/ProductVariant/52151191634202', title: 'Coarse (French Press / Cold Brew)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191666970', title: 'Medium Coarse (Chemex)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191699738', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191732506', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191765274', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191798042', title: 'Extra Fine (Turkish)', price: '849.0', available: true }
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
@@ -160,15 +169,18 @@ export const products: Product[] = [
     id: 'the-high-tide',
     shopifyId: 'gid://shopify/Product/9725860413722',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '889.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '889.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122338586', title: 'Filter Grind', price: '889.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122371354', title: 'Cold Brew Grind', price: '889.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173284122', title: 'Coarse (French Press / Cold Brew)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173316890', title: 'Medium Coarse (Chemex)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173349658', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173382426', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173415194', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173447962', title: 'Extra Fine (Turkish)', price: '899.0', available: true }
     ],
     name: 'THE HIGH TIDE',
     title: 'The High Tide',
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
-    price: 'INR 889.00',
+    price: 'INR 899.00',
     traceability: {
       source: 'Sholayur',
       tasteNotes: ['Sweet', 'Citric'],
@@ -196,15 +208,18 @@ export const products: Product[] = [
     id: 'the-thunder-fuse',
     shopifyId: 'gid://shopify/Product/9746812469530',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '699.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '699.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096714010', title: 'Filter Grind', price: '699.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096746778', title: 'Cold Brew Grind', price: '699.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213293850', title: 'Coarse (French Press / Cold Brew)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213326618', title: 'Medium Coarse (Chemex)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213359386', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213392154', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213424922', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213457690', title: 'Extra Fine (Turkish)', price: '749.0', available: true }
     ],
     name: 'THE THUNDER FUSE',
     title: 'The Thunder Fuse',
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
-    price: 'INR 699.00',
+    price: 'INR 749.00',
     traceability: {
       source: 'Wayanad',
       tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
@@ -232,15 +247,18 @@ export const products: Product[] = [
     id: 'the-tornado-twist',
     shopifyId: 'gid://shopify/Product/9746812535066',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '769.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '769.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990185242', title: 'Filter Grind', price: '769.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990218010', title: 'Cold Brew Grind', price: '769.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218241818', title: 'Coarse (French Press / Cold Brew)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218274586', title: 'Medium Coarse (Chemex)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218307354', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218340122', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218372890', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218405658', title: 'Extra Fine (Turkish)', price: '779.0', available: true }
     ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
-    price: 'INR 769.00',
+    price: 'INR 779.00',
     traceability: {
       source: 'Yercaud, Wayanad',
       tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
@@ -267,7 +285,11 @@ export const products: Product[] = [
   },
   {
     id: 'gadgets',
-    name: 'Gadgets',
+    shopifyId: 'gid://shopify/Product/9859123511578',
+    shopifyVariants: [
+      { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
+    ],
+        name: 'Gadgets',
     title: 'Movement',
     description: 'Coming soon - Gadgets',
     price: 'INR 7,499.00',
@@ -313,6 +335,46 @@ export const products: Product[] = [
     category: 'merchandise',
     upcoming: true
   }
+
+  // {
+  //   id: 'the-liberica-funk',
+  //   shopifyId: 'gid://shopify/Product/10122236789018',
+  //   shopifyVariants: [
+  //     { id: 'gid://shopify/ProductVariant/52151152738586', title: 'Whole Beans', price: '979.0', available: true },
+  //     { id: 'gid://shopify/ProductVariant/52151152771354', title: 'Coarse (French Press / Cold Brew)', price: '979.0', available: true },
+  //     { id: 'gid://shopify/ProductVariant/52151152804122', title: 'Medium Coarse (Chemex)', price: '979.0', available: true },
+  //     { id: 'gid://shopify/ProductVariant/52151152836890', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '979.0', available: true },
+  //     { id: 'gid://shopify/ProductVariant/52151152869658', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '979.0', available: true },
+  //     { id: 'gid://shopify/ProductVariant/52151152902426', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '979.0', available: true },
+  //     { id: 'gid://shopify/ProductVariant/52151152935194', title: 'Extra Fine (Turkish)', price: '979.0', available: true }
+  //   ],
+  //   name: 'THE LIBERICA FUNK',
+  //   title: 'The Liberica Funk',
+  //   description: 'A wild, exotic single-origin Liberica with heavy body, sweet jackfruit aroma, and a clean cup. Heavy, sweet, and complex, it is a rare coffee that stands apart from Arabica and Robusta, designed for those seeking the ultimate sensory adventure.',
+  //   price: 'INR 979.00',
+  //   traceability: {
+  //     source: 'Western Ghats, Wayanad',
+  //     tasteNotes: ['Jackfruit', 'Ripe Banana', 'Sweet Spice', 'Heavy Bodied'],
+  //     process: 'Natural',
+  //     elevation: '3100ft'
+  //   },
+  //   heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Inside-Hero-Image_The-Origin-p-1600.png?updatedAt=1761228745235',
+  //   heroImageMobile: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/The_Origin_Mob-p-800.jpg?updatedAt=1761228745108',
+  //   productCardImage: 'https://ik.imagekit.io/beansofbodhi/Product%20Cards/OR.webp?updatedAt=1761230707571',
+  //   galleryImages: [
+  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR2.webp?updatedAt=1761227480507',
+  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR1.webp?updatedAt=1761227480389',
+  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR3.webp?updatedAt=1761227480407',
+  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/7-p-800.jpg?updatedAt=1761227510274'
+  //   ],
+  //   descriptionContent: {
+  //     title: 'A Rare Legacy of Sweet Spice',
+  //     content: 'Liberica Funk is a rare celebration of standard-setting biodiversity in the coffee forests. Sourced from single microlots where Liberica plants grow tall like trees, this exotic cup contributes to habitat preservation projects for native birds and woodland fauna.',
+  //     image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/Origin_1-p-1080.png?updatedAt=1759660224565'
+  //   },
+  //   category: 'western-ghats-selects',
+  //   featured: true
+  // },
 ];
 
 // Header Products
@@ -321,15 +383,18 @@ export const headerProducts: Product[] = [
     id: 'the-origin',
     shopifyId: 'gid://shopify/Product/9746812141850',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107560218', title: 'Espresso Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107592986', title: 'Filter Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618107625754', title: 'Cold Brew Grind', price: '789.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618107527450', title: 'Whole Beans', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199334682', title: 'Coarse (French Press / Cold Brew)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199367450', title: 'Medium Coarse (Chemex)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199400218', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199432986', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199465754', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151199498522', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
     name: 'THE ORIGIN',
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
-    price: 'INR 789.00',
+    price: 'INR 799.00',
     traceability: {
       source: 'Sholayur, Attapadi, Wayanad',
       tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
@@ -357,15 +422,18 @@ export const headerProducts: Product[] = [
     id: 'the-wild-fire-rush',
     shopifyId: 'gid://shopify/Product/9746812338458',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098680090', title: 'Espresso Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098712858', title: 'Filter Grind', price: '789.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618098745626', title: 'Cold Brew Grind', price: '789.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618098647322', title: 'Whole Beans', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207493914', title: 'Coarse (French Press / Cold Brew)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207526682', title: 'Medium Coarse (Chemex)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207559450', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207592218', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207624986', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151207657754', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
-    price: 'INR 789.00',
+    price: 'INR 799.00',
     traceability: {
       source: 'Wayanad, Anaikatti',
       tasteNotes: ['Ripe Fruit', 'Cashew'],
@@ -394,9 +462,12 @@ export const headerProducts: Product[] = [
     shopifyId: 'gid://shopify/Product/9746812076314',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50618113720602', title: 'Whole Beans', price: '849.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113753370', title: 'Espresso Grind', price: '849.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113786138', title: 'Filter Grind', price: '849.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618113818906', title: 'Cold Brew Grind', price: '849.0', available: true }
+      { id: 'gid://shopify/ProductVariant/52151191634202', title: 'Coarse (French Press / Cold Brew)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191666970', title: 'Medium Coarse (Chemex)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191699738', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191732506', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191765274', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '849.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151191798042', title: 'Extra Fine (Turkish)', price: '849.0', available: true }
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
@@ -429,15 +500,18 @@ export const headerProducts: Product[] = [
     id: 'the-high-tide',
     shopifyId: 'gid://shopify/Product/9725860413722',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '889.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122305818', title: 'Espresso Grind', price: '889.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122338586', title: 'Filter Grind', price: '889.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618122371354', title: 'Cold Brew Grind', price: '889.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618122273050', title: 'Whole Beans', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173284122', title: 'Coarse (French Press / Cold Brew)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173316890', title: 'Medium Coarse (Chemex)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173349658', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173382426', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173415194', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress', price: '899.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151173447962', title: 'Extra Fine (Turkish)', price: '899.0', available: true }
     ],
     name: 'THE HIGH TIDE',
     title: 'The High Tide',
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
-    price: 'INR 889.00',
+    price: 'INR 899.00',
     traceability: {
       source: 'Sholayur',
       tasteNotes: ['Sweet', 'Citric'],
@@ -465,15 +539,18 @@ export const headerProducts: Product[] = [
     id: 'the-thunder-fuse',
     shopifyId: 'gid://shopify/Product/9746812469530',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '699.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096681242', title: 'Espresso Grind', price: '699.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096714010', title: 'Filter Grind', price: '699.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50618096746778', title: 'Cold Brew Grind', price: '699.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50618096648474', title: 'Whole Beans', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213293850', title: 'Coarse (French Press / Cold Brew)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213326618', title: 'Medium Coarse (Chemex)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213359386', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213392154', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213424922', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '749.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151213457690', title: 'Extra Fine (Turkish)', price: '749.0', available: true }
     ],
     name: 'THE THUNDER FUSE',
     title: 'The Thunder Fuse',
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
-    price: 'INR 699.00',
+    price: 'INR 749.00',
     traceability: {
       source: 'Wayanad',
       tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
@@ -501,15 +578,18 @@ export const headerProducts: Product[] = [
     id: 'the-tornado-twist',
     shopifyId: 'gid://shopify/Product/9746812535066',
     shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '769.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990152474', title: 'Espresso Grind', price: '769.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990185242', title: 'Filter Grind', price: '769.0', available: true },
-      { id: 'gid://shopify/ProductVariant/50617990218010', title: 'Cold Brew Grind', price: '769.0', available: true }
+      { id: 'gid://shopify/ProductVariant/50617990119706', title: 'Whole Beans', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218241818', title: 'Coarse (French Press / Cold Brew)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218274586', title: 'Medium Coarse (Chemex)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218307354', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218340122', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218372890', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '779.0', available: true },
+      { id: 'gid://shopify/ProductVariant/52151218405658', title: 'Extra Fine (Turkish)', price: '779.0', available: true }
     ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
-    price: 'INR 769.00',
+    price: 'INR 779.00',
     traceability: {
       source: 'Yercaud, Wayanad',
       tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
@@ -542,7 +622,7 @@ export const collections: Collection[] = [
     name: 'Western Ghats Selects',
     title: 'Western Ghats Selects',
     description: 'Premium coffee blends sourced from the pristine Western Ghats region, featuring our signature HIGH TIDE, ECO SHOCK, and THUNDER FUSE varieties.',
-    price: 'From ₹699',
+    price: 'From ₹749',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Western%20Ghats%20Select.webp?updatedAt=1761390411685',
     products: ['the-high-tide', 'the-eco-shock', 'the-thunder-fuse'],
     featured: true,
@@ -553,7 +633,7 @@ export const collections: Collection[] = [
     name: 'Signature Blends',
     title: 'Signature Blends',
     description: 'Bold and adventurous coffee blends including THE ORIGIN, WILD FIRE RUSH, and TORNADO TWIST. Perfect for those seeking intense flavors and unique experiences.',
-    price: 'From ₹769',
+    price: 'From ₹779',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Signature%20Blends.webp?updatedAt=1761390411670',
     products: ['the-wild-fire-rush', 'the-origin', 'the-tornado-twist'],
     featured: true,
@@ -561,7 +641,11 @@ export const collections: Collection[] = [
   },
   {
     id: 'gadgets',
-    name: 'Gadgets',
+    shopifyId: 'gid://shopify/Product/9859123511578',
+    shopifyVariants: [
+      { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
+    ],
+        name: 'Gadgets',
     title: 'Gadgets',
     description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
     price: 'From ₹7499',

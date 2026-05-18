@@ -37,17 +37,12 @@ export const products: Product[] = [
         id: 'movement',
         shopifyId: 'gid://shopify/Product/9859123511578',
         shopifyVariants: [
-            {
-                id: 'gid://shopify/ProductVariant/50617988055322',
-                title: 'Default Title',
-                price: '7499.0',
-                available: true
-            }
-        ],
+        { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
+    ],
         name: 'MOVEMENT',
         title: 'Movement',
         description: 'Revolutionizing Coffee, One Adventure at a Time.',
-        price: 'INR 7499.00',
+        price: 'INR 7,499.00',
         traceability: {
             source: 'N/A',
             tasteNotes: [],
