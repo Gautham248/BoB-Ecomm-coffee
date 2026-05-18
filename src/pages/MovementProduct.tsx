@@ -5,6 +5,7 @@ import { Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 // import VideoHeroSection from '../components/VideoHeroSection';
 import ScrollImageSequence from '../components/Movement/ScrollImageSequence';
 import DarkHeroAddToCartSection from '../components/Cart/DarkHeroAddToCartSection';
+import ReviewSlider from '../components/ReviewSlider';
 import { products as movementProducts } from '../data/movement';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -330,7 +331,19 @@ const MovementProduct: React.FC = () => {
             className="w-full h-auto md:h-full object-contain"
           />
         </div>
-      </section>
+      </section>      {/* Customer Reviews Section */}
+      {productData.reviews && productData.reviews.length > 0 && (
+        <section className="py-16 md:py-24 bg-black border-t border-zinc-900">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="text-center mb-12 md:mb-16">
+              <p className="text-white/50 text-xs sm:text-sm font-medium tracking-wider mb-3">REVIEWS</p>
+              <h2 className="text-3xl sm:text-4xl font-pangaia font-bold text-white tracking-wide">Customer Reviews</h2>
+            </div>
+
+            <ReviewSlider reviews={productData.reviews} isDark={true} />
+          </div>
+        </section>
+      )}
     </>
   );
 };

@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Plus, X, ChevronLeft, ChevronRight, MapPin, Mountain, Droplet } from 'lucide-react';
 import DarkHeroAddToCartSection from './Cart/DarkHeroAddToCartSection';
 import YouMayAlsoLike from './YouMayAlsoLike';
+import ReviewSlider from './ReviewSlider';
 import { Product } from '../data/collections';
 import { pixelEvent } from '../utils/pixel';
 
@@ -498,23 +499,27 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                   Customer Reviews
                 </h3>
 
-                {/* Placeholder Review Structure */}
-                <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 mb-6">
-                  <div className="flex items-center justify-center mb-4">
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                        </svg>
-                      ))}
+                {product.reviews && product.reviews.length > 0 ? (
+                  <ReviewSlider reviews={product.reviews} />
+                ) : (
+                  /* Placeholder Review Structure */
+                  <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 mb-6">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="flex gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                          </svg>
+                        ))}
+                      </div>
                     </div>
+                    <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed italic mb-4">
+                      "{product.name} has become my daily ritual. The rich, complex flavors transport me to the misty mountains
+                      of the Western Ghats with every sip. It's more than just coffee - it's an experience."
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-500 font-medium">- Coffee Enthusiast</p>
                   </div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed italic mb-4">
-                    "{product.name} has become my daily ritual. The rich, complex flavors transport me to the misty mountains
-                    of the Western Ghats with every sip. It's more than just coffee - it's an experience."
-                  </p>
-                  <p className="text-xs sm:text-sm text-gray-500 font-medium">- Coffee Enthusiast</p>
-                </div>
+                )}
 
                 <div className="mt-8 text-gray-500">
                   <p className="text-sm">More reviews coming soon...</p>

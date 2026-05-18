@@ -1,6 +1,16 @@
+export interface Review {
+  customerName: string;
+  rating: number;
+  date: string;
+  purchase: string;
+  title: string;
+  content: string;
+}
+
 export interface Product {
   id: string;
   shopifyId?: string;
+  reviews?: Review[];
   shopifyVariants?: Array<{
     id: string;
     title: string;
@@ -59,6 +69,16 @@ export const products: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151199465754', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151199498522', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
+    reviews: [
+        {
+          customerName: 'Shahajahan S.',
+          rating: 5,
+          date: '5 Februray 2026',
+          purchase: 'Filter Grind, 250g',
+          title: 'Recommended Coffee',
+          content: 'This is my favourite coffee in India now. Has been 4 months using Bean Of Bodhi’s coffee for pour over, and they became my favourite. Especially High Tide and Origin. Recommend buy.'
+        }
+    ],
     name: 'THE ORIGIN',
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
@@ -99,6 +119,16 @@ export const products: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151207624986', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151207657754', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
+    reviews: [
+        {
+          customerName: 'Hridai',
+          rating: 5,
+          date: '5 Februray 2026',
+          purchase: 'Cold Brew Grind, 250g',
+          title: 'Go try it',
+          content: 'Tried the wild fire rush from beans of bodhi, and it was a love at first hit! ⚡️\n\nThe energy rush is real ✔️'
+        }
+    ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
@@ -137,6 +167,32 @@ export const products: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151191732506', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '849.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151191765274', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '849.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151191798042', title: 'Extra Fine (Turkish)', price: '849.0', available: true }
+    ],
+    reviews: [
+        {
+          customerName: 'Sreemon Sreeraj Ponath',
+          rating: 5,
+          date: '1 April 2026',
+          purchase: 'V60 Grind, 250g',
+          title: 'Great Coffee',
+          content: 'Really enjoyed this coffee—smooth, rich flavor, not too bitter. Smells amazing and tastes great every morning. Definitely buying again, totally worth it.'
+        },
+        {
+          customerName: 'Aashish Nambiar',
+          rating: 5,
+          date: '1 April 2026',
+          purchase: 'V60 Grind, 250g',
+          title: 'Must Try',
+          content: 'Smooth, rich, and worth every sip , Strong aroma, perfect start to my day Café vibes at home, loved it!.'
+        },
+        {
+          customerName: 'Rithik Arun',
+          rating: 5,
+          date: '1 April 2026',
+          purchase: 'V60 Grind, 250g',
+          title: 'Best Coffee Ever',
+          content: 'Woow, beans was perfect for making filter coffee. Everybody should try making decoction with peaberry beans. The flavour was so good. Thank you beans of Bodhi.'
+        }
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
@@ -255,6 +311,16 @@ export const products: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151218372890', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '779.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151218405658', title: 'Extra Fine (Turkish)', price: '779.0', available: true }
     ],
+    reviews: [
+        {
+          customerName: 'Jahan',
+          rating: 5,
+          date: '7 April 2026',
+          purchase: 'Whole beans, 250g',
+          title: 'Really Good Coffee',
+          content: 'Really enjoyed this coffee 😍. It’s strong but still smooth, not harsh. Tastes great as espresso and even better with milk. Feels fresh and good quality. Would definitely buy again ❤️.'
+        }
+    ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
@@ -288,6 +354,16 @@ export const products: Product[] = [
     shopifyId: 'gid://shopify/Product/9859123511578',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
+    ],
+    reviews: [
+        {
+          customerName: 'Navaf Sharafudheen',
+          rating: 5,
+          date: '30 April 2026',
+          purchase: 'Movement',
+          title: 'Game changer',
+          content: 'I have been using Moment for a while now, and it\'s very portable and easy to make an espresso, no matter where you are..'
+        }
     ],
         name: 'Gadgets',
     title: 'Movement',
@@ -391,6 +467,16 @@ export const headerProducts: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151199465754', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151199498522', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
+    reviews: [
+        {
+          customerName: 'Shahajahan S.',
+          rating: 5,
+          date: '5 Februray 2026',
+          purchase: 'Filter Grind, 250g',
+          title: 'Recommended Coffee',
+          content: 'This is my favourite coffee in India now. Has been 4 months using Bean Of Bodhi’s coffee for pour over, and they became my favourite. Especially High Tide and Origin. Recommend buy.'
+        }
+    ],
     name: 'THE ORIGIN',
     title: 'The Origin',
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
@@ -430,6 +516,16 @@ export const headerProducts: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151207624986', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '799.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151207657754', title: 'Extra Fine (Turkish)', price: '799.0', available: true }
     ],
+    reviews: [
+        {
+          customerName: 'Hridai',
+          rating: 5,
+          date: '5 Februray 2026',
+          purchase: 'Cold Brew Grind, 250g',
+          title: 'Go try it',
+          content: 'Tried the wild fire rush from beans of bodhi, and it was a love at first hit! ⚡️\n\nThe energy rush is real ✔️'
+        }
+    ],
     name: 'THE WILD FIRE RUSH',
     title: 'The Wild Fire Rush',
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
@@ -468,6 +564,32 @@ export const headerProducts: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151191732506', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '849.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151191765274', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '849.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151191798042', title: 'Extra Fine (Turkish)', price: '849.0', available: true }
+    ],
+    reviews: [
+        {
+          customerName: 'Sreemon Sreeraj Ponath',
+          rating: 5,
+          date: '1 April 2026',
+          purchase: 'V60 Grind, 250g',
+          title: 'Great Coffee',
+          content: 'Really enjoyed this coffee—smooth, rich flavor, not too bitter. Smells amazing and tastes great every morning. Definitely buying again, totally worth it.'
+        },
+        {
+          customerName: 'Aashish Nambiar',
+          rating: 5,
+          date: '1 April 2026',
+          purchase: 'V60 Grind, 250g',
+          title: 'Must Try',
+          content: 'Smooth, rich, and worth every sip , Strong aroma, perfect start to my day Café vibes at home, loved it!.'
+        },
+        {
+          customerName: 'Rithik Arun',
+          rating: 5,
+          date: '1 April 2026',
+          purchase: 'V60 Grind, 250g',
+          title: 'Best Coffee Ever',
+          content: 'Woow, beans was perfect for making filter coffee. Everybody should try making decoction with peaberry beans. The flavour was so good. Thank you beans of Bodhi.'
+        }
     ],
     name: 'THE ECO SHOCK',
     title: 'The Eco Shock',
@@ -586,6 +708,16 @@ export const headerProducts: Product[] = [
       { id: 'gid://shopify/ProductVariant/52151218372890', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '779.0', available: true },
       { id: 'gid://shopify/ProductVariant/52151218405658', title: 'Extra Fine (Turkish)', price: '779.0', available: true }
     ],
+    reviews: [
+        {
+          customerName: 'Jahan',
+          rating: 5,
+          date: '7 April 2026',
+          purchase: 'Whole beans, 250g',
+          title: 'Really Good Coffee',
+          content: 'Really enjoyed this coffee 😍. It’s strong but still smooth, not harsh. Tastes great as espresso and even better with milk. Feels fresh and good quality. Would definitely buy again ❤️.'
+        }
+    ],
     name: 'THE TORNADO TWIST',
     title: 'The Tornado Twist',
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
@@ -644,6 +776,16 @@ export const collections: Collection[] = [
     shopifyId: 'gid://shopify/Product/9859123511578',
     shopifyVariants: [
       { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
+    ],
+    reviews: [
+        {
+          customerName: 'Navaf Sharafudheen',
+          rating: 5,
+          date: '30 April 2026',
+          purchase: 'Movement',
+          title: 'Game changer',
+          content: 'I have been using Moment for a while now, and it\'s very portable and easy to make an espresso, no matter where you are..'
+        }
     ],
         name: 'Gadgets',
     title: 'Gadgets',

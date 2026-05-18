@@ -1,6 +1,16 @@
+export interface Review {
+    customerName: string;
+    rating: number;
+    date: string;
+    purchase: string;
+    title: string;
+    content: string;
+}
+
 export interface Product {
     id: string;
     shopifyId?: string;
+    reviews?: Review[];
     shopifyVariants?: Array<{
         id: string;
         title: string;
@@ -38,6 +48,16 @@ export const products: Product[] = [
         shopifyId: 'gid://shopify/Product/9859123511578',
         shopifyVariants: [
         { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
+    ],
+    reviews: [
+          {
+            customerName: 'Navaf Sharafudheen',
+            rating: 5,
+            date: '30 April 2026',
+            purchase: 'Movement',
+            title: 'Game changer',
+            content: 'I have been using Moment for a while now, and it\'s very portable and easy to make an espresso, no matter where you are..'
+          }
     ],
         name: 'MOVEMENT',
         title: 'Movement',
