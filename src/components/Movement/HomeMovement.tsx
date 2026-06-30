@@ -11,7 +11,6 @@ interface HomeMovementProps {
   mobileObjectFit?: 'cover' | 'contain' | 'fill';
   desktopObjectFit?: 'cover' | 'contain' | 'fill';
   overlayOpacity?: number;
-  buttonPosition?: 'left' | 'right';
   buttonText?: string;
 }
 
@@ -25,12 +24,10 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
   mobileObjectFit = 'cover',
   desktopObjectFit = 'cover',
   overlayOpacity = 0.1,
-  buttonPosition = 'left',
   buttonText = 'Explore'
 }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const desktopVideoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,15 +38,6 @@ const HomeMovement: React.FC<HomeMovementProps> = ({
   const [isComplete, setIsComplete] = useState(false);
   const [textOpacity, setTextOpacity] = useState(0);
   const [textTranslateY, setTextTranslateY] = useState(100);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

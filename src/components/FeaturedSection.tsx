@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { getFeaturedProducts } from '../data/collections';
+import { getFeaturedProducts } from '../services/adminService';
 
 const FeaturedSection = () => {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { collections, getProductsInCollection } from '../data/collections';
+import { getCollections, getProductsInCollection } from '../services/adminService';
 import SEOHead from '../components/SEO/SEOHead';
 import StructuredData from '../components/SEO/StructuredData';
 import NewsletterSection from '../components/NewsletterSection';
@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Shop: React.FC = () => {
   const navigate = useNavigate();
+  const collections = useMemo(() => getCollections(), []);
 
   useEffect(() => {
     // Animation for category sections

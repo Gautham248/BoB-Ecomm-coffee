@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {  products, getProductsByCategory } from '../data/collections';
+import { getAllProducts, getProductsByCategory } from '../services/adminService';
 import ProductCard from './ProductCard';
 
 interface YouMayAlsoLikeProps {
@@ -14,6 +14,7 @@ const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({
   maxProducts = 4 
 }) => {
   const navigate = useNavigate();
+  const products = useMemo(() => getAllProducts(), []);
 
   // Get the current product
   const currentProduct = products.find(p => p.id === currentProductId);

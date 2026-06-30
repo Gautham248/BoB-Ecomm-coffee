@@ -23,6 +23,24 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    },
+  },
+  {
+    files: ['src/components/**/*.{ts,tsx}', 'src/pages/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/data/collections', '**/data/movement'],
+              message:
+                'Components and pages must import from services/adminService, not directly from data/collections or data/movement.',
+            },
+          ],
+        },
+      ],
     },
   }
 );

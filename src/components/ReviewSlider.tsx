@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Review } from '../data/collections';
+import type { Review } from '../types/product';
 
 interface ReviewSliderProps {
   reviews: Review[];

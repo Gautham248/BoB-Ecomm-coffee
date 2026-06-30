@@ -1,3 +1,5 @@
+import type { Collection } from '../types/product';
+
 export interface Review {
   customerName: string;
   rating: number;
@@ -38,19 +40,6 @@ export interface Product {
     image: string;
   };
   category: string;
-  featured?: boolean;
-  upcoming?: boolean;
-}
-
-export interface Collection {
-  id: string;
-  name: string;
-  title: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  image: string;
-  products: string[];
   featured?: boolean;
   upcoming?: boolean;
 }
@@ -773,27 +762,13 @@ export const collections: Collection[] = [
   },
   {
     id: 'gadgets',
-    shopifyId: 'gid://shopify/Product/9859123511578',
-    shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
-    ],
-    reviews: [
-        {
-          customerName: 'Navaf Sharafudheen',
-          rating: 5,
-          date: '30 April 2026',
-          purchase: 'Movement',
-          title: 'Game changer',
-          content: 'I have been using Moment for a while now, and it\'s very portable and easy to make an espresso, no matter where you are..'
-        }
-    ],
-        name: 'Gadgets',
+    name: 'Gadgets',
     title: 'Gadgets',
     description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
     price: 'From ₹7499',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Gadgets.webp?updatedAt=1761390411909',
     products: ['gadgets'],
-    featured: true,
+    featured: false,
     upcoming: false
   },
   {

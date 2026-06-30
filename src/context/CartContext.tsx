@@ -1,11 +1,12 @@
 // CartContext.tsx - Fixed version with better state management
+/* eslint-disable @typescript-eslint/no-explicit-any -- Shopify SDK types are not fully typed */
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 import Cookies from 'js-cookie';
 import client from '../utils/shopify';
 
 interface CartState {
   isOpen: boolean;
-  items: any[]; // Using any for Shopify SDK types
+  items: any[];
   checkout: any | null; // Using any for Shopify SDK types
   loading: boolean;
   error: string | null;
@@ -49,7 +50,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     case 'SET_INITIALIZED':
       return { ...state, initialized: action.payload };
     
-    case 'SET_CHECKOUT':
+    case 'SET_CHECKOUT': {
       const checkout = action.payload;
       return {
         ...state,
@@ -61,8 +62,9 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         error: null,
         initialized: true
       };
+    }
     
-    case 'ADD_TO_CART_SUCCESS':
+    case 'ADD_TO_CART_SUCCESS': {
       const updatedCheckout = action.payload.checkout;
       return {
         ...state,
@@ -73,8 +75,9 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         loading: false,
         error: null
       };
+    }
     
-    case 'UPDATE_CART_SUCCESS':
+    case 'UPDATE_CART_SUCCESS': {
       const updatedCart = action.payload;
       return {
         ...state,
@@ -84,6 +87,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         subtotal: updatedCart.subtotalPrice?.amount || '0.00',
         loading: false
       };
+    }
     
     case 'CLEAR_CART':
       return { ...initialState, initialized: true };
@@ -104,6 +108,8 @@ interface CartContextType extends CartState {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+// useCart depends on module-private CartContext; must live in same file
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -155,7 +161,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
             // console.log('Checkout is completed or invalid, creating new one');
             Cookies.remove('shopify_checkout_id');
           }
-        } catch (error) {
+        } catch {
           // console.log('Error fetching existing checkout, creating new one:', error);
           Cookies.remove('shopify_checkout_id');
         }

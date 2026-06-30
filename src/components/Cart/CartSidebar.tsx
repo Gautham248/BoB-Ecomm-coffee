@@ -123,6 +123,7 @@ const CartSidebar: React.FC = () => {
 
             {!loading && items.length > 0 && (
               <div className="space-y-4">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {items.map((item: any) => (
                   <div key={item.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
                     {/* Product Image */}

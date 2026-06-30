@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { getFeaturedCollections, Collection } from '../data/collections';
+import { getFeaturedCollections } from '../services/adminService';
+import type { Collection } from '../types/product';
 
 // Mock GSAP functions for demonstration
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 const gsap = {
   utils: {
     toArray: (selector: string) => Array.from(document.querySelectorAll(selector))
@@ -11,6 +13,7 @@ const gsap = {
   fromTo: (_targets: any, _fromVars: any, _toVars: any) => { },
   to: (_targets: any, _toVars: any) => { }
 };
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 
 interface CollectionsSectionProps {
   mobileCarouselItemWidth?: number; // Percentage (0-100) - default 70

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Plus, Minus } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
-import { Product } from '../../data/collections';
+import type { Product } from '../../types/product';
 import { pixelEvent } from '../../utils/pixel';
 
 interface DarkHeroAddToCartSectionProps {

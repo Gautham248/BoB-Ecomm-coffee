@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { products, getAvailableCategories, categoryLabels } from '../data/collections';
+import { getAllProducts, getAvailableCategories, getCategoryLabels } from '../services/adminService';
 import ShopAllBanner from '../components/ShopAllBanner';
 
 // Filter Pills Component
@@ -47,6 +47,7 @@ const CategoryFilter = ({
 };
 
 // Upcoming Product Card Component
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UpcomingProductCard: React.FC<{ categoryLabel: string }> = ({ categoryLabel }) => {
   return (
     <div className="bg-gray-50 rounded-lg overflow-hidden shadow-sm border-2 border-dashed border-gray-300">
@@ -129,14 +130,17 @@ const ShopAllPage = () => {
     }
   };
 
+  const allProducts = useMemo(() => getAllProducts(), []);
+  const labels = useMemo(() => getCategoryLabels(), []);
+
   const filteredProducts = useMemo(() => {
     if (selectedCategories.length === 0) {
-      return products;
+      return allProducts;
     }
-    return products.filter(product =>
+    return allProducts.filter(product =>
       selectedCategories.includes(product.category)
     );
-  }, [selectedCategories]);
+  }, [selectedCategories, allProducts]);
 
   // Check if selected categories include upcoming ones
   const hasUpcomingCategories = useMemo(() => {
@@ -153,8 +157,8 @@ const ShopAllPage = () => {
         const category = availableCategories.find(c => c.id === catId);
         return category?.upcoming;
       })
-      .map(catId => categoryLabels[catId]);
-  }, [selectedCategories, availableCategories]);
+      .map(catId => labels[catId]);
+  }, [selectedCategories, availableCategories, labels]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -189,7 +193,7 @@ const ShopAllPage = () => {
               key={product.id}
               product={product}
               onClick={() => handleProductClick(product.id)}
-              categoryLabel={categoryLabels[product.category]}
+              categoryLabel={labels[product.category]}
             />
           ))}
 
@@ -231,7 +235,7 @@ const ShopAllPage = () => {
         {/* Results Count */}
         <div className="mt-8 text-center text-sm text-gray-600">
           {filteredProducts.length > 0 && (
-            <>Showing {filteredProducts.length} of {products.length} products</>
+            <>Showing {filteredProducts.length} of {allProducts.length} products</>
           )}
           {hasUpcomingCategories && filteredProducts.length === 0 && (
             <>New products coming soon in {upcomingCategoryLabels.join(', ')}</>

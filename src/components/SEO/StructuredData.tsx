@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface StructuredDataProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   type: 'organization' | 'product' | 'breadcrumb' | 'website' | 'coffeeshop';
 }
@@ -103,6 +104,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ data, type }) => {
         return {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           "itemListElement": data.map((item: any, index: number) => ({
             "@type": "ListItem",
             "position": index + 1,

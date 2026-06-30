@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, Menu, X, ShoppingBag } from 'lucide-react';
 import { gsap } from 'gsap';
-import { headerProducts } from '../data/collections';
+import { getHeaderProducts } from '../services/adminService';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/images/BoB_Logo_small.png';
 import favicon from '../assets/images/Bob_Favicon-03.png';
@@ -10,11 +10,11 @@ import favicon from '../assets/images/Bob_Favicon-03.png';
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { toggleCart, itemCount } = useCart();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
+  const headerProducts = useMemo(() => getHeaderProducts(), []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,11 +91,6 @@ const Header: React.FC = () => {
     }
   };
 
-  const handleMovementClick = () => {
-    navigate('/movement');
-    setIsMobileMenuOpen(false);
-  };
-
   const toggleMobileDropdown = (dropdown: string) => {
     setMobileActiveDropdown(mobileActiveDropdown === dropdown ? null : dropdown);
   };
@@ -137,7 +132,7 @@ const Header: React.FC = () => {
                   : 'opacity-0 invisible -translate-y-4'
               }`}>
                 <div className="py-8 px-6">
-                  {headerProducts.map((product, index) => (
+                  {headerProducts.map((product) => (
                     <div 
                       key={product.name} 
                       className="group flex items-center space-x-4 py-3 px-4 rounded-lg hover:bg-teal-900 transition-all duration-300 cursor-pointer"
@@ -184,7 +179,7 @@ const Header: React.FC = () => {
                   : 'opacity-0 invisible -translate-y-4'
               }`}>
                 <div className="py-8 px-6">
-                  {insideItems.map((item, index) => (
+                  {insideItems.map((item) => (
                     <div 
                       key={item.title} 
                       className="group flex items-center space-x-4 py-3 px-4 rounded-lg hover:bg-teal-900 transition-all duration-300 cursor-pointer"

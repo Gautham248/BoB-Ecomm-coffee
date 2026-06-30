@@ -3,7 +3,7 @@ import { useParams, Navigate } from 'react-router-dom';
 import SEOHead from '../components/SEO/SEOHead';
 import StructuredData from '../components/SEO/StructuredData';
 import ProductPage from '../components/ProductPage';
-import { getProductById } from '../data/collections';
+import { getProductById } from '../services/adminService';
 
 const Product: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -39,10 +39,7 @@ const Product: React.FC = () => {
       <ProductPage 
         product={product} 
         onBackToHome={() => window.history.back()}
-        onProductClick={(_productName) => {
-          // Note: 'products' is not imported - this will also cause an error
-          // You should import it from collections
-        }}
+        onProductClick={() => {}}
       />
     </>
   );

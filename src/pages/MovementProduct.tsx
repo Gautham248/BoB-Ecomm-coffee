@@ -6,19 +6,17 @@ import { Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollImageSequence from '../components/Movement/ScrollImageSequence';
 import DarkHeroAddToCartSection from '../components/Cart/DarkHeroAddToCartSection';
 import ReviewSlider from '../components/ReviewSlider';
-import { products as movementProducts } from '../data/movement';
+import { getMovementProducts } from '../services/adminService';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const MovementProduct: React.FC = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-  const [_isMobile, setIsMobile] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const productData = movementProducts[0];
+  const productData = getMovementProducts()[0];
   const product = {
     name: productData.name,
     title: productData.title,

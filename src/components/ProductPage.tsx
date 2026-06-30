@@ -5,7 +5,7 @@ import { Plus, X, ChevronLeft, ChevronRight, MapPin, Mountain, Droplet } from 'l
 import DarkHeroAddToCartSection from './Cart/DarkHeroAddToCartSection';
 import YouMayAlsoLike from './YouMayAlsoLike';
 import ReviewSlider from './ReviewSlider';
-import { Product } from '../data/collections';
+import type { Product } from '../types/product';
 import { pixelEvent } from '../utils/pixel';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -173,7 +173,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
               loading="eager"
               width="600"
               height="600"
-              // @ts-ignore
+              // @ts-expect-error fetchpriority not in React types
               fetchpriority="high"
             />
           </div>
@@ -221,7 +221,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
               loading="eager"
               width="1200"
               height="800"
-              // @ts-ignore
+              // @ts-expect-error fetchpriority not in React types
               fetchpriority="high"
             />
             {/* Dark gradient overlay */}
