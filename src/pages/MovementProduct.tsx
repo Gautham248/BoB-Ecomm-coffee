@@ -15,6 +15,7 @@ const MovementProduct: React.FC = () => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const productData = getMovementProducts()[0];
   const product = {

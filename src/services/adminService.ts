@@ -102,6 +102,7 @@ export function getAllProducts(): Product[] {
         category: '',
         featured: false,
         upcoming: false,
+        shopifyVariants: [] as Product['shopifyVariants'],
         ...meta,
       } satisfies Product;
       validateProduct(product);

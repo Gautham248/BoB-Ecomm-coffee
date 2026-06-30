@@ -11,7 +11,7 @@ async function getFirestoreWriter() {
 }
 
 const CACHE_KEY = 'bob-admin-cache';
-const CURRENT_VERSION = 3;
+const CURRENT_VERSION = 5;
 
 export function validateCache(data: unknown): AdminCache {
   if (!data || typeof data !== 'object') throw new Error('Cache is not an object');

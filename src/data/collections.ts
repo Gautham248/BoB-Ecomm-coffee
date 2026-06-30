@@ -355,7 +355,7 @@ export const products: Product[] = [
         }
     ],
         name: 'Gadgets',
-    title: 'Movement',
+    title: 'Gadgets',
     description: 'Coming soon - Gadgets',
     price: 'INR 7,499.00',
     traceability: {
@@ -399,47 +399,44 @@ export const products: Product[] = [
     },
     category: 'merchandise',
     upcoming: true
-  }
+  },
 
-  // {
-  //   id: 'the-liberica-funk',
-  //   shopifyId: 'gid://shopify/Product/10122236789018',
-  //   shopifyVariants: [
-  //     { id: 'gid://shopify/ProductVariant/52151152738586', title: 'Whole Beans', price: '979.0', available: true },
-  //     { id: 'gid://shopify/ProductVariant/52151152771354', title: 'Coarse (French Press / Cold Brew)', price: '979.0', available: true },
-  //     { id: 'gid://shopify/ProductVariant/52151152804122', title: 'Medium Coarse (Chemex)', price: '979.0', available: true },
-  //     { id: 'gid://shopify/ProductVariant/52151152836890', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '979.0', available: true },
-  //     { id: 'gid://shopify/ProductVariant/52151152869658', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '979.0', available: true },
-  //     { id: 'gid://shopify/ProductVariant/52151152902426', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '979.0', available: true },
-  //     { id: 'gid://shopify/ProductVariant/52151152935194', title: 'Extra Fine (Turkish)', price: '979.0', available: true }
-  //   ],
-  //   name: 'THE LIBERICA FUNK',
-  //   title: 'The Liberica Funk',
-  //   description: 'A wild, exotic single-origin Liberica with heavy body, sweet jackfruit aroma, and a clean cup. Heavy, sweet, and complex, it is a rare coffee that stands apart from Arabica and Robusta, designed for those seeking the ultimate sensory adventure.',
-  //   price: 'INR 979.00',
-  //   traceability: {
-  //     source: 'Western Ghats, Wayanad',
-  //     tasteNotes: ['Jackfruit', 'Ripe Banana', 'Sweet Spice', 'Heavy Bodied'],
-  //     process: 'Natural',
-  //     elevation: '3100ft'
-  //   },
-  //   heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Inside-Hero-Image_The-Origin-p-1600.png?updatedAt=1761228745235',
-  //   heroImageMobile: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/The_Origin_Mob-p-800.jpg?updatedAt=1761228745108',
-  //   productCardImage: 'https://ik.imagekit.io/beansofbodhi/Product%20Cards/OR.webp?updatedAt=1761230707571',
-  //   galleryImages: [
-  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR2.webp?updatedAt=1761227480507',
-  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR1.webp?updatedAt=1761227480389',
-  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/OR3.webp?updatedAt=1761227480407',
-  //     'https://ik.imagekit.io/beansofbodhi/Products/The%20Origin/7-p-800.jpg?updatedAt=1761227510274'
-  //   ],
-  //   descriptionContent: {
-  //     title: 'A Rare Legacy of Sweet Spice',
-  //     content: 'Liberica Funk is a rare celebration of standard-setting biodiversity in the coffee forests. Sourced from single microlots where Liberica plants grow tall like trees, this exotic cup contributes to habitat preservation projects for native birds and woodland fauna.',
-  //     image: 'https://ik.imagekit.io/7ujz6ljli/Product%20Description%20and%20Gallery/Origin/Origin_1-p-1080.png?updatedAt=1759660224565'
-  //   },
-  //   category: 'western-ghats-selects',
-  //   featured: true
-  // },
+  {
+    id: 'the-liberica-funk',
+    shopifyId: 'gid://shopify/Product/10122236789018',
+    shopifyVariants: [
+      { id: 'gid://shopify/ProductVariant/52151152738586', title: 'Whole Beans', price: '932.38', available: true },
+      { id: 'gid://shopify/ProductVariant/52151152771354', title: 'Coarse (French Press / Cold Brew)', price: '932.38', available: true },
+      { id: 'gid://shopify/ProductVariant/52151152804122', title: 'Medium Coarse (Chemex)', price: '932.38', available: true },
+      { id: 'gid://shopify/ProductVariant/52151152836890', title: 'Medium (Drip Coffee Maker / South Indian Filter)', price: '932.38', available: true },
+      { id: 'gid://shopify/ProductVariant/52151152869658', title: 'Medium Fine (V60 / Pour Over / Syphon)', price: '932.38', available: true },
+      { id: 'gid://shopify/ProductVariant/52151152902426', title: 'Fine (Espresso / Movement / Moka Pot / Aeropress)', price: '932.38', available: true },
+      { id: 'gid://shopify/ProductVariant/52151152935194', title: 'Extra Fine (Turkish)', price: '932.38', available: true }
+    ],
+    name: 'THE LIBERICA FUNK',
+    title: 'The Liberica Funk',
+    description: 'A wild, exotic single-origin Liberica with heavy body, sweet jackfruit aroma, and a clean cup. Heavy, sweet, and complex, it is a rare coffee that stands apart from Arabica and Robusta, designed for those seeking the ultimate sensory adventure.',
+    price: 'INR 932.00',
+    traceability: {
+      source: 'Western Ghats, Wayanad',
+      tasteNotes: ['Jackfruit', 'Ripe Banana', 'Sweet Spice', 'Heavy Bodied'],
+      process: 'Natural',
+      elevation: '3100ft'
+    },
+    heroImage: 'https://cdn.shopify.com/s/files/1/0918/6941/3658/files/IMG-1298.png?v=1770882427',
+    heroImageMobile: 'https://cdn.shopify.com/s/files/1/0918/6941/3658/files/IMG-1298.png?v=1770882427',
+    productCardImage: 'https://cdn.shopify.com/s/files/1/0918/6941/3658/files/IMG-1298.png?v=1770882427',
+    galleryImages: [
+      'https://cdn.shopify.com/s/files/1/0918/6941/3658/files/IMG-1298.png?v=1770882427',
+    ],
+    descriptionContent: {
+      title: 'A Rare Legacy of Sweet Spice',
+      content: 'Liberica Funk is a rare celebration of standard-setting biodiversity in the coffee forests. Sourced from single microlots where Liberica plants grow tall like trees, this exotic cup contributes to habitat preservation projects for native birds and woodland fauna.',
+      image: 'https://cdn.shopify.com/s/files/1/0918/6941/3658/files/IMG-1298.png?v=1770882427'
+    },
+    category: 'western-ghats-selects',
+    featured: true
+  },
 ];
 
 // Header Products
@@ -742,10 +739,10 @@ export const collections: Collection[] = [
     id: 'western-ghats-selects',
     name: 'Western Ghats Selects',
     title: 'Western Ghats Selects',
-    description: 'Premium coffee blends sourced from the pristine Western Ghats region, featuring our signature HIGH TIDE, ECO SHOCK, and THUNDER FUSE varieties.',
+    description: 'Premium coffee blends sourced from the pristine Western Ghats region, featuring our signature HIGH TIDE, ECO SHOCK, THUNDER FUSE, and LIBERICA FUNK varieties.',
     price: 'From ₹749',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Western%20Ghats%20Select.webp?updatedAt=1761390411685',
-    products: ['the-high-tide', 'the-eco-shock', 'the-thunder-fuse'],
+    products: ['the-high-tide', 'the-eco-shock', 'the-thunder-fuse', 'the-liberica-funk'],
     featured: true,
     upcoming: false
   },
@@ -801,7 +798,8 @@ export const categoryLabels: Record<string, string> = {
   'signature-blends': 'Signature Blends',
   'gadgets': 'Gadgets',
   'merchandise': 'Merchandise',
-  'microlots': 'Microlots'
+  'microlots': 'Microlots',
+  'liberica-funk': 'Western Ghats Selects'
 };
 
 // Helper functions

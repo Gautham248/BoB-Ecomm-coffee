@@ -27,9 +27,7 @@ async function buildFullCache(): Promise<AdminCache> {
 
   const productMetadata: Record<string, Partial<Product>> = {};
   for (const p of products) {
-    const rest = { ...p };
-    delete (rest as Record<string, unknown>).shopifyVariants;
-    productMetadata[p.id] = rest;
+    productMetadata[p.id] = { ...p };
   }
 
   return {
@@ -58,6 +56,8 @@ async function buildFullCache(): Promise<AdminCache> {
       traceability: (p as Record<string, unknown>).traceability || { source: '', tasteNotes: [], process: '', elevation: '' },
       descriptionContent: (p as Record<string, unknown>).descriptionContent || { title: '', content: '', image: '' },
       category: (p as Record<string, unknown>).category as string || '',
+      shopifyVariants: ((p as Record<string, unknown>).shopifyVariants as Product['shopifyVariants']) || [],
+      reviews: ((p as Record<string, unknown>).reviews as Product['reviews']) || [],
     })),
     categoryLabels:
       Object.keys(cache.categoryLabels).length > 0 ? cache.categoryLabels : categoryLabels,
@@ -73,13 +73,11 @@ async function pushToFirestore(cache: AdminCache): Promise<void> {
     const { products } = await import('../data/collections');
     const { products: movementProducts } = await import('../data/movement');
 
+    // Write admin_cache — productMetadata in cache now includes shopifyVariants
     await writeFirestoreCache(cache);
 
-    const allProducts: Product[] = products.map((p) => {
-      const { shopifyVariants, ...rest } = p;
-      return { ...rest, id: p.id, shopifyVariants };
-    });
-    await writeCollection('products', allProducts);
+    // Write individual product documents (full, with variants)
+    await writeCollection('products', products as Product[]);
 
     await writeCollection('collections', collections as Collection[]);
 
@@ -98,6 +96,8 @@ async function pushToFirestore(cache: AdminCache): Promise<void> {
       traceability: (p as Record<string, unknown>).traceability || { source: '', tasteNotes: [], process: '', elevation: '' },
       descriptionContent: (p as Record<string, unknown>).descriptionContent || { title: '', content: '', image: '' },
       category: (p as Record<string, unknown>).category as string || '',
+      shopifyVariants: ((p as Record<string, unknown>).shopifyVariants as Product['shopifyVariants']) || [],
+      reviews: ((p as Record<string, unknown>).reviews as Product['reviews']) || [],
     }));
     await writeCollection('movement_products', mvProducts);
 
