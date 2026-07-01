@@ -34,11 +34,22 @@ export function getProductsInCollection(collectionId: string): Product[] {
 }
 
 export function getProductById(id: string): Product | undefined {
-  return getAllProducts().find((p) => p.id === id);
+  const all = getAllProducts();
+  return all.find((p) => p.id === id) || 
+         all.find((p) => p.id === `the-${id}`) || 
+         all.find((p) => p.id === id.replace(/^the-/, ''));
 }
 
 export function getProductsByCategory(category: string): Product[] {
-  return getAllProducts().filter((p) => p.category === category);
+  const collection = getCollections().find((c) => c.id === category);
+  const all = getAllProducts();
+  return all.filter((p) => {
+    if (p.category === category) return true;
+    if (!collection) return false;
+    const stripped = p.id.replace(/^the-/, '');
+    const prefixed = p.id.startsWith('the-') ? p.id : `the-${p.id}`;
+    return collection.products.some(id => id === p.id || id === stripped || id === prefixed);
+  });
 }
 
 export function getFeaturedProducts(): Product[] {
@@ -82,9 +93,23 @@ export function getAvailableCategories(): CategoryInfo[] {
 export function getAllProducts(): Product[] {
   const cache = readCache();
   const products: Product[] = [];
+  const seenHandles = new Set<string>();
 
-  for (const [id, meta] of Object.entries(cache.productMetadata)) {
+  const entries = Object.entries(cache.productMetadata).sort(([idA, metaA], [idB, metaB]) => {
+    const prefixedA = idA.startsWith('the-') ? 1 : 0;
+    const prefixedB = idB.startsWith('the-') ? 1 : 0;
+    if (prefixedA !== prefixedB) return prefixedB - prefixedA;
+    const hasImgA = (metaA && typeof metaA === 'object' && 'heroImage' in (metaA as Record<string, unknown>) && !!(metaA as Record<string, unknown>).heroImage) ? 1 : 0;
+    const hasImgB = (metaB && typeof metaB === 'object' && 'heroImage' in (metaB as Record<string, unknown>) && !!(metaB as Record<string, unknown>).heroImage) ? 1 : 0;
+    return hasImgB - hasImgA;
+  });
+
+  for (const [id, meta] of entries) {
     if (id.startsWith('movement-')) continue;
+    const baseHandle = id.replace(/^the-/, '');
+    if (seenHandles.has(baseHandle)) continue;
+    seenHandles.add(baseHandle);
+
     try {
       const product = {
         id,
@@ -104,7 +129,10 @@ export function getAllProducts(): Product[] {
         upcoming: false,
         shopifyVariants: [] as Product['shopifyVariants'],
         ...meta,
-      } satisfies Product;
+      } as Product;
+      if (!product.name) product.name = product.title || id.toUpperCase();
+      if (!product.title) product.title = product.name || id;
+      if (typeof product.category !== 'string') product.category = '';
       validateProduct(product);
       products.push(product);
     } catch {
@@ -117,7 +145,10 @@ export function getAllProducts(): Product[] {
       const product = {
         ...p,
         ...(cache.productMetadata[p.id] || {}),
-      };
+      } as Product;
+      if (!product.name) product.name = product.title || p.id.toUpperCase();
+      if (!product.title) product.title = product.name || p.id;
+      if (typeof product.category !== 'string') product.category = '';
       validateProduct(product);
       products.push(product);
     } catch {

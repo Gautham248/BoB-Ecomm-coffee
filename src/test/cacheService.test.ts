@@ -9,7 +9,7 @@ function clearLocalStorage() {
 }
 
 const validCache = {
-  version: 3,
+  version: 5,
   lastSynced: '2026-06-30T00:00:00Z',
   heroSettings: {
     slides: [],
@@ -105,7 +105,7 @@ describe('validateCache', () => {
 describe('readCache', () => {
   test('returns default cache when localStorage empty', () => {
     const cache = readCache();
-    expect(cache.version).toBe(3);
+    expect(cache.version).toBe(5);
     expect(cache.collections).toEqual([]);
     expect(cache.productMetadata).toEqual({});
   });
@@ -113,7 +113,7 @@ describe('readCache', () => {
   test('returns validated cache from localStorage', () => {
     setLocalStorage(validCache);
     const cache = readCache();
-    expect(cache.version).toBe(3);
+    expect(cache.version).toBe(5);
     expect(cache.collections).toEqual([]);
   });
 
@@ -121,15 +121,15 @@ describe('readCache', () => {
     const oldVersion = { ...validCache, version: 1 };
     setLocalStorage(oldVersion);
     const cache = readCache();
-    expect(cache.version).toBe(3);
+    expect(cache.version).toBe(5);
     expect(localStorage.getItem('bob-admin-cache')).toBeNull();
   });
 
   test('resets on corrupted data', () => {
-    setLocalStorage({ version: 3, collections: 'not-array' });
+    setLocalStorage({ version: 5, collections: 'not-array' });
     expect(localStorage.getItem('bob-admin-cache')).not.toBeNull();
     const cache = readCache();
-    expect(cache.version).toBe(3);
+    expect(cache.version).toBe(5);
     expect(cache.collections).toEqual([]);
     expect(localStorage.getItem('bob-admin-cache')).toBeNull();
   });
@@ -137,7 +137,7 @@ describe('readCache', () => {
   test('resets on invalid JSON', () => {
     localStorage.setItem('bob-admin-cache', 'not-json-{{{');
     const cache = readCache();
-    expect(cache.version).toBe(3);
+    expect(cache.version).toBe(5);
     expect(localStorage.getItem('bob-admin-cache')).toBeNull();
   });
 });

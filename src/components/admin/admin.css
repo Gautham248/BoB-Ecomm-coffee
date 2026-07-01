@@ -4,7 +4,7 @@
     inset: 0;
     z-index: 9999;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -48,7 +48,7 @@
 .stagger-6 { animation-delay: 0.3s; }
 
 .shimmer-loading {
-  background: linear-gradient(90deg, #2c2416 25%, #3a2f1c 50%, #2c2416 75%);
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
 }
@@ -60,13 +60,13 @@
   background: transparent;
 }
 .admin-scrollbar::-webkit-scrollbar-thumb {
-  background: #4a3d28;
+  background: #d1d5db;
   border-radius: 3px;
 }
 .admin-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #6b604a;
+  background: #9ca3af;
 }
 
 .admin-copper-ring:focus {
-  box-shadow: 0 0 0 1px rgba(200,155,74,0.5), 0 0 0 3px rgba(200,155,74,0.15);
+  box-shadow: 0 0 0 1px rgba(17,24,39,0.3), 0 0 0 3px rgba(17,24,39,0.08);
 }

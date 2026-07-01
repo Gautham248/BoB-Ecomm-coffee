@@ -46,15 +46,15 @@ const AdminFormField: React.FC<AdminFormFieldProps> = ({
   const displayError = error || localError;
 
   const baseClasses =
-    'w-full px-3.5 py-2.5 bg-roast-card border rounded-xl text-roast-cream placeholder-roast-muted text-sm outline-none transition-all duration-300 admin-copper-ring';
-  const errorClasses = 'border-rust-DEFAULT bg-rust-muted/5';
-  const normalClasses = 'border-roast-border focus:border-copper/50';
+    'w-full px-3.5 py-2.5 bg-gray-50 border rounded-xl text-gray-900 placeholder-gray-400 text-sm outline-none transition-all duration-300 admin-copper-ring';
+  const errorClasses = 'border-red-500 bg-red-50';
+  const normalClasses = 'border-gray-300 focus:border-gray-400';
 
   return (
     <div>
-      <label htmlFor={name} className="block text-xs font-medium text-roast-dust mb-1.5 tracking-wide">
+      <label htmlFor={name} className="block text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
         {label}
-        {required && <span className="text-copper ml-0.5">*</span>}
+        {required && <span className="text-gray-900 ml-0.5">*</span>}
       </label>
       {type === 'textarea' ? (
         <textarea
@@ -82,7 +82,7 @@ const AdminFormField: React.FC<AdminFormFieldProps> = ({
         />
       )}
       {displayError && (
-        <p className="text-[11px] text-rust-DEFAULT mt-1.5 flex items-center gap-1 animate-fade-in-up">
+        <p className="text-[11px] text-red-600 mt-1.5 flex items-center gap-1 animate-fade-in-up">
           <span className="text-[10px]">!</span> {displayError}
         </p>
       )}

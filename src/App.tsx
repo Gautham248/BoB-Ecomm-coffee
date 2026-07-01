@@ -30,6 +30,7 @@ const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 const HeroManager = lazy(() => import('./pages/admin/HeroManager'));
 const CollectionsManager = lazy(() => import('./pages/admin/CollectionsManager'));
 const ProductsManager = lazy(() => import('./pages/admin/ProductsManager'));
+const CatalogRegistry = lazy(() => import('./pages/admin/CatalogRegistry'));
 const FeaturedManager = lazy(() => import('./pages/admin/FeaturedManager'));
 const MovementManager = lazy(() => import('./pages/admin/MovementManager'));
 
@@ -154,6 +155,14 @@ function AppRoutes() {
             element={
               <AdminRouteGuard>
                 <ProductsManager />
+              </AdminRouteGuard>
+            }
+          />
+          <Route
+            path="/admin/registry"
+            element={
+              <AdminRouteGuard>
+                <CatalogRegistry />
               </AdminRouteGuard>
             }
           />

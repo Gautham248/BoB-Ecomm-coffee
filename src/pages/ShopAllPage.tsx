@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { getAllProducts, getAvailableCategories, getCategoryLabels } from '../services/adminService';
+import { getAllProducts, getAvailableCategories, getCategoryLabels, getCollections } from '../services/adminService';
 import ShopAllBanner from '../components/ShopAllBanner';
 
 // Filter Pills Component
@@ -133,14 +133,33 @@ const ShopAllPage = () => {
   const allProducts = useMemo(() => getAllProducts(), []);
   const labels = useMemo(() => getCategoryLabels(), []);
 
+  const productCollections = useMemo(() => {
+    const map = new Map<string, Set<string>>();
+    for (const col of getCollections()) {
+      for (const pid of col.products) {
+        const variations = [pid, pid.startsWith('the-') ? pid : `the-${pid}`, pid.replace(/^the-/, '')];
+        for (const varId of variations) {
+          const set = map.get(varId) || new Set<string>();
+          set.add(col.id);
+          map.set(varId, set);
+        }
+      }
+    }
+    return map;
+  }, []);
+
   const filteredProducts = useMemo(() => {
     if (selectedCategories.length === 0) {
       return allProducts;
     }
     return allProducts.filter(product =>
-      selectedCategories.includes(product.category)
+      selectedCategories.some(
+        (catId) =>
+          product.category === catId ||
+          productCollections.get(product.id)?.has(catId)
+      )
     );
-  }, [selectedCategories, allProducts]);
+  }, [selectedCategories, allProducts, productCollections]);
 
   // Check if selected categories include upcoming ones
   const hasUpcomingCategories = useMemo(() => {
@@ -159,6 +178,24 @@ const ShopAllPage = () => {
       })
       .map(catId => labels[catId]);
   }, [selectedCategories, availableCategories, labels]);
+
+  const getProductCategoryLabel = (product: Product) => {
+    // If the active selection matches a subset of categories, show matching selected labels
+    const matchColIds = Array.from(productCollections.get(product.id) || [])
+      .filter(id => selectedCategories.length === 0 || selectedCategories.includes(id));
+      
+    if (matchColIds.length > 0) {
+      return matchColIds.map(id => labels[id] || id).join(', ');
+    }
+    
+    // Fallback to all collections
+    const allColIds = Array.from(productCollections.get(product.id) || []);
+    if (allColIds.length > 0) {
+      return allColIds.map(id => labels[id] || id).join(', ');
+    }
+    
+    return labels[product.category] || product.category;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -193,7 +230,7 @@ const ShopAllPage = () => {
               key={product.id}
               product={product}
               onClick={() => handleProductClick(product.id)}
-              categoryLabel={labels[product.category]}
+              categoryLabel={getProductCategoryLabel(product)}
             />
           ))}
 

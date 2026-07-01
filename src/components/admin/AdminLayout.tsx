@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../../context/AdminAuthContext';
-import { LayoutDashboard, Image, Layers, Package, Star, Bike, LogOut, Coffee } from 'lucide-react';
+import { LayoutDashboard, Image, Layers, Package, Star, Bike, LogOut, Coffee, BookOpen } from 'lucide-react';
 import './admin.css';
 
 const NAV_ITEMS = [
@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { to: '/admin/hero', label: 'Hero', icon: Image },
   { to: '/admin/collections', label: 'Collections', icon: Layers },
   { to: '/admin/products', label: 'Products', icon: Package },
+  { to: '/admin/registry', label: 'Catalog Registry', icon: BookOpen },
   { to: '/admin/featured', label: 'Featured', icon: Star },
   { to: '/admin/movement', label: 'Movement', icon: Bike },
 ];
@@ -23,18 +24,18 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-roast-base flex admin-grain">
-      <aside className="w-64 bg-roast-surface border-r border-roast-border flex flex-col shrink-0">
-        <div className="p-5 border-b border-roast-border">
+    <div className="min-h-screen bg-white flex admin-grain">
+      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
+        <div className="p-5 border-b border-gray-200">
           <div className="flex items-center gap-2.5 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-copper-surface flex items-center justify-center">
-              <Coffee className="w-4 h-4 text-copper" />
+            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
+              <Coffee className="w-4 h-4 text-gray-900" />
             </div>
             <div>
-              <h1 className="text-sm font-semibold text-roast-cream tracking-wide font-pangaia">
+              <h1 className="text-sm font-semibold text-gray-900 tracking-wide font-pangaia">
                 Beans of Bodhi
               </h1>
-              <p className="text-[10px] text-roast-muted tracking-widest uppercase">Admin</p>
+              <p className="text-[10px] text-gray-500 tracking-widest uppercase">Admin</p>
             </div>
           </div>
         </div>
@@ -49,8 +50,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 animate-fade-in-up ${
                   isActive
-                    ? 'bg-copper-surface text-copper font-medium border border-copper/20'
-                    : 'text-roast-muted hover:text-roast-cream hover:bg-roast-hover'
+                    ? 'bg-gray-100 text-gray-900 font-medium border border-gray-200'
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
                 }`
               }
             >
@@ -60,14 +61,14 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           ))}
         </nav>
 
-        <div className="p-3 border-t border-roast-border">
-          <div className="px-3 py-2 mb-2 rounded-lg bg-roast-card border border-roast-border/50">
-            <p className="text-[10px] text-roast-muted uppercase tracking-wider">Quick Stats</p>
-            <p className="text-xs text-copper mt-1 font-mono">v3 · Firestore</p>
+        <div className="p-3 border-t border-gray-200">
+          <div className="px-3 py-2 mb-2 rounded-lg bg-gray-50 border border-gray-100">
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Quick Stats</p>
+            <p className="text-xs text-gray-600 mt-1 font-mono">v3 · Firestore</p>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-roast-muted hover:text-rust-DEFAULT hover:bg-rust-muted/10 transition-all duration-200 w-full"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 w-full"
           >
             <LogOut className="w-4 h-4" />
             Sign Out

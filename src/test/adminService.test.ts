@@ -1,5 +1,5 @@
-import { getAllProducts, getProductById } from '../services/adminService';
-import { writeCache } from '../services/cacheService';
+import { getAllProducts, getProductById, getProductsByCategory } from '../services/adminService';
+import { writeCache, readCache } from '../services/cacheService';
 
 function clearLocalStorage() {
   localStorage.removeItem('bob-admin-cache');
@@ -113,5 +113,67 @@ describe('getProductById', () => {
     const product = getProductById('the-origin');
     expect(product).toBeDefined();
     expect(product!.name).toBe('THE ORIGIN');
+  });
+
+  test('finds product by prefix-less handle', () => {
+    seedCache({
+      'the-origin': {
+        name: 'THE ORIGIN', title: 'The Origin', description: '', price: '',
+        heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
+        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        descriptionContent: { title: '', content: '', image: '' },
+        category: '',
+      },
+    });
+    const product = getProductById('origin');
+    expect(product).toBeDefined();
+    expect(product!.name).toBe('THE ORIGIN');
+  });
+
+  test('finds product by stripping prefixed input', () => {
+    seedCache({
+      'origin': {
+        name: 'THE ORIGIN', title: 'The Origin', description: '', price: '',
+        heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
+        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        descriptionContent: { title: '', content: '', image: '' },
+        category: '',
+      },
+    });
+    const product = getProductById('the-origin');
+    expect(product).toBeDefined();
+    expect(product!.name).toBe('THE ORIGIN');
+  });
+});
+
+describe('getProductsByCategory', () => {
+  test('matches products in collection across ID prefix variations', () => {
+    seedCache({
+      'the-high-tide': {
+        name: 'THE HIGH TIDE', title: 'The High Tide', description: '', price: '',
+        heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
+        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        descriptionContent: { title: '', content: '', image: '' },
+        category: 'western-ghats-selects',
+      },
+    });
+    // Add collection with prefixless ID 'high-tide'
+    const cache = readCache();
+    cache.collections = [
+      {
+        id: 'signature-blends',
+        name: 'Signature Blends',
+        title: 'Signature Blends',
+        description: '',
+        price: '',
+        image: '',
+        products: ['high-tide'],
+      }
+    ];
+    writeCache(cache);
+
+    const results = getProductsByCategory('signature-blends');
+    expect(results).toHaveLength(1);
+    expect(results[0].id).toBe('the-high-tide');
   });
 });

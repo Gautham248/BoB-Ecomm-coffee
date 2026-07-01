@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllProducts, getProductsByCategory } from '../services/adminService';
+import { getAllProducts, getProductsByCategory, getCategoryLabels, getCollections } from '../services/adminService';
 import ProductCard from './ProductCard';
+import type { Product } from '../types/product';
 
 interface YouMayAlsoLikeProps {
     currentProductId: string;
@@ -15,6 +16,22 @@ const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({
 }) => {
   const navigate = useNavigate();
   const products = useMemo(() => getAllProducts(), []);
+  const labels = useMemo(() => getCategoryLabels(), []);
+
+  const productCollections = useMemo(() => {
+    const map = new Map<string, Set<string>>();
+    for (const col of getCollections()) {
+      for (const pid of col.products) {
+        const variations = [pid, pid.startsWith('the-') ? pid : `the-${pid}`, pid.replace(/^the-/, '')];
+        for (const varId of variations) {
+          const set = map.get(varId) || new Set<string>();
+          set.add(col.id);
+          map.set(varId, set);
+        }
+      }
+    }
+    return map;
+  }, []);
 
   // Get the current product
   const currentProduct = products.find(p => p.id === currentProductId);
@@ -40,10 +57,12 @@ const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({
 
   if (relatedProducts.length === 0) return null;
 
-  // Category labels mapping
-  const categoryLabels: Record<string, string> = {
-    'nitro-blends': 'Nitro Blends',
-    'western-ghats-selects': 'Western Ghats Selects'
+  const getProductCategoryLabel = (product: Product) => {
+    const colIds = Array.from(productCollections.get(product.id) || []);
+    if (colIds.length > 0) {
+      return colIds.map(id => labels[id] || id).join(', ');
+    }
+    return labels[product.category] || product.category;
   };
 
   const handleProductClick = (productId: string) => {
@@ -74,7 +93,7 @@ const YouMayAlsoLike: React.FC<YouMayAlsoLikeProps> = ({
               key={product.id}
               product={product}
               onClick={() => handleProductClick(product.id)}
-              categoryLabel={categoryLabels[product.category]}
+              categoryLabel={getProductCategoryLabel(product)}
             />
           ))}
         </div>

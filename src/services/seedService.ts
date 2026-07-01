@@ -79,7 +79,7 @@ async function pushToFirestore(cache: AdminCache): Promise<void> {
     // Write individual product documents (full, with variants)
     await writeCollection('products', products as Product[]);
 
-    await writeCollection('collections', collections as Collection[]);
+    await writeCollection('collections', cache.collections.length > 0 ? cache.collections : (collections as Collection[]));
 
     const mvProducts: Product[] = movementProducts.map((p) => ({
       ...p,

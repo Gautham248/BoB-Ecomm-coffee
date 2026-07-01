@@ -73,17 +73,17 @@ const MovementManager: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-roast-cream">Movement</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Movement</h2>
           <div className="flex gap-3">
             <button
               onClick={addProduct}
-              className="flex items-center gap-1 px-3 py-2 bg-roast-card text-roast-dust rounded-lg hover:bg-roast-hover transition text-sm"
+              className="flex items-center gap-1 px-3 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm"
             >
               <Plus className="w-4 h-4" /> Add Product
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 px-4 py-2 bg-copper text-roast-base rounded-lg hover:bg-copper-dark transition text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium"
             >
               <Save className="w-4 h-4" />
               {saved ? 'Saved!' : 'Save Changes'}
@@ -92,43 +92,43 @@ const MovementManager: React.FC = () => {
         </div>
 
         {products.length === 0 ? (
-          <div className="bg-roast-surface rounded-xl border border-roast-border p-12 text-center">
-            <p className="text-roast-muted">No movement products yet. Click "Add Product" to create one.</p>
+          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+            <p className="text-gray-500">No movement products yet. Click "Add Product" to create one.</p>
           </div>
         ) : (
           <div className="space-y-4">
             {products.map((product, index) => (
-              <div key={product.id || index} className="bg-roast-surface rounded-xl border border-roast-border overflow-hidden">
+              <div key={product.id || index} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 <button
                   onClick={() => setExpanded(expanded === index ? null : index)}
-                  className="w-full flex items-center justify-between p-4 hover:bg-roast-base transition"
+                  className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition"
                 >
                   <div className="flex items-center gap-3">
                     {product.heroImage && (
                       <img src={product.heroImage} alt="" className="w-10 h-10 rounded-lg object-cover" />
                     )}
-                    <span className="text-sm font-medium text-roast-cream">
+                    <span className="text-sm font-medium text-gray-900">
                       {product.name || 'New Movement Product'}
                     </span>
-                    <span className="text-xs text-roast-muted">{product.price}</span>
+                    <span className="text-xs text-gray-500">{product.price}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={(e) => { e.stopPropagation(); removeProduct(index); }}
-                      className="p-1 text-rust-DEFAULT hover:bg-rust-muted/10 rounded transition"
+                      className="p-1 text-red-600 hover:bg-red-50 rounded transition"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                     {expanded === index ? (
-                      <ChevronUp className="w-4 h-4 text-roast-muted" />
+                      <ChevronUp className="w-4 h-4 text-gray-400" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-roast-muted" />
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
                     )}
                   </div>
                 </button>
 
                 {expanded === index && (
-                  <div className="p-4 border-t border-roast-border space-y-4">
+                  <div className="p-4 border-t border-gray-200 space-y-4">
                     <div className="grid grid-cols-2 gap-3">
                       <AdminFormField
                         label="Name (uppercase)"
@@ -189,8 +189,8 @@ const MovementManager: React.FC = () => {
                       />
                     </div>
 
-                    <fieldset className="border border-roast-border rounded-lg p-3 space-y-2">
-                      <legend className="text-xs font-semibold text-roast-dust px-1">Traceability</legend>
+                    <fieldset className="border border-gray-200 rounded-lg p-3 space-y-2">
+                      <legend className="text-xs font-semibold text-gray-600 px-1">Traceability</legend>
                       <div className="grid grid-cols-2 gap-2">
                         <AdminFormField
                           label="Source"
@@ -227,8 +227,8 @@ const MovementManager: React.FC = () => {
                       </div>
                     </fieldset>
 
-                    <fieldset className="border border-roast-border rounded-lg p-3 space-y-2">
-                      <legend className="text-xs font-semibold text-roast-dust px-1">Description Content</legend>
+                    <fieldset className="border border-gray-200 rounded-lg p-3 space-y-2">
+                      <legend className="text-xs font-semibold text-gray-600 px-1">Description Content</legend>
                       <AdminFormField
                         label="Title"
                         name={`mv-dt-${index}`}

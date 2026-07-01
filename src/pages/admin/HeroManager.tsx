@@ -51,18 +51,18 @@ const HeroManager: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-roast-cream">Hero Section</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Hero Section</h2>
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 bg-copper text-roast-base rounded-lg hover:bg-copper-dark transition text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium"
           >
             <Save className="w-4 h-4" />
             {saved ? 'Saved!' : 'Save Changes'}
           </button>
         </div>
 
-        <div className="bg-roast-surface rounded-xl border border-roast-border p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-roast-cream">Auto-play Settings</h3>
+        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900">Auto-play Settings</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <AdminFormField
               label="Display Duration (ms)"
@@ -92,21 +92,21 @@ const HeroManager: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-roast-surface rounded-xl border border-roast-border p-6">
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-roast-cream">
+            <h3 className="text-lg font-semibold text-gray-900">
               Slides ({settings.slides.length})
             </h3>
             <button
               onClick={addSlide}
-              className="flex items-center gap-1 px-3 py-1.5 bg-roast-card text-roast-dust rounded-lg hover:bg-roast-hover transition text-sm"
+              className="flex items-center gap-1 px-3 py-1.5 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm"
             >
               <Plus className="w-4 h-4" /> Add Slide
             </button>
           </div>
 
           {settings.slides.length === 0 ? (
-            <p className="text-sm text-roast-muted py-4">No slides yet. Click "Add Slide" to create one.</p>
+            <p className="text-sm text-gray-500 py-4">No slides yet. Click "Add Slide" to create one.</p>
           ) : (
             <div className="space-y-4">
               {settings.slides.map((slide, index) => (
@@ -144,28 +144,28 @@ function SlideEditor({
   onMove: (dir: -1 | 1) => void;
 }) {
   return (
-    <div className="border border-roast-border rounded-lg p-4 space-y-3">
+    <div className="border border-gray-200 rounded-lg p-4 space-y-3">
       <div className="flex items-center gap-2">
-        <GripVertical className="w-4 h-4 text-roast-muted" />
-        <span className="text-sm font-medium text-roast-dust">Slide {index + 1}</span>
+        <GripVertical className="w-4 h-4 text-gray-400" />
+        <span className="text-sm font-medium text-gray-600">Slide {index + 1}</span>
         <div className="flex gap-1 ml-auto">
           <button
             onClick={() => onMove(-1)}
             disabled={index === 0}
-            className="px-2 py-1 text-xs bg-roast-card rounded hover:bg-roast-hover disabled:opacity-30 transition"
+            className="px-2 py-1 text-xs bg-gray-50 rounded hover:bg-gray-100 disabled:opacity-30 transition"
           >
             ↑
           </button>
           <button
             onClick={() => onMove(1)}
             disabled={index === total - 1}
-            className="px-2 py-1 text-xs bg-roast-card rounded hover:bg-roast-hover disabled:opacity-30 transition"
+            className="px-2 py-1 text-xs bg-gray-50 rounded hover:bg-gray-100 disabled:opacity-30 transition"
           >
             ↓
           </button>
           <button
             onClick={onRemove}
-            className="px-2 py-1 text-xs bg-rust-muted/10 text-rust-DEFAULT rounded hover:bg-rust-muted/20 transition"
+            className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100 transition"
           >
             <Trash2 className="w-3 h-3" />
           </button>
@@ -174,11 +174,11 @@ function SlideEditor({
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium text-roast-muted mb-1">Type</label>
+          <label className="block text-xs font-medium text-gray-500 mb-1">Type</label>
           <select
             value={slide.type}
             onChange={(e) => onChange('type', e.target.value)}
-            className="w-full px-3 py-2 border border-roast-border rounded-lg text-sm focus:ring-2 focus:ring-gray-900 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-900 outline-none"
           >
             <option value="video">Video</option>
             <option value="image">Image</option>
@@ -210,7 +210,7 @@ function SlideEditor({
         placeholder="Optional mobile-specific URL"
       />
       {slide.url && (
-        <div className="aspect-video bg-roast-card rounded-lg overflow-hidden max-w-sm">
+        <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden max-w-sm">
           {slide.type === 'video' ? (
             <video src={slide.url} className="w-full h-full object-cover" muted controls preload="metadata" />
           ) : (

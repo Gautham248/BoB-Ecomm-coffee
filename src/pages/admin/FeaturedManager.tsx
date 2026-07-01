@@ -36,17 +36,17 @@ const FeaturedManager: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-roast-cream">Featured Products</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Featured Products</h2>
           <div className="flex gap-3">
             <button
               onClick={addEntry}
-              className="flex items-center gap-1 px-3 py-2 bg-roast-card text-roast-dust rounded-lg hover:bg-roast-hover transition text-sm"
+              className="flex items-center gap-1 px-3 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm"
             >
               <Plus className="w-4 h-4" /> Add Product
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 px-4 py-2 bg-copper text-roast-base rounded-lg hover:bg-copper-dark transition text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium"
             >
               <Save className="w-4 h-4" />
               {saved ? 'Saved!' : 'Save Changes'}
@@ -55,18 +55,18 @@ const FeaturedManager: React.FC = () => {
         </div>
 
         {entries.length === 0 ? (
-          <div className="bg-roast-surface rounded-xl border border-roast-border p-12 text-center">
-            <p className="text-roast-muted">No featured products. Click "Add Product" to select some.</p>
+          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+            <p className="text-gray-500">No featured products. Click "Add Product" to select some.</p>
           </div>
         ) : (
           <div className="space-y-4">
             {entries.map((entry, index) => (
-              <div key={index} className="bg-roast-surface rounded-xl border border-roast-border p-5 space-y-3">
+              <div key={index} className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-roast-dust">Product {index + 1}</span>
+                  <span className="text-sm font-medium text-gray-600">Product {index + 1}</span>
                   <button
                     onClick={() => removeEntry(index)}
-                    className="p-1 text-rust-DEFAULT hover:bg-rust-muted/10 rounded transition"
+                    className="p-1 text-red-600 hover:bg-red-50 rounded transition"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -103,7 +103,7 @@ const FeaturedManager: React.FC = () => {
                   <img
                     src={entry.displayImage}
                     alt=""
-                    className="w-24 h-24 object-cover rounded-lg border border-roast-border"
+                    className="w-24 h-24 object-cover rounded-lg border border-gray-200"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 )}

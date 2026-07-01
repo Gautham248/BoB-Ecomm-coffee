@@ -52,6 +52,18 @@ const DEFAULT_CACHE: AdminCache = {
   categoryLabels: {},
 };
 
+function cleanDuplicateMetadata<T extends Record<string, unknown>>(metadata: T): T {
+  const cleaned = { ...metadata } as T;
+  for (const key of Object.keys(cleaned)) {
+    if (!key.startsWith('the-') && !key.startsWith('movement-')) {
+      if (cleaned[`the-${key}`]) {
+        delete cleaned[key];
+      }
+    }
+  }
+  return cleaned;
+}
+
 export function readCache(): AdminCache {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
@@ -61,7 +73,9 @@ export function readCache(): AdminCache {
       localStorage.removeItem(CACHE_KEY);
       return { ...DEFAULT_CACHE };
     }
-    return { ...DEFAULT_CACHE, ...parsed };
+    const cache = { ...DEFAULT_CACHE, ...parsed };
+    cache.productMetadata = cleanDuplicateMetadata(cache.productMetadata as Record<string, unknown>) as typeof cache.productMetadata;
+    return cache;
   } catch {
     localStorage.removeItem(CACHE_KEY);
     return { ...DEFAULT_CACHE };
@@ -71,6 +85,7 @@ export function readCache(): AdminCache {
 export function writeCache(cache: AdminCache): void {
   cache.lastSynced = new Date().toISOString();
   cache.version = CURRENT_VERSION;
+  cache.productMetadata = cleanDuplicateMetadata(cache.productMetadata as Record<string, unknown>) as typeof cache.productMetadata;
   localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
   getFirestoreWriter().then((fn) =>
     fn(cache).catch((err) => console.warn('Firestore write deferred:', err))

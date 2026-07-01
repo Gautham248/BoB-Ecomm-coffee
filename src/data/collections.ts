@@ -804,7 +804,9 @@ export const categoryLabels: Record<string, string> = {
 
 // Helper functions
 export const getProductById = (id: string): Product | undefined => {
-  return products.find(product => product.id === id);
+  return products.find(product => product.id === id) || 
+         products.find(product => product.id === `the-${id}`) || 
+         products.find(product => product.id === id.replace(/^the-/, ''));
 };
 
 export const getCollectionById = (id: string): Collection | undefined => {
