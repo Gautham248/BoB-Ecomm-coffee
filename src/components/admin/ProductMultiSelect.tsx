@@ -194,9 +194,9 @@ const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
                     >
                       {isSelected && <Check className="w-3 h-3 text-white" />}
                     </div>
-                    {p.heroImage ? (
+                    {p.heroImage || p.productCardImage ? (
                       <img
-                        src={p.heroImage}
+                        src={p.heroImage || p.productCardImage}
                         alt=""
                         className="w-8 h-8 rounded object-cover flex-shrink-0"
                       />

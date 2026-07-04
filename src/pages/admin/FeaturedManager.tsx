@@ -1,14 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import AdminFormField from '../../components/admin/AdminFormField';
 import { readCache, updateCacheField } from '../../services/cacheService';
+import { getAllProducts } from '../../services/adminService';
 import type { FeaturedProductEntry } from '../../types/admin';
-import { Plus, Trash2, Save } from 'lucide-react';
+import type { Product } from '../../types/product';
+import { Plus, Trash2, Save, Search, X, Pencil } from 'lucide-react';
 
 const FeaturedManager: React.FC = () => {
   const cache = readCache();
   const [entries, setEntries] = useState<FeaturedProductEntry[]>(cache.featuredProducts);
   const [saved, setSaved] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+  const [pickerSearch, setPickerSearch] = useState('');
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editImage, setEditImage] = useState('');
+
+  const allProducts = useMemo(() => getAllProducts(), []);
+
+  const productLookup = useMemo(() => {
+    const map = new Map<string, Product>();
+    for (const p of allProducts) {
+      map.set(p.id, p);
+      map.set(`the-${p.id}`, p);
+      map.set(p.id.replace(/^the-/, ''), p);
+    }
+    return map;
+  }, [allProducts]);
+
+  const existingProductIds = useMemo(() => new Set(entries.map((e) => e.productId)), [entries]);
+
+  const filteredPickerProducts = useMemo(() => {
+    const q = pickerSearch.toLowerCase();
+    return allProducts.filter(
+      (p) =>
+        !existingProductIds.has(p.id) &&
+        (p.title.toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || p.name.toLowerCase().includes(q))
+    );
+  }, [allProducts, pickerSearch, existingProductIds]);
+
+  const addEntry = (p: Product) => {
+    setEntries((prev) => [
+      ...prev,
+      { productId: p.id, displayTitle: p.title, displayImage: p.heroImage || p.productCardImage || '' },
+    ]);
+    setShowPicker(false);
+    setPickerSearch('');
+  };
+
+  const removeEntry = (index: number) => {
+    setEntries((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const updateEntry = (index: number, field: keyof FeaturedProductEntry, value: string) => {
     setEntries((prev) => {
@@ -18,12 +61,17 @@ const FeaturedManager: React.FC = () => {
     });
   };
 
-  const addEntry = () => {
-    setEntries((prev) => [...prev, { productId: '', displayTitle: '', displayImage: '' }]);
+  const startEdit = (index: number, entry: FeaturedProductEntry) => {
+    setEditingIndex(index);
+    setEditTitle(entry.displayTitle);
+    setEditImage(entry.displayImage);
   };
 
-  const removeEntry = (index: number) => {
-    setEntries((prev) => prev.filter((_, i) => i !== index));
+  const saveEdit = () => {
+    if (editingIndex === null) return;
+    updateEntry(editingIndex, 'displayTitle', editTitle);
+    updateEntry(editingIndex, 'displayImage', editImage);
+    setEditingIndex(null);
   };
 
   const handleSave = () => {
@@ -39,7 +87,7 @@ const FeaturedManager: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900">Featured Products</h2>
           <div className="flex gap-3">
             <button
-              onClick={addEntry}
+              onClick={() => setShowPicker(true)}
               className="flex items-center gap-1 px-3 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm"
             >
               <Plus className="w-4 h-4" /> Add Product
@@ -56,62 +104,126 @@ const FeaturedManager: React.FC = () => {
 
         {entries.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-            <p className="text-gray-500">No featured products. Click "Add Product" to select some.</p>
+            <p className="text-gray-500 mb-4">No featured products yet.</p>
+            <button
+              onClick={() => setShowPicker(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+            >
+              <Plus className="w-4 h-4" /> Add Product
+            </button>
           </div>
         ) : (
-          <div className="space-y-4">
-            {entries.map((entry, index) => (
-              <div key={index} className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600">Product {index + 1}</span>
-                  <button
-                    onClick={() => removeEntry(index)}
-                    className="p-1 text-red-600 hover:bg-red-50 rounded transition"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {entries.map((entry, index) => {
+              const product = productLookup.get(entry.productId);
+              const img = entry.displayImage || product?.heroImage || product?.productCardImage || '';
+
+              if (editingIndex === index) {
+                return (
+                  <div key={index} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                    <div className="p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-600">Edit Product {index + 1}</span>
+                        <button onClick={saveEdit} className="text-xs text-gray-900 hover:underline font-medium">Done</button>
+                      </div>
+                      <AdminFormField label="Display Title" name={`edit-title-${index}`} value={editTitle} onChange={setEditTitle} />
+                      <AdminFormField label="Display Image URL" name={`edit-img-${index}`} type="url" value={editImage} onChange={setEditImage} />
+                      {editImage && (
+                        <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
+                          <img src={editImage} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={index} className="bg-white rounded-xl border border-gray-200 overflow-hidden group">
+                  <div className="aspect-square bg-gray-50 relative">
+                    {img ? (
+                      <img src={img} alt={entry.displayTitle} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-300">
+                        <span className="text-xs">No image</span>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => removeEntry(index)}
+                      className="absolute top-2 right-2 p-1.5 bg-white/90 rounded-lg text-red-600 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div className="p-4 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-gray-900 truncate">{entry.displayTitle || entry.productId}</h3>
+                      <button
+                        onClick={() => startEdit(index, entry)}
+                        className="p-1 text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                    {product && (
+                      <p className="text-xs text-gray-500 truncate">{product.title}</p>
+                    )}
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+        )}
 
-                <div className="grid grid-cols-2 gap-3">
-                  <AdminFormField
-                    label="Product ID"
-                    name={`prod-${index}`}
-                    value={entry.productId}
-                    onChange={(v) => updateEntry(index, 'productId', v)}
-                    placeholder="the-origin"
-                    required
-                    tooltip="The internal database identifier for the featured product (e.g. the-origin)."
-                  />
-                  <AdminFormField
-                    label="Display Title (optional)"
-                    name={`title-${index}`}
-                    value={entry.displayTitle || ''}
-                    onChange={(v) => updateEntry(index, 'displayTitle', v)}
-                    placeholder="Custom display name"
-                    tooltip="Custom title to display on the storefront instead of the default Shopify title."
+        {showPicker && (
+          <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh]">
+            <div className="absolute inset-0 bg-black/40" onClick={() => { setShowPicker(false); setPickerSearch(''); }} />
+            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[70vh] flex flex-col mx-4 animate-fade-in-up">
+              <div className="flex items-center justify-between p-4 border-b border-gray-100">
+                <h3 className="text-base font-semibold text-gray-900">Add Featured Product</h3>
+                <button onClick={() => { setShowPicker(false); setPickerSearch(''); }} className="p-1 text-gray-400 hover:text-gray-600">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-4 border-b border-gray-100">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text"
+                    value={pickerSearch}
+                    onChange={(e) => setPickerSearch(e.target.value)}
+                    placeholder="Search products..."
+                    className="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-xl text-sm outline-none focus:border-gray-400"
+                    autoFocus
                   />
                 </div>
-
-                <AdminFormField
-                  label="Display Image URL (optional)"
-                  name={`img-${index}`}
-                  type="url"
-                  value={entry.displayImage || ''}
-                  onChange={(v) => updateEntry(index, 'displayImage', v)}
-                  placeholder="Custom thumbnail URL"
-                  tooltip="Custom image URL to display on the storefront instead of the main hero image."
-                />
-
-                {entry.displayImage && (
-                  <img
-                    src={entry.displayImage}
-                    alt=""
-                    className="w-24 h-24 object-cover rounded-lg border border-gray-200"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                  />
+              </div>
+              <div className="flex-1 overflow-auto p-2">
+                {filteredPickerProducts.length === 0 ? (
+                  <p className="text-center text-sm text-gray-400 py-8">
+                    {pickerSearch ? 'No matching products' : 'All products are already featured'}
+                  </p>
+                ) : (
+                  filteredPickerProducts.map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => addEntry(p)}
+                      className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition text-left"
+                    >
+                      {p.heroImage || p.productCardImage ? (
+                        <img src={p.heroImage || p.productCardImage} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
+                      ) : (
+                        <div className="w-12 h-12 rounded-lg bg-gray-100 flex-shrink-0" />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium text-gray-900 truncate">{p.title}</p>
+                        <p className="text-xs text-gray-400 truncate">{p.id}</p>
+                      </div>
+                    </button>
+                  ))
                 )}
               </div>
-            ))}
+            </div>
           </div>
         )}
       </div>

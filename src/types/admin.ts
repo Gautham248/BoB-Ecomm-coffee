@@ -28,8 +28,8 @@ export interface HeroSettings {
 
 export interface FeaturedProductEntry {
   productId: string;
-  displayTitle?: string;
-  displayImage?: string;
+  displayTitle: string;
+  displayImage: string;
 }
 
 export interface AdminCache {

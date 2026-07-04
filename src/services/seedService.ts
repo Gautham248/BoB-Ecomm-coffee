@@ -32,7 +32,7 @@ async function buildFullCache(): Promise<AdminCache> {
 
   const featuredProductIds = products
     .filter((p) => p.featured)
-    .map((p) => ({ productId: p.id }));
+    .map((p) => ({ productId: p.id, displayTitle: p.title, displayImage: p.heroImage }));
 
   const productMetadata: Record<string, Partial<Product>> = {};
   const productReviews: Record<string, Review[]> = {};

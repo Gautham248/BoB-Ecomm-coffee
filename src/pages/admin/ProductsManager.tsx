@@ -55,6 +55,44 @@ const ProductsManager: React.FC = () => {
       // Handles that must never be stored as regular productMetadata entries.
       const MOVEMENT_HANDLES = new Set(['movement', 'the-movement']);
       let modified = false;
+
+      // Synchronize movement product images and shopifyId if they are empty
+      const updatedMovementProducts = currentCache.movementProducts.map((mp) => {
+        const lp = liveProducts.find(
+          (item) => (item.shopifyId && item.shopifyId === mp.shopifyId) || MOVEMENT_HANDLES.has(item.id) || item.id === mp.id
+        );
+        if (lp) {
+          let mpModified = false;
+          const updated = { ...mp };
+          if (!updated.shopifyId && lp.shopifyId) {
+            updated.shopifyId = lp.shopifyId;
+            mpModified = true;
+          }
+          if (!updated.heroImage && lp.heroImage) {
+            updated.heroImage = lp.heroImage;
+            mpModified = true;
+          }
+          if (!updated.heroImageMobile && lp.heroImageMobile) {
+            updated.heroImageMobile = lp.heroImageMobile;
+            mpModified = true;
+          }
+          if (!updated.productCardImage && lp.productCardImage) {
+            updated.productCardImage = lp.productCardImage;
+            mpModified = true;
+          }
+          if (mpModified) {
+            modified = true;
+            return updated;
+          }
+        }
+        return mp;
+      });
+
+      if (modified) {
+        currentCache.movementProducts = updatedMovementProducts;
+        updateCacheField('movementProducts', updatedMovementProducts);
+      }
+
       for (const lp of liveProducts) {
         if (lp.shopifyId && movementShopifyIds.has(lp.shopifyId)) continue;
         if (MOVEMENT_HANDLES.has(lp.id)) continue;

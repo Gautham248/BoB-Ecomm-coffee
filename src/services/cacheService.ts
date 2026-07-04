@@ -164,6 +164,32 @@ function migrateStaleEntries(cache: AdminCache): AdminCache {
     }
   }
 
+  // Ensure featured product entries have displayTitle and displayImage populated
+  const resolvedFeatured = cache.featuredProducts.map((entry) => {
+    if (entry.displayTitle && entry.displayImage) return entry;
+    const key = entry.productId;
+    const variations = [key, `the-${key}`, key.replace(/^the-/, '')];
+    let meta: Record<string, unknown> | undefined;
+    for (const v of variations) {
+      meta = cache.productMetadata[v] as Record<string, unknown>;
+      if (meta) break;
+    }
+    if (!meta) {
+      for (const mp of cache.movementProducts) {
+        if (variations.includes(mp.id)) { meta = mp as unknown as Record<string, unknown>; break; }
+      }
+    }
+    return {
+      ...entry,
+      displayTitle: entry.displayTitle || (meta?.title as string) || (meta?.name as string) || '',
+      displayImage: entry.displayImage || (meta?.heroImage as string) || (meta?.productCardImage as string) || '',
+    };
+  });
+  if (JSON.stringify(resolvedFeatured) !== JSON.stringify(cache.featuredProducts)) {
+    cache.featuredProducts = resolvedFeatured;
+    modified = true;
+  }
+
   if (modified) {
     writeCache(cache);
   }
