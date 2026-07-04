@@ -80,6 +80,7 @@ const FeaturedManager: React.FC = () => {
                     onChange={(v) => updateEntry(index, 'productId', v)}
                     placeholder="the-origin"
                     required
+                    tooltip="The internal database identifier for the featured product (e.g. the-origin)."
                   />
                   <AdminFormField
                     label="Display Title (optional)"
@@ -87,6 +88,7 @@ const FeaturedManager: React.FC = () => {
                     value={entry.displayTitle || ''}
                     onChange={(v) => updateEntry(index, 'displayTitle', v)}
                     placeholder="Custom display name"
+                    tooltip="Custom title to display on the storefront instead of the default Shopify title."
                   />
                 </div>
 
@@ -97,6 +99,7 @@ const FeaturedManager: React.FC = () => {
                   value={entry.displayImage || ''}
                   onChange={(v) => updateEntry(index, 'displayImage', v)}
                   placeholder="Custom thumbnail URL"
+                  tooltip="Custom image URL to display on the storefront instead of the main hero image."
                 />
 
                 {entry.displayImage && (

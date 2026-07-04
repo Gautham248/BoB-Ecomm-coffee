@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InfoTooltip from './InfoTooltip';
 
 interface AdminFormFieldProps {
   label: string;
@@ -10,6 +11,7 @@ interface AdminFormFieldProps {
   required?: boolean;
   pattern?: string;
   error?: string;
+  tooltip?: string;
 }
 
 const AdminFormField: React.FC<AdminFormFieldProps> = ({
@@ -22,6 +24,7 @@ const AdminFormField: React.FC<AdminFormFieldProps> = ({
   required,
   pattern,
   error,
+  tooltip,
 }) => {
   const [touched, setTouched] = useState(false);
   const [localError, setLocalError] = useState('');
@@ -52,9 +55,10 @@ const AdminFormField: React.FC<AdminFormFieldProps> = ({
 
   return (
     <div>
-      <label htmlFor={name} className="block text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
-        {label}
+      <label htmlFor={name} className="flex items-center text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
+        <span>{label}</span>
         {required && <span className="text-gray-900 ml-0.5">*</span>}
+        {tooltip && <InfoTooltip content={tooltip} />}
       </label>
       {type === 'textarea' ? (
         <textarea

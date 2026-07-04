@@ -137,24 +137,28 @@ const MovementManager: React.FC = () => {
                         value={product.name}
                         onChange={(v) => updateProduct(index, { name: v })}
                         required
+                        tooltip="The uppercase name displayed in storefront headings and checkout details."
                       />
                       <AdminFormField
                         label="Title"
                         name={`mv-title-${index}`}
                         value={product.title}
                         onChange={(v) => updateProduct(index, { title: v })}
+                        tooltip="Legacy title for system-wide configuration references."
                       />
                       <AdminFormField
                         label="Price"
                         name={`mv-price-${index}`}
                         value={product.price}
                         onChange={(v) => updateProduct(index, { price: v })}
+                        tooltip="Price text displayed on storefront product detail cards (e.g. ₹749)."
                       />
                       <AdminFormField
                         label="Shopify ID (optional)"
                         name={`mv-shopify-${index}`}
                         value={product.shopifyId || ''}
                         onChange={(v) => updateProduct(index, { shopifyId: v })}
+                        tooltip="Shopify product numeric ID or variant ID link (optional)."
                       />
                     </div>
 
@@ -164,6 +168,7 @@ const MovementManager: React.FC = () => {
                       type="textarea"
                       value={product.description}
                       onChange={(v) => updateProduct(index, { description: v })}
+                      tooltip="Main paragraph describing the coffee profile, origin flavor notes, or body characteristics."
                     />
 
                     <div className="grid grid-cols-2 gap-3">
@@ -173,6 +178,7 @@ const MovementManager: React.FC = () => {
                         type="url"
                         value={product.heroImage}
                         onChange={(v) => updateProduct(index, { heroImage: v })}
+                        tooltip="Direct URL of the high-res image displayed on the product's banner section."
                       />
                       <AdminFormField
                         label="Hero Image (Mobile)"
@@ -180,6 +186,7 @@ const MovementManager: React.FC = () => {
                         type="url"
                         value={product.heroImageMobile}
                         onChange={(v) => updateProduct(index, { heroImageMobile: v })}
+                        tooltip="Direct URL of the mobile-optimized image displayed on the product's mobile banner."
                       />
                       <AdminFormField
                         label="Product Card Image"
@@ -187,6 +194,7 @@ const MovementManager: React.FC = () => {
                         type="url"
                         value={product.productCardImage}
                         onChange={(v) => updateProduct(index, { productCardImage: v })}
+                        tooltip="The square image displayed on collection catalog grids and search results."
                       />
                     </div>
 
@@ -199,6 +207,7 @@ const MovementManager: React.FC = () => {
                           values={Array.isArray(product.traceability.source) ? product.traceability.source : (typeof product.traceability.source === 'string' ? [product.traceability.source] : [])}
                           onChange={(v) => updateNested(index, 'traceability', 'source', v)}
                           placeholder="Enter source"
+                          tooltip="Specific estates, co-ops, regions, or farms where the beans were harvested."
                         />
                         <ChipInput
                           label="Process"
@@ -206,12 +215,14 @@ const MovementManager: React.FC = () => {
                           values={Array.isArray(product.traceability.process) ? product.traceability.process : (typeof product.traceability.process === 'string' ? [product.traceability.process] : [])}
                           onChange={(v) => updateNested(index, 'traceability', 'process', v)}
                           placeholder="Enter process"
+                          tooltip="The coffee bean processing method (e.g. Natural, Washed, Honey, anaerobic)."
                         />
                         <AdminFormField
                           label="Elevation"
                           name={`mv-elev-${index}`}
                           value={product.traceability.elevation}
                           onChange={(v) => updateNested(index, 'traceability', 'elevation', v)}
+                          tooltip="The altitude/elevation where the coffee was grown (e.g. 1500m or 4900ft)."
                         />
                         <ChipInput
                           label="Tasting Notes"
@@ -219,6 +230,7 @@ const MovementManager: React.FC = () => {
                           values={Array.isArray(product.traceability.tasteNotes) ? product.traceability.tasteNotes : []}
                           onChange={(v) => updateNested(index, 'traceability', 'tasteNotes', v)}
                           placeholder="Enter tasting note"
+                          tooltip="Flavor characteristics, aromas, or notes observed (e.g., Citrus, Chocolate, Caramel)."
                         />
                       </div>
                     </fieldset>
@@ -230,6 +242,7 @@ const MovementManager: React.FC = () => {
                         name={`mv-dt-${index}`}
                         value={product.descriptionContent.title}
                         onChange={(v) => updateNested(index, 'descriptionContent', 'title', v)}
+                        tooltip="Heading for the secondary product story or details section."
                       />
                       <AdminFormField
                         label="Content"
@@ -237,6 +250,7 @@ const MovementManager: React.FC = () => {
                         type="textarea"
                         value={product.descriptionContent.content}
                         onChange={(v) => updateNested(index, 'descriptionContent', 'content', v)}
+                        tooltip="Rich body text detailing the brand/product story or background narrative."
                       />
                       <AdminFormField
                         label="Image URL"
@@ -244,6 +258,7 @@ const MovementManager: React.FC = () => {
                         type="url"
                         value={product.descriptionContent.image}
                         onChange={(v) => updateNested(index, 'descriptionContent', 'image', v)}
+                        tooltip="URL of the descriptive image rendered alongside the product story text."
                       />
                     </fieldset>
 
@@ -257,6 +272,7 @@ const MovementManager: React.FC = () => {
                           galleryImages: v.split('\n').map((s) => s.trim()).filter(Boolean),
                         })
                       }
+                      tooltip="Line-separated list of additional images for the product detail page photo carousel."
                     />
 
                     <div className="flex flex-wrap gap-2">

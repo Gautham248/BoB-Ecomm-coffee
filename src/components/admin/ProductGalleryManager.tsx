@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { GripVertical, X, Plus, Image as ImageIcon } from 'lucide-react';
+import InfoTooltip from './InfoTooltip';
 
 interface ProductGalleryManagerProps {
   label: string;
   values: string[];
   onChange: (values: string[]) => void;
+  tooltip?: string;
 }
 
 const ProductGalleryManager: React.FC<ProductGalleryManagerProps> = ({
   label,
   values,
   onChange,
+  tooltip,
 }) => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragActiveIndex, setDragActiveIndex] = useState<number | null>(null);
@@ -55,8 +58,9 @@ const ProductGalleryManager: React.FC<ProductGalleryManagerProps> = ({
 
   return (
     <div className="space-y-3">
-      <label className="block text-xs font-medium text-gray-600 tracking-wide">
-        {label}
+      <label className="flex items-center text-xs font-medium text-gray-600 tracking-wide">
+        <span>{label}</span>
+        {tooltip && <InfoTooltip content={tooltip} />}
       </label>
 
       {values.length > 0 && (

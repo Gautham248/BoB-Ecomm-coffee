@@ -4,7 +4,8 @@ import AdminFormField from '../../components/admin/AdminFormField';
 import { readCache, writeCache } from '../../services/cacheService';
 import { getAllProducts, getProductReviews } from '../../services/adminService';
 import type { Product, Review } from '../../types/product';
-import { Save, Trash2, Plus, Star } from 'lucide-react';
+import { Plus, Trash2, Save, Star, ArrowUpDown } from 'lucide-react';
+import InfoTooltip from '../../components/admin/InfoTooltip';
 
 const EMPTY_REVIEW: Review = {
   customerName: '',
@@ -154,7 +155,10 @@ const ReviewsManager: React.FC = () => {
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="block text-xs font-medium text-gray-500">Rating</label>
+                          <label className="flex items-center text-xs font-medium text-gray-500">
+                            <span>Rating</span>
+                            <InfoTooltip content="Review score rating from 1 to 5 stars." />
+                          </label>
                           <StarPicker
                             value={review.rating}
                             onChange={(v) => updateReviewField(index, 'rating', v)}
@@ -168,6 +172,7 @@ const ReviewsManager: React.FC = () => {
                             value={review.customerName}
                             onChange={(v) => updateReviewField(index, 'customerName', v)}
                             placeholder="John D."
+                            tooltip="The name of the customer leaving the review."
                           />
                           <AdminFormField
                             label="Date"
@@ -175,6 +180,7 @@ const ReviewsManager: React.FC = () => {
                             value={review.date}
                             onChange={(v) => updateReviewField(index, 'date', v)}
                             placeholder="1 January 2026"
+                            tooltip="The display date when the review was submitted (e.g. 1 January 2026)."
                           />
                         </div>
 
@@ -184,6 +190,7 @@ const ReviewsManager: React.FC = () => {
                           value={review.purchase}
                           onChange={(v) => updateReviewField(index, 'purchase', v)}
                           placeholder="V60 Grind, 250g"
+                          tooltip="The product variant or configuration purchased by the reviewer (e.g. V60 Grind, 250g)."
                         />
                         <AdminFormField
                           label="Review Title"
@@ -191,6 +198,7 @@ const ReviewsManager: React.FC = () => {
                           value={review.title}
                           onChange={(v) => updateReviewField(index, 'title', v)}
                           placeholder="Great coffee!"
+                          tooltip="A short, catchy summary title for the review."
                         />
                         <AdminFormField
                           label="Review Content"
@@ -199,6 +207,7 @@ const ReviewsManager: React.FC = () => {
                           value={review.content}
                           onChange={(v) => updateReviewField(index, 'content', v)}
                           placeholder="Write the review..."
+                          tooltip="The full written feedback or text body of the review."
                         />
                       </div>
                     ))}

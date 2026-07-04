@@ -3,6 +3,7 @@ import { fetchAllProducts } from '../../services/shopifyService';
 import type { Product } from '../../types/product';
 import type { Collection } from '../../types/product';
 import { Search, X, Check } from 'lucide-react';
+import InfoTooltip from './InfoTooltip';
 
 interface ProductMultiSelectProps {
   label: string;
@@ -10,6 +11,7 @@ interface ProductMultiSelectProps {
   onChange: (ids: string[]) => void;
   allCollections: Collection[];
   currentCollectionId: string;
+  tooltip?: string;
 }
 
 const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
@@ -18,6 +20,7 @@ const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
   onChange,
   allCollections,
   currentCollectionId,
+  tooltip,
 }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,8 +115,9 @@ const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
 
   return (
     <div ref={wrapperRef}>
-      <label className="block text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
-        {label}
+      <label className="flex items-center text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
+        <span>{label}</span>
+        {tooltip && <InfoTooltip content={tooltip} />}
       </label>
 
       {selectedIds.length > 0 && (

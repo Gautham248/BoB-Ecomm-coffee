@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Plus } from 'lucide-react';
+import InfoTooltip from './InfoTooltip';
 
 interface ChipInputProps {
   label: string;
@@ -8,6 +9,7 @@ interface ChipInputProps {
   onChange: (values: string[]) => void;
   placeholder?: string;
   type?: 'text' | 'url';
+  tooltip?: string;
 }
 
 const ChipInput: React.FC<ChipInputProps> = ({
@@ -17,6 +19,7 @@ const ChipInput: React.FC<ChipInputProps> = ({
   onChange,
   placeholder,
   type = 'text',
+  tooltip,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
@@ -57,8 +60,9 @@ const ChipInput: React.FC<ChipInputProps> = ({
 
   return (
     <div>
-      <label htmlFor={name} className="block text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
-        {label}
+      <label htmlFor={name} className="flex items-center text-xs font-medium text-gray-600 mb-1.5 tracking-wide">
+        <span>{label}</span>
+        {tooltip && <InfoTooltip content={tooltip} />}
       </label>
       <div className="flex gap-2">
         <input

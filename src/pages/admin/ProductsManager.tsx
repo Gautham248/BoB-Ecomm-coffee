@@ -12,6 +12,7 @@ import type { Product } from '../../types/product';
 import { Save, RefreshCw, Search } from 'lucide-react';
 import ChipInput from '../../components/admin/ChipInput';
 import ProductGalleryManager from '../../components/admin/ProductGalleryManager';
+import InfoTooltip from '../../components/admin/InfoTooltip';
 
 const resolveMetaKey = (pid: string, metaMap: Record<string, unknown>): string => {
   const prefixed = pid.startsWith('the-') ? pid : `the-${pid}`;
@@ -281,16 +282,19 @@ const ProductsManager: React.FC = () => {
                     name="name"
                     value={(metadata as Record<string, string>).name || selected.name}
                     onChange={(v) => updateMeta('name', v)}
+                    tooltip="The uppercase name displayed in storefront headings and checkout details."
                   />
                   <AdminFormField
                     label="Price"
                     name="price"
                     value={(metadata as Record<string, string>).price || selected.price}
                     onChange={(v) => updateMeta('price', v)}
+                    tooltip="Price text displayed on storefront product detail cards (e.g. ₹749)."
                   />
                   <div className="space-y-1">
-                    <label htmlFor="admin-product-category" className="block text-xs font-medium text-gray-700">
-                      Category
+                    <label htmlFor="admin-product-category" className="flex items-center text-xs font-medium text-gray-700">
+                      <span>Category</span>
+                      <InfoTooltip content="The primary collection or group this product belongs to." />
                     </label>
                     <select
                       id="admin-product-category"
@@ -313,6 +317,7 @@ const ProductsManager: React.FC = () => {
                     type="url"
                     value={(metadata as Record<string, string>).heroImage || selected.heroImage}
                     onChange={(v) => updateMeta('heroImage', v)}
+                    tooltip="Direct URL of the high-res image displayed on the product's banner section."
                   />
                   <AdminFormField
                     label="Hero Image (Mobile)"
@@ -320,6 +325,7 @@ const ProductsManager: React.FC = () => {
                     type="url"
                     value={(metadata as Record<string, string>).heroImageMobile || selected.heroImageMobile || ''}
                     onChange={(v) => updateMeta('heroImageMobile', v)}
+                    tooltip="Direct URL of the mobile-optimized image displayed on the product's mobile banner."
                   />
                   <AdminFormField
                     label="Product Card Image"
@@ -327,15 +333,15 @@ const ProductsManager: React.FC = () => {
                     type="url"
                     value={(metadata as Record<string, string>).productCardImage || selected.productCardImage || ''}
                     onChange={(v) => updateMeta('productCardImage', v)}
+                    tooltip="The square image displayed on collection catalog grids and search results."
                   />
-                </div>
-
-                <AdminFormField
+                </div>                 <AdminFormField
                   label="Description"
                   name="desc"
                   type="textarea"
                   value={(metadata as Record<string, string>).description || selected.description}
                   onChange={(v) => updateMeta('description', v)}
+                  tooltip="Main paragraph describing the coffee profile, origin flavor notes, or body characteristics."
                 />
 
                 <fieldset className="border border-gray-200 rounded-lg p-4 space-y-3">
@@ -347,6 +353,7 @@ const ProductsManager: React.FC = () => {
                       values={Array.isArray((metadata.traceability || selected.traceability).source) ? (metadata.traceability || selected.traceability).source as string[] : (typeof (metadata.traceability || selected.traceability).source === 'string' ? [(metadata.traceability || selected.traceability).source as string] : [])}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), source: v })}
                       placeholder="Enter source location"
+                      tooltip="Specific estates, co-ops, regions, or farms where the beans were harvested."
                     />
                     <ChipInput
                       label="Process"
@@ -354,19 +361,22 @@ const ProductsManager: React.FC = () => {
                       values={Array.isArray((metadata.traceability || selected.traceability).process) ? (metadata.traceability || selected.traceability).process as string[] : (typeof (metadata.traceability || selected.traceability).process === 'string' ? [(metadata.traceability || selected.traceability).process as string] : [])}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), process: v })}
                       placeholder="Enter process method"
+                      tooltip="The coffee bean processing method (e.g. Natural, Washed, Honey, anaerobic)."
                     />
                     <AdminFormField
                       label="Elevation"
                       name="elevation"
                       value={(metadata as Record<string, string>).traceability?.elevation || selected.traceability.elevation}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), elevation: v })}
+                      tooltip="The altitude/elevation where the coffee was grown (e.g. 1500m or 4900ft)."
                     />
                     <ChipInput
                       label="Tasting Notes"
                       name="tasteNotes"
-                      values={Array.isArray((metadata.traceability || selected.traceability).tasteNotes) ? (metadata.traceability || selected.traceability).tasteNotes : []}
+                      values={Array.isArray((metadata.traceability || selected.tasteNotes).tasteNotes) ? (metadata.traceability || selected.tasteNotes).tasteNotes : []}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), tasteNotes: v })}
                       placeholder="Enter tasting note"
+                      tooltip="Flavor characteristics, aromas, or notes observed (e.g., Citrus, Chocolate, Caramel)."
                     />
                   </div>
                 </fieldset>
@@ -378,6 +388,7 @@ const ProductsManager: React.FC = () => {
                     name="descTitle"
                     value={(metadata as Record<string, string>).descriptionContent?.title || selected.descriptionContent.title}
                     onChange={(v) => updateMeta('descriptionContent', { ...(metadata.descriptionContent || selected.descriptionContent), title: v })}
+                    tooltip="Heading for the secondary product story or details section."
                   />
                   <AdminFormField
                     label="Content"
@@ -385,6 +396,7 @@ const ProductsManager: React.FC = () => {
                     type="textarea"
                     value={(metadata as Record<string, string>).descriptionContent?.content || selected.descriptionContent.content}
                     onChange={(v) => updateMeta('descriptionContent', { ...(metadata.descriptionContent || selected.descriptionContent), content: v })}
+                    tooltip="Rich body text detailing the brand/product story or background narrative."
                   />
                   <AdminFormField
                     label="Image URL"
@@ -392,6 +404,7 @@ const ProductsManager: React.FC = () => {
                     type="url"
                     value={(metadata as Record<string, string>).descriptionContent?.image || selected.descriptionContent.image}
                     onChange={(v) => updateMeta('descriptionContent', { ...(metadata.descriptionContent || selected.descriptionContent), image: v })}
+                    tooltip="URL of the descriptive image rendered alongside the product story text."
                   />
                 </fieldset>
 
@@ -401,6 +414,7 @@ const ProductsManager: React.FC = () => {
                     label="Gallery URLs"
                     values={Array.isArray((metadata as Record<string, string[]>).galleryImages || selected.galleryImages) ? ((metadata as Record<string, string[]>).galleryImages || selected.galleryImages) : []}
                     onChange={(v) => updateMeta('galleryImages', v)}
+                    tooltip="A list of additional product photos that can be reordered via drag-and-drop."
                   />
                 </fieldset>
 

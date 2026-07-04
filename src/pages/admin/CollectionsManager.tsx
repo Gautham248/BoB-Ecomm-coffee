@@ -182,18 +182,21 @@ const CollectionsManager: React.FC = () => {
                     value={collection.name}
                     onChange={(v) => updateCollection(index, 'name', v)}
                     required
+                    tooltip="Display name used for filters and headers on the storefront (e.g. Signature Blends)."
                   />
                   <AdminFormField
                     label="Title"
                     name={`title-${index}`}
                     value={collection.title}
                     onChange={(v) => updateCollection(index, 'title', v)}
+                    tooltip="Legacy title for system-wide configuration references."
                   />
                   <AdminFormField
                     label="Price (e.g. From ₹749)"
                     name={`price-${index}`}
                     value={collection.price}
                     onChange={(v) => updateCollection(index, 'price', v)}
+                    tooltip="Starting price text displayed on collection overview cards."
                   />
                   <AdminFormField
                     label="Thumbnail URL"
@@ -201,6 +204,7 @@ const CollectionsManager: React.FC = () => {
                     type="url"
                     value={collection.image}
                     onChange={(v) => updateCollection(index, 'image', v)}
+                    tooltip="Banner or card image URL for the collection."
                   />
                 </div>
 
@@ -210,6 +214,7 @@ const CollectionsManager: React.FC = () => {
                   type="textarea"
                   value={collection.description}
                   onChange={(v) => updateCollection(index, 'description', v)}
+                  tooltip="Brief summary of this collection's theme or coffee categories."
                 />
 
                 <ProductMultiSelect
@@ -218,6 +223,7 @@ const CollectionsManager: React.FC = () => {
                   onChange={(ids) => updateCollection(index, 'products', ids)}
                   allCollections={collections}
                   currentCollectionId={collection.id}
+                  tooltip="Choose which Shopify products to group inside this collection."
                 />
 
                 {collection.image && (

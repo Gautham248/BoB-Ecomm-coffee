@@ -4,6 +4,7 @@ import AdminFormField from '../../components/admin/AdminFormField';
 import { readCache, updateCacheField } from '../../services/cacheService';
 import type { MediaSlide, HeroSettings } from '../../types/admin';
 import { Plus, Trash2, GripVertical, Save, ChevronDown, ChevronUp } from 'lucide-react';
+import InfoTooltip from '../../components/admin/InfoTooltip';
 
 const EMPTY_SLIDE: MediaSlide = { type: 'video', url: '', mobileUrl: '', posterUrl: '' };
 
@@ -109,6 +110,7 @@ const HeroManager: React.FC = () => {
             type="number"
             value={String(settings.imageDisplayDuration)}
             onChange={(v) => setSettings((s) => ({ ...s, imageDisplayDuration: Number(v) }))}
+            tooltip="Duration in milliseconds before the homepage hero carousel auto-scrolls to the next slide (e.g. 5000)."
           />
         </CollapsibleSection>
 
@@ -154,6 +156,7 @@ const HeroManager: React.FC = () => {
                       return { ...s, shopBannerImages: images };
                     })}
                     placeholder="https://ik.imagekit.io/..."
+                    tooltip="URL of the banner image displayed at the top of the /store page."
                   />
                   {url && (
                     <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden max-w-sm">
@@ -248,11 +251,14 @@ function SlideEditor({
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Type</label>
+          <label className="flex items-center text-xs font-medium text-gray-500 mb-1">
+            <span>Type</span>
+            <InfoTooltip content="Choose whether this slide displays a video background or a static image." />
+          </label>
           <select
             value={slide.type}
             onChange={(e) => onChange('type', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-900 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-900 outline-none animate-fade-in-up"
           >
             <option value="video">Video</option>
             <option value="image">Image</option>
@@ -264,6 +270,7 @@ function SlideEditor({
           value={slide.posterUrl || ''}
           onChange={(v) => onChange('posterUrl', v)}
           placeholder="Optional poster image"
+          tooltip="URL of the cover/poster image displayed while the video is loading or buffer state."
         />
       </div>
       <AdminFormField
@@ -274,6 +281,7 @@ function SlideEditor({
         onChange={(v) => onChange('url', v)}
         placeholder={slide.type === 'video' ? '/videos/hero.mp4' : 'https://ik.imagekit.io/...'}
         required
+        tooltip="Desktop media resource URL (either MP4 video or JPG/PNG image)."
       />
       <AdminFormField
         label="Mobile URL"
@@ -282,6 +290,7 @@ function SlideEditor({
         value={slide.mobileUrl || ''}
         onChange={(v) => onChange('mobileUrl', v)}
         placeholder="Optional mobile-specific URL"
+        tooltip="Optional mobile-optimized media URL (vertical format, lower file size)."
       />
       {slide.url && (
         <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden max-w-sm">
