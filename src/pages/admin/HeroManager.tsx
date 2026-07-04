@@ -3,8 +3,7 @@ import AdminLayout from '../../components/admin/AdminLayout';
 import AdminFormField from '../../components/admin/AdminFormField';
 import { readCache, updateCacheField } from '../../services/cacheService';
 import type { MediaSlide, HeroSettings } from '../../types/admin';
-import { Plus, Trash2, GripVertical, Save, ChevronDown, ChevronUp } from 'lucide-react';
-import InfoTooltip from '../../components/admin/InfoTooltip';
+import { Plus, Trash2, Save, ChevronDown, ChevronUp, Pencil } from 'lucide-react';
 
 const EMPTY_SLIDE: MediaSlide = { type: 'video', url: '', mobileUrl: '', posterUrl: '' };
 
@@ -46,10 +45,103 @@ function CollapsibleSection({
   );
 }
 
+function KanbanCard({
+  label,
+  thumbnail,
+  type = 'image',
+  onEdit,
+  onRemove,
+  onMoveUp,
+  onMoveDown,
+  isFirst,
+  isLast,
+  children,
+  isOpen,
+}: {
+  label: string;
+  thumbnail?: string;
+  type?: 'video' | 'image';
+  onEdit: () => void;
+  onRemove: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
+  isFirst?: boolean;
+  isLast?: boolean;
+  children?: React.ReactNode;
+  isOpen: boolean;
+}) {
+  return (
+    <div className={`bg-white rounded-xl border transition-shadow ${isOpen ? 'border-gray-400 shadow-md' : 'border-gray-200 hover:shadow-sm'}`}>
+      <div
+        className="aspect-video bg-gray-50 rounded-t-xl overflow-hidden cursor-pointer relative group"
+        onClick={onEdit}
+      >
+        {thumbnail ? (
+          type === 'video' ? (
+            <video
+              src={thumbnail}
+              className="w-full h-full object-cover"
+              muted
+              loop
+              playsInline
+              autoPlay
+            />
+          ) : (
+            <img src={thumbnail} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+          )
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-300">
+            <span className="text-xs">No preview</span>
+          </div>
+        )}
+        <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          {onMoveUp && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onMoveUp(); }}
+              disabled={isFirst}
+              className="p-1 bg-white/90 rounded shadow-sm text-gray-600 hover:text-gray-900 disabled:opacity-30 transition"
+            >
+              <ChevronUp className="w-3 h-3" />
+            </button>
+          )}
+          {onMoveDown && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onMoveDown(); }}
+              disabled={isLast}
+              className="p-1 bg-white/90 rounded shadow-sm text-gray-600 hover:text-gray-900 disabled:opacity-30 transition"
+            >
+              <ChevronDown className="w-3 h-3" />
+            </button>
+          )}
+          <button
+            onClick={(e) => { e.stopPropagation(); onRemove(); }}
+            className="p-1 bg-white/90 rounded shadow-sm text-red-600 hover:text-red-800 transition"
+          >
+            <Trash2 className="w-3 h-3" />
+          </button>
+        </div>
+      </div>
+      <div className="p-3 flex items-center justify-between">
+        <span className="text-xs font-medium text-gray-600 truncate">{label}</span>
+        <button onClick={onEdit} className="p-1 text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0">
+          <Pencil className="w-3 h-3" />
+        </button>
+      </div>
+      {isOpen && children && (
+        <div className="px-3 pb-3 border-t border-gray-100 pt-3 space-y-2">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const HeroManager: React.FC = () => {
   const cache = readCache();
   const [settings, setSettings] = useState<HeroSettings>({ ...cache.heroSettings });
   const [saved, setSaved] = useState(false);
+  const [expandedBanner, setExpandedBanner] = useState<number | null>(null);
+  const [expandedSlide, setExpandedSlide] = useState<number | null>(null);
 
   const updateSlide = (index: number, field: keyof MediaSlide, value: string) => {
     setSettings((prev) => {
@@ -61,13 +153,12 @@ const HeroManager: React.FC = () => {
 
   const addSlide = () => {
     setSettings((prev) => ({ ...prev, slides: [...prev.slides, { ...EMPTY_SLIDE }] }));
+    setExpandedSlide(settings.slides.length);
   };
 
   const removeSlide = (index: number) => {
-    setSettings((prev) => ({
-      ...prev,
-      slides: prev.slides.filter((_, i) => i !== index),
-    }));
+    setSettings((prev) => ({ ...prev, slides: prev.slides.filter((_, i) => i !== index) }));
+    setExpandedSlide(null);
   };
 
   const moveSlide = (index: number, direction: -1 | 1) => {
@@ -78,6 +169,18 @@ const HeroManager: React.FC = () => {
       [slides[index], slides[newIndex]] = [slides[newIndex], slides[index]];
       return { ...prev, slides };
     });
+    setExpandedSlide(null);
+  };
+
+  const moveBannerImage = (index: number, direction: -1 | 1) => {
+    setSettings((prev) => {
+      const images = [...(prev.shopBannerImages || [])];
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= images.length) return prev;
+      [images[index], images[newIndex]] = [images[newIndex], images[index]];
+      return { ...prev, shopBannerImages: images };
+    });
+    setExpandedBanner(null);
   };
 
   const handleSave = () => {
@@ -100,17 +203,13 @@ const HeroManager: React.FC = () => {
           </button>
         </div>
 
-        <CollapsibleSection
-          title="Auto-play Settings"
-          subtitle="Hero carousel display duration"
-        >
+        <CollapsibleSection title="Auto-play Settings" subtitle="Hero carousel display duration">
           <AdminFormField
             label="Display Duration (ms)"
             name="duration"
             type="number"
             value={String(settings.imageDisplayDuration)}
             onChange={(v) => setSettings((s) => ({ ...s, imageDisplayDuration: Number(v) }))}
-            tooltip="Duration in milliseconds before the homepage hero carousel auto-scrolls to the next slide (e.g. 5000)."
           />
         </CollapsibleSection>
 
@@ -120,7 +219,10 @@ const HeroManager: React.FC = () => {
         >
           <div className="flex items-center justify-end mb-3">
             <button
-              onClick={() => setSettings((s) => ({ ...s, shopBannerImages: [...(s.shopBannerImages || []), ''] }))}
+              onClick={() => {
+                setSettings((s) => ({ ...s, shopBannerImages: [...(s.shopBannerImages || []), ''] }));
+                setExpandedBanner((settings.shopBannerImages || []).length);
+              }}
               className="flex items-center gap-1 px-3 py-1.5 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm"
             >
               <Plus className="w-4 h-4" /> Add Image
@@ -130,21 +232,23 @@ const HeroManager: React.FC = () => {
           {(settings.shopBannerImages || []).length === 0 ? (
             <p className="text-sm text-gray-500 py-4 text-center">No shop banner images yet. Click "Add Image" to add one.</p>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {(settings.shopBannerImages || []).map((url, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-600">Image {index + 1}</span>
-                    <button
-                      onClick={() => setSettings((s) => ({
-                        ...s,
-                        shopBannerImages: (s.shopBannerImages || []).filter((_, i) => i !== index),
-                      }))}
-                      className="ml-auto px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100 transition"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
-                  </div>
+                <KanbanCard
+                  key={index}
+                  label={`Banner ${index + 1}`}
+                  thumbnail={url}
+                  isOpen={expandedBanner === index}
+                  onEdit={() => setExpandedBanner(expandedBanner === index ? null : index)}
+                  onRemove={() => {
+                    setSettings((s) => ({ ...s, shopBannerImages: (s.shopBannerImages || []).filter((_, i) => i !== index) }));
+                    setExpandedBanner(null);
+                  }}
+                  onMoveUp={() => moveBannerImage(index, -1)}
+                  onMoveDown={() => moveBannerImage(index, 1)}
+                  isFirst={index === 0}
+                  isLast={index === (settings.shopBannerImages || []).length - 1}
+                >
                   <AdminFormField
                     label="Image URL"
                     name={`banner-${index}`}
@@ -156,14 +260,13 @@ const HeroManager: React.FC = () => {
                       return { ...s, shopBannerImages: images };
                     })}
                     placeholder="https://ik.imagekit.io/..."
-                    tooltip="URL of the banner image displayed at the top of the /store page."
                   />
                   {url && (
-                    <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden max-w-sm">
+                    <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden mt-2">
                       <img src={url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                     </div>
                   )}
-                </div>
+                </KanbanCard>
               ))}
             </div>
           )}
@@ -185,17 +288,68 @@ const HeroManager: React.FC = () => {
           {settings.slides.length === 0 ? (
             <p className="text-sm text-gray-500 py-4 text-center">No slides yet. Click "Add Slide" to create one.</p>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {settings.slides.map((slide, index) => (
-                <SlideEditor
+                <KanbanCard
                   key={index}
-                  slide={slide}
-                  index={index}
-                  total={settings.slides.length}
-                  onChange={(field, value) => updateSlide(index, field, value)}
+                  label={`Slide ${index + 1}` + (slide.type ? ` · ${slide.type}` : '')}
+                  thumbnail={slide.url || slide.posterUrl}
+                  type={slide.type}
+                  isOpen={expandedSlide === index}
+                  onEdit={() => setExpandedSlide(expandedSlide === index ? null : index)}
                   onRemove={() => removeSlide(index)}
-                  onMove={(dir) => moveSlide(index, dir)}
-                />
+                  onMoveUp={() => moveSlide(index, -1)}
+                  onMoveDown={() => moveSlide(index, 1)}
+                  isFirst={index === 0}
+                  isLast={index === settings.slides.length - 1}
+                >
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Type</label>
+                      <select
+                        value={slide.type}
+                        onChange={(e) => updateSlide(index, 'type', e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-900 outline-none"
+                      >
+                        <option value="video">Video</option>
+                        <option value="image">Image</option>
+                      </select>
+                    </div>
+                    <AdminFormField
+                      label="Poster URL"
+                      name={`poster-${index}`}
+                      value={slide.posterUrl || ''}
+                      onChange={(v) => updateSlide(index, 'posterUrl', v)}
+                      placeholder="Optional poster image"
+                    />
+                  </div>
+                  <AdminFormField
+                    label="URL"
+                    name={`url-${index}`}
+                    type="url"
+                    value={slide.url}
+                    onChange={(v) => updateSlide(index, 'url', v)}
+                    placeholder={slide.type === 'video' ? '/videos/hero.mp4' : 'https://ik.imagekit.io/...'}
+                    required
+                  />
+                  <AdminFormField
+                    label="Mobile URL"
+                    name={`mobile-${index}`}
+                    type="url"
+                    value={slide.mobileUrl || ''}
+                    onChange={(v) => updateSlide(index, 'mobileUrl', v)}
+                    placeholder="Optional mobile-specific URL"
+                  />
+                  {slide.url && (
+                    <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden mt-2">
+                      {slide.type === 'video' ? (
+                        <video src={slide.url} className="w-full h-full object-cover" muted controls preload="metadata" />
+                      ) : (
+                        <img src={slide.url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                      )}
+                    </div>
+                  )}
+                </KanbanCard>
               ))}
             </div>
           )}
@@ -204,105 +358,5 @@ const HeroManager: React.FC = () => {
     </AdminLayout>
   );
 };
-
-function SlideEditor({
-  slide,
-  index,
-  total,
-  onChange,
-  onRemove,
-  onMove,
-}: {
-  slide: MediaSlide;
-  index: number;
-  total: number;
-  onChange: (field: keyof MediaSlide, value: string) => void;
-  onRemove: () => void;
-  onMove: (dir: -1 | 1) => void;
-}) {
-  return (
-    <div className="border border-gray-200 rounded-lg p-4 space-y-3">
-      <div className="flex items-center gap-2">
-        <GripVertical className="w-4 h-4 text-gray-400" />
-        <span className="text-sm font-medium text-gray-600">Slide {index + 1}</span>
-        <div className="flex gap-1 ml-auto">
-          <button
-            onClick={() => onMove(-1)}
-            disabled={index === 0}
-            className="px-2 py-1 text-xs bg-gray-50 rounded hover:bg-gray-100 disabled:opacity-30 transition"
-          >
-            ↑
-          </button>
-          <button
-            onClick={() => onMove(1)}
-            disabled={index === total - 1}
-            className="px-2 py-1 text-xs bg-gray-50 rounded hover:bg-gray-100 disabled:opacity-30 transition"
-          >
-            ↓
-          </button>
-          <button
-            onClick={onRemove}
-            className="px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100 transition"
-          >
-            <Trash2 className="w-3 h-3" />
-          </button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="flex items-center text-xs font-medium text-gray-500 mb-1">
-            <span>Type</span>
-            <InfoTooltip content="Choose whether this slide displays a video background or a static image." />
-          </label>
-          <select
-            value={slide.type}
-            onChange={(e) => onChange('type', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-900 outline-none animate-fade-in-up"
-          >
-            <option value="video">Video</option>
-            <option value="image">Image</option>
-          </select>
-        </div>
-        <AdminFormField
-          label="Poster URL"
-          name={`poster-${index}`}
-          value={slide.posterUrl || ''}
-          onChange={(v) => onChange('posterUrl', v)}
-          placeholder="Optional poster image"
-          tooltip="URL of the cover/poster image displayed while the video is loading or buffer state."
-        />
-      </div>
-      <AdminFormField
-        label="URL"
-        name={`url-${index}`}
-        type="url"
-        value={slide.url}
-        onChange={(v) => onChange('url', v)}
-        placeholder={slide.type === 'video' ? '/videos/hero.mp4' : 'https://ik.imagekit.io/...'}
-        required
-        tooltip="Desktop media resource URL (either MP4 video or JPG/PNG image)."
-      />
-      <AdminFormField
-        label="Mobile URL"
-        name={`mobile-${index}`}
-        type="url"
-        value={slide.mobileUrl || ''}
-        onChange={(v) => onChange('mobileUrl', v)}
-        placeholder="Optional mobile-specific URL"
-        tooltip="Optional mobile-optimized media URL (vertical format, lower file size)."
-      />
-      {slide.url && (
-        <div className="aspect-video bg-gray-50 rounded-lg overflow-hidden max-w-sm">
-          {slide.type === 'video' ? (
-            <video src={slide.url} className="w-full h-full object-cover" muted controls preload="metadata" />
-          ) : (
-            <img src={slide.url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default HeroManager;
