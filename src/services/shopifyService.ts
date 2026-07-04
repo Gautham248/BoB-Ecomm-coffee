@@ -109,9 +109,9 @@ export async function fetchAllProducts(): Promise<Product[]> {
       productCardImage: heroImage,
       galleryImages: images.slice(0, 4).map((i) => i.src),
       traceability: {
-        source: '',
+        source: [],
         tasteNotes: [],
-        process: '',
+        process: [],
         elevation: '',
       },
       descriptionContent: {

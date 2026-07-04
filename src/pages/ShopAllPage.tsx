@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { getAllProducts, getAvailableCategories, getCategoryLabels, getCollections } from '../services/adminService';
+import { getAllProducts, getAvailableCategories, getCategoryLabels, getCollections, getHeroSettings } from '../services/adminService';
 import ShopAllBanner from '../components/ShopAllBanner';
 
 // Filter Pills Component
@@ -123,7 +123,8 @@ const ShopAllPage = () => {
   };
 
   const handleProductClick = (productId: string) => {
-    if (productId === 'gadgets') {
+    const product = allProducts.find((p) => p.id === productId);
+    if (product?.category === 'gadgets' || productId === 'movement') {
       navigate('/movement');
     } else {
       navigate(`/product/${productId}`);
@@ -197,6 +198,8 @@ const ShopAllPage = () => {
     return labels[product.category] || product.category;
   };
 
+  const bannerImages = useMemo(() => getHeroSettings().shopBannerImages || [], []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -204,17 +207,7 @@ const ShopAllPage = () => {
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           All Products
         </h1>
-        <ShopAllBanner
-          images={[
-            'https://ik.imagekit.io/nzkbravfr/Banner/origin.png?updatedAt=1761489002944',
-            'https://ik.imagekit.io/nzkbravfr/Banner/tornado%20twist.png?updatedAt=1761489002921',
-            'https://ik.imagekit.io/nzkbravfr/Banner/High%20tide.png?updatedAt=1761489002900',
-            'https://ik.imagekit.io/nzkbravfr/Banner/wild%20fire%20rush.png?updatedAt=1761489002944',
-            'https://ik.imagekit.io/nzkbravfr/Banner/eco2.png?updatedAt=1761489002895',
-            'https://ik.imagekit.io/nzkbravfr/Banner/thunder%20fuse.png?updatedAt=1761489002932',
-
-          ]}
-        />
+        <ShopAllBanner images={bannerImages} />
         {/* Category Filters */}
         <CategoryFilter
           categories={availableCategories}

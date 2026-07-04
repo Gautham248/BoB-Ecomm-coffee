@@ -58,7 +58,7 @@ describe('getAllProducts', () => {
         heroImageMobile: 'https://example.com/img-mob.png',
         productCardImage: 'https://example.com/card.png',
         galleryImages: [],
-        traceability: { source: 'Wayanad', tasteNotes: ['Sweet'], process: 'Natural', elevation: '3200ft' },
+        traceability: { source: ['Wayanad'], tasteNotes: ['Sweet'], process: ['Natural'], elevation: '3200ft' },
         descriptionContent: { title: 'Rooted', content: 'Content', image: 'https://example.com/desc.png' },
         category: 'signature-blends',
       },
@@ -82,7 +82,7 @@ describe('getAllProducts', () => {
       'the-origin': {
         name: 'THE ORIGIN', title: 'The Origin', description: '', price: '',
         heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
-        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
         descriptionContent: { title: '', content: '', image: '' },
         category: '',
       },
@@ -105,7 +105,7 @@ describe('getProductById', () => {
       'the-origin': {
         name: 'THE ORIGIN', title: 'The Origin', description: '', price: '',
         heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
-        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
         descriptionContent: { title: '', content: '', image: '' },
         category: '',
       },
@@ -120,7 +120,7 @@ describe('getProductById', () => {
       'the-origin': {
         name: 'THE ORIGIN', title: 'The Origin', description: '', price: '',
         heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
-        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
         descriptionContent: { title: '', content: '', image: '' },
         category: '',
       },
@@ -135,7 +135,7 @@ describe('getProductById', () => {
       'origin': {
         name: 'THE ORIGIN', title: 'The Origin', description: '', price: '',
         heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
-        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
         descriptionContent: { title: '', content: '', image: '' },
         category: '',
       },
@@ -152,7 +152,7 @@ describe('getProductsByCategory', () => {
       'the-high-tide': {
         name: 'THE HIGH TIDE', title: 'The High Tide', description: '', price: '',
         heroImage: '', heroImageMobile: '', productCardImage: '', galleryImages: [],
-        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
         descriptionContent: { title: '', content: '', image: '' },
         category: 'western-ghats-selects',
       },

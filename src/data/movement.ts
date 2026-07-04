@@ -64,9 +64,9 @@ export const products: Product[] = [
         description: 'Revolutionizing Coffee, One Adventure at a Time.',
         price: 'INR 7,499.00',
         traceability: {
-            source: 'N/A',
+            source: [],
             tasteNotes: [],
-            process: 'N/A',
+            process: [],
             elevation: 'N/A'
         },
         heroImage: '', // Placeholder
@@ -78,7 +78,7 @@ export const products: Product[] = [
             content: 'Revolutionizing Coffee, One Adventure at a Time.',
             image: '' // Placeholder
         },
-        category: 'signature-blends', // Default category
+        category: 'gadgets',
         featured: false
     }
 ];

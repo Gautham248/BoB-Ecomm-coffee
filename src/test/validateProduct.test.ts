@@ -11,7 +11,7 @@ const validProduct = {
   heroImageMobile: 'https://example.com/img-mob.png',
   productCardImage: 'https://example.com/card.png',
   galleryImages: [],
-  traceability: { source: 'Wayanad', tasteNotes: ['Sweet'], process: 'Natural', elevation: '3200ft' },
+  traceability: { source: ['Wayanad'], tasteNotes: ['Sweet'], process: ['Natural'], elevation: '3200ft' },
   descriptionContent: { title: 'Rooted', content: 'Content', image: 'https://example.com/desc.png' },
   category: 'signature-blends',
 };

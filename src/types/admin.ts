@@ -11,6 +11,7 @@ export interface MediaSlide {
 
 export interface HeroSettings {
   slides: MediaSlide[];
+  shopBannerImages: string[];
   imageDisplayDuration: number;
   showDots: boolean;
   showArrows: boolean;

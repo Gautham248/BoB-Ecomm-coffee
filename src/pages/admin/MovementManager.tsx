@@ -4,6 +4,7 @@ import AdminFormField from '../../components/admin/AdminFormField';
 import { readCache, updateCacheField } from '../../services/cacheService';
 import type { Product } from '../../types/product';
 import { Plus, Trash2, Save, ChevronDown, ChevronUp } from 'lucide-react';
+import ChipInput from '../../components/admin/ChipInput';
 
 const EMPTY_PRODUCT: Product = {
   id: '',
@@ -15,7 +16,7 @@ const EMPTY_PRODUCT: Product = {
   heroImageMobile: '',
   productCardImage: '',
   galleryImages: [],
-  traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+  traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
   descriptionContent: { title: '', content: '', image: '' },
   category: 'movement',
   featured: false,
@@ -192,17 +193,19 @@ const MovementManager: React.FC = () => {
                     <fieldset className="border border-gray-200 rounded-lg p-3 space-y-2">
                       <legend className="text-xs font-semibold text-gray-600 px-1">Traceability</legend>
                       <div className="grid grid-cols-2 gap-2">
-                        <AdminFormField
+                        <ChipInput
                           label="Source"
                           name={`mv-source-${index}`}
-                          value={product.traceability.source}
+                          values={Array.isArray(product.traceability.source) ? product.traceability.source : (typeof product.traceability.source === 'string' ? [product.traceability.source] : [])}
                           onChange={(v) => updateNested(index, 'traceability', 'source', v)}
+                          placeholder="Enter source"
                         />
-                        <AdminFormField
+                        <ChipInput
                           label="Process"
                           name={`mv-process-${index}`}
-                          value={product.traceability.process}
+                          values={Array.isArray(product.traceability.process) ? product.traceability.process : (typeof product.traceability.process === 'string' ? [product.traceability.process] : [])}
                           onChange={(v) => updateNested(index, 'traceability', 'process', v)}
+                          placeholder="Enter process"
                         />
                         <AdminFormField
                           label="Elevation"
@@ -210,19 +213,12 @@ const MovementManager: React.FC = () => {
                           value={product.traceability.elevation}
                           onChange={(v) => updateNested(index, 'traceability', 'elevation', v)}
                         />
-                        <AdminFormField
+                        <ChipInput
                           label="Tasting Notes"
                           name={`mv-notes-${index}`}
-                          value={product.traceability.tasteNotes.join(', ')}
-                          onChange={(v) =>
-                            updateNested(
-                              index,
-                              'traceability',
-                              'tasteNotes',
-                              v.split(',').map((s) => s.trim()).filter(Boolean)
-                            )
-                          }
-                          placeholder="Chocolate, Nutty"
+                          values={Array.isArray(product.traceability.tasteNotes) ? product.traceability.tasteNotes : []}
+                          onChange={(v) => updateNested(index, 'traceability', 'tasteNotes', v)}
+                          placeholder="Enter tasting note"
                         />
                       </div>
                     </fieldset>

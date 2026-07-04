@@ -460,7 +460,9 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                     </div>
                     <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">SOURCE</h4>
                     <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
-                      {product.traceability.source}
+                      {Array.isArray(product.traceability.source)
+                        ? product.traceability.source.join(', ')
+                        : product.traceability.source}
                     </p>
                   </div>
 
@@ -486,7 +488,9 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, onProductClick }) =>
                     </div>
                     <h4 className="text-xs font-medium tracking-wider text-gray-600 mb-2 text-center">PROCESS</h4>
                     <p className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-center">
-                      {product.traceability.process}
+                      {Array.isArray(product.traceability.process)
+                        ? product.traceability.process.join(', ')
+                        : product.traceability.process}
                     </p>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import './admin.css';
 
 const NAV_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/admin/hero', label: 'Hero', icon: Image },
+  { to: '/admin/hero', label: 'Media', icon: Image },
   { to: '/admin/collections', label: 'Collections', icon: Layers },
   { to: '/admin/products', label: 'Products', icon: Package },
   { to: '/admin/registry', label: 'Catalog Registry', icon: BookOpen },

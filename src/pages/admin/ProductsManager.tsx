@@ -10,6 +10,8 @@ import { getAllProducts } from '../../services/adminService';
 import { writeCollection } from '../../services/firestoreService';
 import type { Product } from '../../types/product';
 import { Save, RefreshCw, Search } from 'lucide-react';
+import ChipInput from '../../components/admin/ChipInput';
+import ProductGalleryManager from '../../components/admin/ProductGalleryManager';
 
 const resolveMetaKey = (pid: string, metaMap: Record<string, unknown>): string => {
   const prefixed = pid.startsWith('the-') ? pid : `the-${pid}`;
@@ -46,11 +48,19 @@ const ProductsManager: React.FC = () => {
     try {
       const liveProducts = await fetchAllProducts();
       const currentCache = readCache();
+      const movementShopifyIds = new Set(
+        currentCache.movementProducts.map((p) => p.shopifyId).filter(Boolean)
+      );
+      // Handles that must never be stored as regular productMetadata entries.
+      const MOVEMENT_HANDLES = new Set(['movement', 'the-movement']);
       let modified = false;
       for (const lp of liveProducts) {
+        if (lp.shopifyId && movementShopifyIds.has(lp.shopifyId)) continue;
+        if (MOVEMENT_HANDLES.has(lp.id)) continue;
         const metaKey = resolveMetaKey(lp.id, currentCache.productMetadata);
         if (!currentCache.productMetadata[metaKey]) {
           currentCache.productMetadata[metaKey] = {
+            shopifyId: lp.shopifyId,
             name: lp.name || lp.title,
             title: lp.title || lp.name,
             price: lp.price,
@@ -230,8 +240,8 @@ const ProductsManager: React.FC = () => {
 
             <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
               <h4 className="text-sm font-semibold text-gray-900">Header Products</h4>
-              <p className="text-xs text-gray-500">Select products to show in nav dropdown (max 5)</p>
-              {productsList.slice(0, 10).map((p) => (
+              <p className="text-xs text-gray-500">Select products to show in nav dropdown</p>
+              {productsList.map((p) => (
                 <label key={p.id} className="flex items-center gap-2 text-sm cursor-pointer">
                   <input
                     type="checkbox"
@@ -250,27 +260,6 @@ const ProductsManager: React.FC = () => {
               ))}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
-              <h4 className="text-sm font-semibold text-gray-900">Category Labels</h4>
-              {Object.entries(categoryLabels).map(([key, val]) => (
-                <AdminFormField
-                  key={key}
-                  label={key}
-                  name={`cat-${key}`}
-                  value={val}
-                  onChange={(v) => setCatLabels((prev) => ({ ...prev, [key]: v }))}
-                />
-              ))}
-              <button
-                onClick={() => {
-                  const newKey = prompt('New category key (e.g. micro-lots):');
-                  if (newKey) setCatLabels((prev) => ({ ...prev, [newKey]: 'New Category' }));
-                }}
-                className="text-xs text-gray-500 hover:text-gray-900 transition"
-              >
-                + Add category
-              </button>
-            </div>
           </div>
 
           <div className="md:col-span-2">
@@ -286,7 +275,7 @@ const ProductsManager: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <AdminFormField
                     label="Name (uppercase)"
                     name="name"
@@ -351,18 +340,20 @@ const ProductsManager: React.FC = () => {
 
                 <fieldset className="border border-gray-200 rounded-lg p-4 space-y-3">
                   <legend className="text-sm font-semibold text-gray-900 px-1">Traceability</legend>
-                  <div className="grid grid-cols-2 gap-3">
-                    <AdminFormField
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <ChipInput
                       label="Source"
                       name="source"
-                      value={(metadata as Record<string, string>).traceability?.source || selected.traceability.source}
+                      values={Array.isArray((metadata.traceability || selected.traceability).source) ? (metadata.traceability || selected.traceability).source as string[] : (typeof (metadata.traceability || selected.traceability).source === 'string' ? [(metadata.traceability || selected.traceability).source as string] : [])}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), source: v })}
+                      placeholder="Enter source location"
                     />
-                    <AdminFormField
+                    <ChipInput
                       label="Process"
                       name="process"
-                      value={(metadata as Record<string, string>).traceability?.process || selected.traceability.process}
+                      values={Array.isArray((metadata.traceability || selected.traceability).process) ? (metadata.traceability || selected.traceability).process as string[] : (typeof (metadata.traceability || selected.traceability).process === 'string' ? [(metadata.traceability || selected.traceability).process as string] : [])}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), process: v })}
+                      placeholder="Enter process method"
                     />
                     <AdminFormField
                       label="Elevation"
@@ -370,17 +361,12 @@ const ProductsManager: React.FC = () => {
                       value={(metadata as Record<string, string>).traceability?.elevation || selected.traceability.elevation}
                       onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), elevation: v })}
                     />
-                    <AdminFormField
+                    <ChipInput
                       label="Tasting Notes"
                       name="tasteNotes"
-                      value={Array.isArray((metadata.traceability || selected.traceability).tasteNotes) ? (metadata.traceability || selected.traceability).tasteNotes.join(', ') : ''}
-                      onChange={(v) =>
-                        updateMeta('traceability', {
-                          ...(metadata.traceability || selected.traceability),
-                          tasteNotes: v.split(',').map((s) => s.trim()).filter(Boolean),
-                        })
-                      }
-                      placeholder="Chocolate, Nutty, Sweet"
+                      values={Array.isArray((metadata.traceability || selected.traceability).tasteNotes) ? (metadata.traceability || selected.traceability).tasteNotes : []}
+                      onChange={(v) => updateMeta('traceability', { ...(metadata.traceability || selected.traceability), tasteNotes: v })}
+                      placeholder="Enter tasting note"
                     />
                   </div>
                 </fieldset>
@@ -411,36 +397,42 @@ const ProductsManager: React.FC = () => {
 
                 <fieldset className="border border-gray-200 rounded-lg p-4 space-y-3">
                   <legend className="text-sm font-semibold text-gray-900 px-1">Gallery Images</legend>
-                  <AdminFormField
-                    label="Gallery URLs (one per line)"
-                    name="gallery"
-                    type="textarea"
-                    value={((metadata as Record<string, string[]>).galleryImages || selected.galleryImages).join('\n')}
-                    onChange={(v) => updateMeta('galleryImages', v.split('\n').map((s: string) => s.trim()).filter(Boolean))}
+                  <ProductGalleryManager
+                    label="Gallery URLs"
+                    values={Array.isArray((metadata as Record<string, string[]>).galleryImages || selected.galleryImages) ? ((metadata as Record<string, string[]>).galleryImages || selected.galleryImages) : []}
+                    onChange={(v) => updateMeta('galleryImages', v)}
                   />
-                  <div className="flex flex-wrap gap-2">
-                    {((metadata as Record<string, string[]>).galleryImages || selected.galleryImages).map((url: string, i: number) => (
-                      <img key={i} src={url} alt="" className="w-20 h-20 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-                    ))}
-                  </div>
                 </fieldset>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
+                  <span className="text-sm font-medium text-gray-700">Status</span>
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <input
-                      type="checkbox"
-                      checked={Boolean((metadata as Record<string, boolean>).featured !== undefined ? (metadata as Record<string, boolean>).featured : selected.featured)}
-                      onChange={(e) => updateMeta('featured', e.target.checked)}
-                      className="rounded border-gray-300"
+                      type="radio"
+                      name="product-status"
+                      checked={!(metadata as Record<string, boolean>).featured && !(metadata as Record<string, boolean>).upcoming}
+                      onChange={() => { updateMeta('featured', false); updateMeta('upcoming', false); }}
+                      className="rounded-full border-gray-300"
+                    />
+                    None
+                  </label>
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <input
+                      type="radio"
+                      name="product-status"
+                      checked={Boolean((metadata as Record<string, boolean>).featured)}
+                      onChange={() => { updateMeta('featured', true); updateMeta('upcoming', false); }}
+                      className="rounded-full border-gray-300"
                     />
                     Featured
                   </label>
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <input
-                      type="checkbox"
-                      checked={Boolean((metadata as Record<string, boolean>).upcoming !== undefined ? (metadata as Record<string, boolean>).upcoming : selected.upcoming)}
-                      onChange={(e) => updateMeta('upcoming', e.target.checked)}
-                      className="rounded border-gray-300"
+                      type="radio"
+                      name="product-status"
+                      checked={Boolean((metadata as Record<string, boolean>).upcoming)}
+                      onChange={() => { updateMeta('featured', false); updateMeta('upcoming', true); }}
+                      className="rounded-full border-gray-300"
                     />
                     Upcoming
                   </label>

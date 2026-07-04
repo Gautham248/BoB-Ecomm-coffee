@@ -94,6 +94,7 @@ export function getAllProducts(): Product[] {
   const cache = readCache();
   const products: Product[] = [];
   const seenHandles = new Set<string>();
+  const seenShopifyIds = new Set<string>();
 
   const entries = Object.entries(cache.productMetadata).sort(([idA, metaA], [idB, metaB]) => {
     const prefixedA = idA.startsWith('the-') ? 1 : 0;
@@ -104,8 +105,13 @@ export function getAllProducts(): Product[] {
     return hasImgB - hasImgA;
   });
 
+  // IDs that belong exclusively to the movement/gadgets system and must never
+  // appear as regular store products.
+  const MOVEMENT_EXACT_IDS = new Set(['movement', 'the-movement']);
+
   for (const [id, meta] of entries) {
     if (id.startsWith('movement-')) continue;
+    if (MOVEMENT_EXACT_IDS.has(id)) continue;
     const baseHandle = id.replace(/^the-/, '');
     if (seenHandles.has(baseHandle)) continue;
     seenHandles.add(baseHandle);
@@ -122,7 +128,7 @@ export function getAllProducts(): Product[] {
         heroImageMobile: '',
         productCardImage: '',
         galleryImages: [],
-        traceability: { source: '', tasteNotes: [], process: '', elevation: '' },
+        traceability: { source: [], tasteNotes: [], process: [], elevation: '' },
         descriptionContent: { title: '', content: '', image: '' },
         category: '',
         featured: false,
@@ -134,6 +140,7 @@ export function getAllProducts(): Product[] {
       if (!product.title) product.title = product.name || id;
       if (typeof product.category !== 'string') product.category = '';
       validateProduct(product);
+      if (product.shopifyId) seenShopifyIds.add(product.shopifyId);
       products.push(product);
     } catch {
       console.warn('getAllProducts: skipping invalid product', id);
@@ -142,6 +149,7 @@ export function getAllProducts(): Product[] {
 
   for (const p of cache.movementProducts) {
     try {
+      if (p.shopifyId && seenShopifyIds.has(p.shopifyId)) continue;
       const product = {
         ...p,
         ...(cache.productMetadata[p.id] || {}),

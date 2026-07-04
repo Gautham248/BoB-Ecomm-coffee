@@ -73,9 +73,9 @@ export const products: Product[] = [
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
     price: 'INR 799.00',
     traceability: {
-      source: 'Sholayur, Attapadi, Wayanad',
+      source: ['Sholayur, Attapadi, Wayanad'],
       tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3280ft'
     },
     heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Inside-Hero-Image_The-Origin-p-1600.png?updatedAt=1761228745235',
@@ -123,9 +123,9 @@ export const products: Product[] = [
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
     price: 'INR 799.00',
     traceability: {
-      source: 'Wayanad, Anaikatti',
+      source: ['Wayanad, Anaikatti'],
       tasteNotes: ['Ripe Fruit', 'Cashew'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3650ft'
     },
     heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Inside-Hero-Image_Wild-Fire-p-1600.png?updatedAt=1761228744797',
@@ -188,9 +188,9 @@ export const products: Product[] = [
     description: 'Step into a world of vibrant energy with Echo Shock,a playful blend of light roasted 100% Peaberry designed to awaken your senses. Bright, lively flavors meet a smooth, balanced finish, crafted for those who thrive on curiosity and boundless enthusiasm.',
     price: 'INR 849.00',
     traceability: {
-      source: 'Attapadi',
+      source: ['Attapadi'],
       tasteNotes: ['Spice', 'Chocolate', 'Jaggery'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3500ft'
     },
     heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/High-Tide---Inside-Header-p-1080.png?updatedAt=1761228745143',
@@ -227,9 +227,9 @@ export const products: Product[] = [
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
     price: 'INR 899.00',
     traceability: {
-      source: 'Sholayur',
+      source: ['Sholayur'],
       tasteNotes: ['Sweet', 'Citric'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3610ft'
     },
     heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/High-Tide---Inside-Header-1-p-1600.png?updatedAt=1761228745150',
@@ -266,9 +266,9 @@ export const products: Product[] = [
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
     price: 'INR 749.00',
     traceability: {
-      source: 'Wayanad',
+      source: ['Wayanad'],
       tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '4593ft'
     },
     heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/thunder--p-1080.jpg?updatedAt=1761228745097',
@@ -315,9 +315,9 @@ export const products: Product[] = [
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
     price: 'INR 779.00',
     traceability: {
-      source: 'Yercaud, Wayanad',
+      source: ['Yercaud, Wayanad'],
       tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3650ft'
     },
     heroImage: 'https://ik.imagekit.io/beansofbodhi/Products/Hero%20Images/Inside-Hero-Image_Tornado-Twist-p-1080.png?updatedAt=1761228745088',
@@ -338,68 +338,7 @@ export const products: Product[] = [
     category: 'signature-blends',
     featured: true
   },
-  {
-    id: 'gadgets',
-    shopifyId: 'gid://shopify/Product/9859123511578',
-    shopifyVariants: [
-      { id: 'gid://shopify/ProductVariant/50617988055322', title: 'Default Title', price: '7499.0', available: true }
-    ],
-    reviews: [
-        {
-          customerName: 'Navaf Sharafudheen',
-          rating: 5,
-          date: '30 April 2026',
-          purchase: 'Movement',
-          title: 'Game changer',
-          content: 'I have been using Moment for a while now, and it\'s very portable and easy to make an espresso, no matter where you are..'
-        }
-    ],
-        name: 'Gadgets',
-    title: 'Gadgets',
-    description: 'Coming soon - Gadgets',
-    price: 'INR 7,499.00',
-    traceability: {
-      source: 'N/A',
-      tasteNotes: [],
-      process: 'N/A',
-      elevation: 'N/A'
-    },
-    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Gadget.webp?updatedAt=1761221187018',
-    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Categories/Gadget.webp?updatedAt=1761221187018',
-    productCardImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Gadget.webp?updatedAt=1761221187018',
-    galleryImages: [],
-    descriptionContent: {
-      title: 'Coming Soon',
-      content: 'Premium brewing equipment coming soon.',
-      image: ''
-    },
-    category: 'gadgets',
-    upcoming: false
-  },
-  {
-    id: 'merchandise',
-    name: 'Merchandise',
-    title: 'Merchandise',
-    description: 'Coming soon - Premium cotton t-shirt',
-    price: 'INR 799.00',
-    traceability: {
-      source: 'N/A',
-      tasteNotes: [],
-      process: 'N/A',
-      elevation: 'N/A'
-    },
-    heroImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Merchandise.webp?updatedAt=1761221187036',
-    heroImageMobile: 'https://ik.imagekit.io/7ujz6ljli/Categories/Merchandise.webp?updatedAt=1761221187036',
-    productCardImage: 'https://ik.imagekit.io/7ujz6ljli/Categories/Merchandise.webp?updatedAt=1761221187036',
-    galleryImages: [],
-    descriptionContent: {
-      title: 'Coming Soon',
-      content: 'Branded merchandise coming soon.',
-      image: ''
-    },
-    category: 'merchandise',
-    upcoming: true
-  },
+
 
   {
     id: 'the-liberica-funk',
@@ -418,9 +357,9 @@ export const products: Product[] = [
     description: 'A wild, exotic single-origin Liberica with heavy body, sweet jackfruit aroma, and a clean cup. Heavy, sweet, and complex, it is a rare coffee that stands apart from Arabica and Robusta, designed for those seeking the ultimate sensory adventure.',
     price: 'INR 932.00',
     traceability: {
-      source: 'Western Ghats, Wayanad',
+      source: ['Western Ghats, Wayanad'],
       tasteNotes: ['Jackfruit', 'Ripe Banana', 'Sweet Spice', 'Heavy Bodied'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3100ft'
     },
     heroImage: 'https://cdn.shopify.com/s/files/1/0918/6941/3658/files/IMG-1298.png?v=1770882427',
@@ -468,9 +407,9 @@ export const headerProducts: Product[] = [
     description: 'A nutty sweet blend of 60% Arabica, 20% Robusta and 20% Peaberry. This bold, fullbodied coffee embodies the untamed spirit of its origins, offering a taste of adventure with every sip',
     price: 'INR 799.00',
     traceability: {
-      source: 'Sholayur, Attapadi, Wayanad',
+      source: ['Sholayur, Attapadi, Wayanad'],
       tasteNotes: ['White Chocolate', 'Soft Nutty', 'Sweet'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3280ft'
     },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_The-Origin-p-1600.png?updatedAt=1759647760949',
@@ -517,9 +456,9 @@ export const headerProducts: Product[] = [
     description: 'A smoky dark blend of 70% Arabica and 30% Robusta, dark roasted to perfection. Smoky and robust, it\'s a coffee that sparks energy and fuels your fiercest pursuits, crafted for those who thrive on intensity and boldness.',
     price: 'INR 799.00',
     traceability: {
-      source: 'Wayanad, Anaikatti',
+      source: ['Wayanad, Anaikatti'],
       tasteNotes: ['Ripe Fruit', 'Cashew'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3650ft'
     },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_Wild-Fire-p-1600.png?updatedAt=1759650893936',
@@ -582,9 +521,9 @@ export const headerProducts: Product[] = [
     description: 'Step into a world of vibrant energy with Echo Shock,a playful blend of light roasted 100% Peaberry designed to awaken your senses. Bright, lively flavors meet a smooth, balanced finish, crafted for those who thrive on curiosity and boundless enthusiasm.',
     price: 'INR 849.00',
     traceability: {
-      source: 'Attapadi',
+      source: ['Attapadi'],
       tasteNotes: ['Spice', 'Chocolate', 'Jaggery'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3500ft'
     },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Inside-Header-p-1080.png?updatedAt=1759647315410',
@@ -621,9 +560,9 @@ export const headerProducts: Product[] = [
     description: 'A washed clean 100% Arabica. Hints of floral undertones meet a crisp, refreshing finish, crafted for adventurers seeking clarity in their chaos and balance in every bold moment.',
     price: 'INR 899.00',
     traceability: {
-      source: 'Sholayur',
+      source: ['Sholayur'],
       tasteNotes: ['Sweet', 'Citric'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3610ft'
     },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/High-Tide---Inside-Header-1-p-1600.png?updatedAt=1759651342901',
@@ -660,9 +599,9 @@ export const headerProducts: Product[] = [
     description: 'A creamy 100% Wayanadan Robusta, with  peanut and hints of dark chocolate that hits like a storm. Packed with an intense caffeine punch, this Robusta will surprise you. To fuel those who live for power, energy, and unstoppable momentum.',
     price: 'INR 749.00',
     traceability: {
-      source: 'Wayanad',
+      source: ['Wayanad'],
       tasteNotes: ['Chocolate', 'Nutty', 'Sweet', 'Spices'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '4593ft'
     },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/thunder--p-1080.jpg?updatedAt=1759647315069',
@@ -709,9 +648,9 @@ export const headerProducts: Product[] = [
     description: 'Our twisted blend of microlots for you. 50% Robusta and 50% Arabica. Citrus burts? Maybe. A hint of fermented funk? Possibly. Barrel-aged complexity? Could be. We experiment, we evolve, and we let nature and you do the talking. With dynamic flavors, this coffee is designed for those who thrive on adventure and embrace life\'s twists and turns.',
     price: 'INR 779.00',
     traceability: {
-      source: 'Yercaud, Wayanad',
+      source: ['Yercaud, Wayanad'],
       tasteNotes: ['Cocoa', 'Spice', 'Fruit', 'Hints of Floral'],
-      process: 'Natural',
+      process: ['Natural'],
       elevation: '3650ft'
     },
     heroImage: 'https://ik.imagekit.io/7ujz6ljli/Hero%20Images/Inside-Hero-Image_Tornado-Twist-p-1080.png?updatedAt=1759647315384',
@@ -764,7 +703,7 @@ export const collections: Collection[] = [
     description: 'Premium coffee brewing equipment and accessories to enhance your coffee experience. From precision grinders to elegant brewing vessels.',
     price: 'From ₹7499',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Gadgets.webp?updatedAt=1761390411909',
-    products: ['gadgets'],
+    products: ['movement'],
     featured: false,
     upcoming: false
   },
@@ -775,7 +714,7 @@ export const collections: Collection[] = [
     description: 'Beans of Bodhi branded merchandise including apparel, mugs, and accessories for the true coffee enthusiast.',
     price: 'Coming Soon',
     image: 'https://ik.imagekit.io/nzkbravfr/Collections/Merchandise.webp?updatedAt=1761390411855',
-    products: ['merchandise'],
+    products: [],
     featured: true,
     upcoming: true
   },

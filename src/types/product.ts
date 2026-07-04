@@ -25,9 +25,9 @@ export interface Product {
   price: string;
   originalPrice?: string;
   traceability: {
-    source: string;
+    source: string[];
     tasteNotes: string[];
-    process: string;
+    process: string[];
     elevation: string;
   };
   heroImage: string;
