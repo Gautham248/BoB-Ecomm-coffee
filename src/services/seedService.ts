@@ -1,7 +1,7 @@
 import { readCache, writeCache, hasLocalData, restoreFromFirestore } from './cacheService';
 import { collections, categoryLabels, headerProducts } from '../data/collections';
 import type { AdminCache } from '../types/admin';
-import type { Product, Collection } from '../types/product';
+import type { Product, Collection, Review } from '../types/product';
 
 const defaultHeroSlides = [
   {
@@ -35,8 +35,21 @@ async function buildFullCache(): Promise<AdminCache> {
     .map((p) => ({ productId: p.id }));
 
   const productMetadata: Record<string, Partial<Product>> = {};
+  const productReviews: Record<string, Review[]> = {};
+
   for (const p of products) {
-    productMetadata[p.id] = { ...p };
+    const { reviews, ...rest } = p as Product & { reviews?: Review[] };
+    productMetadata[p.id] = { ...rest } as Partial<Product>;
+    if (reviews && reviews.length > 0) {
+      productReviews[p.id] = reviews;
+    }
+  }
+
+  for (const p of movementProducts) {
+    const mv = p as unknown as Product;
+    if (mv.reviews && mv.reviews.length > 0) {
+      productReviews[mv.id] = mv.reviews;
+    }
   }
 
   return {
@@ -71,6 +84,8 @@ async function buildFullCache(): Promise<AdminCache> {
     })),
     categoryLabels:
       Object.keys(cache.categoryLabels).length > 0 ? cache.categoryLabels : categoryLabels,
+    productReviews:
+      Object.keys(cache.productReviews || {}).length > 0 ? (cache.productReviews || {}) : productReviews,
   };
 }
 

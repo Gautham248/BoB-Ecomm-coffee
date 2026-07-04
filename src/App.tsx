@@ -33,6 +33,7 @@ const ProductsManager = lazy(() => import('./pages/admin/ProductsManager'));
 const CatalogRegistry = lazy(() => import('./pages/admin/CatalogRegistry'));
 const FeaturedManager = lazy(() => import('./pages/admin/FeaturedManager'));
 const MovementManager = lazy(() => import('./pages/admin/MovementManager'));
+const ReviewsManager = lazy(() => import('./pages/admin/ReviewsManager'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -179,6 +180,14 @@ function AppRoutes() {
             element={
               <AdminRouteGuard>
                 <MovementManager />
+              </AdminRouteGuard>
+            }
+          />
+          <Route
+            path="/admin/reviews"
+            element={
+              <AdminRouteGuard>
+                <ReviewsManager />
               </AdminRouteGuard>
             }
           />

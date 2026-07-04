@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../../context/AdminAuthContext';
-import { LayoutDashboard, Image, Layers, Package, Star, Bike, LogOut, Coffee, BookOpen } from 'lucide-react';
+import { LayoutDashboard, Image, Layers, Package, Star, Bike, LogOut, Coffee, BookOpen, MessageSquare } from 'lucide-react';
 import './admin.css';
 
 const NAV_ITEMS = [
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: '/admin/collections', label: 'Collections', icon: Layers },
   { to: '/admin/products', label: 'Products', icon: Package },
   { to: '/admin/registry', label: 'Catalog Registry', icon: BookOpen },
+  { to: '/admin/reviews', label: 'Reviews', icon: MessageSquare },
   { to: '/admin/featured', label: 'Featured', icon: Star },
   { to: '/admin/movement', label: 'Movement', icon: Bike },
 ];

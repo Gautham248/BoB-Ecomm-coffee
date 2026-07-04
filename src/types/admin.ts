@@ -1,4 +1,4 @@
-import type { Product, Collection } from './product';
+import type { Product, Collection, Review } from './product';
 
 export interface MediaSlide {
   type: 'video' | 'image';
@@ -38,6 +38,7 @@ export interface AdminCache {
   heroSettings: HeroSettings;
   collections: Collection[];
   productMetadata: Record<string, Partial<Product>>;
+  productReviews: Record<string, Review[]>;
   featuredProducts: FeaturedProductEntry[];
   headerProducts: string[];
   movementProducts: Product[];

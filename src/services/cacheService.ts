@@ -1,4 +1,5 @@
 import type { AdminCache } from '../types/admin';
+import type { Review } from '../types/product';
 
 let _writeFirestoreCache: ((cache: AdminCache) => Promise<void>) | null = null;
 
@@ -23,6 +24,7 @@ export function validateCache(data: unknown): AdminCache {
   if (!Array.isArray(obj.headerProducts)) throw new Error('Cache headerProducts not an array');
   if (!Array.isArray(obj.movementProducts)) throw new Error('Cache movementProducts not an array');
   if (obj.categoryLabels !== null && (typeof obj.categoryLabels !== 'object' || Array.isArray(obj.categoryLabels))) throw new Error('Cache categoryLabels invalid');
+  if (obj.productReviews != null && (typeof obj.productReviews !== 'object' || Array.isArray(obj.productReviews))) throw new Error('Cache productReviews invalid');
   return data as AdminCache;
 }
 
@@ -50,6 +52,7 @@ const DEFAULT_CACHE: AdminCache = {
   featuredProducts: [],
   headerProducts: [],
   movementProducts: [],
+  productReviews: {},
   categoryLabels: {},
 };
 
@@ -148,6 +151,17 @@ function migrateStaleEntries(cache: AdminCache): AdminCache {
     const t = m.traceability as Record<string, unknown>;
     if (typeof t.source === 'string') { t.source = t.source ? [t.source] : []; modified = true; }
     if (typeof t.process === 'string') { t.process = t.process ? [t.process] : []; modified = true; }
+  }
+
+  // Migrate reviews from productMetadata to dedicated productReviews map
+  cache.productReviews = cache.productReviews || {};
+  for (const [key, meta] of Object.entries(cache.productMetadata)) {
+    const m = meta as Record<string, unknown>;
+    if (Array.isArray(m.reviews) && m.reviews.length > 0) {
+      cache.productReviews[key] = m.reviews as Review[];
+      delete m.reviews;
+      modified = true;
+    }
   }
 
   if (modified) {

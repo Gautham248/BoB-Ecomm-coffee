@@ -1,4 +1,4 @@
-import type { Product, Collection, CategoryInfo } from '../types/product';
+import type { Product, Collection, CategoryInfo, Review } from '../types/product';
 import type { HeroSettings, FeaturedProductEntry, MediaSlide } from '../types/admin';
 import { readCache } from './cacheService';
 import { validateProduct } from './productValidation';
@@ -76,6 +76,15 @@ export function getHeaderProducts(): Product[] {
 
 export function getMovementProducts(): Product[] {
   return readCache().movementProducts;
+}
+
+export function getProductReviews(productId: string): Review[] {
+  const cache = readCache();
+  const base = productId.replace(/^the-/, '');
+  return cache.productReviews?.[productId]
+    || cache.productReviews?.[`the-${base}`]
+    || cache.productReviews?.[base]
+    || [];
 }
 
 export function getCategoryLabels(): Record<string, string> {
