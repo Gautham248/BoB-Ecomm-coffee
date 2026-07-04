@@ -54,9 +54,10 @@ const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
     for (const col of allCollections) {
       if (col.id === currentCollectionId) continue;
       for (const pid of col.products) {
-        const existing = map.get(pid) || [];
+        const normPid = pid.startsWith('the-') ? pid.substring(4) : pid;
+        const existing = map.get(normPid) || [];
         existing.push(col.name || col.title || col.id);
-        map.set(pid, existing);
+        map.set(normPid, existing);
       }
     }
     return map;
@@ -74,20 +75,39 @@ const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
   }, [products, search]);
 
   const selectedChips = useMemo(() => {
-    const productMap = new Map(products.map((p) => [p.id, p]));
-    return selectedIds.map((id) => ({ id, product: productMap.get(id) || null }));
+    const productMap = new Map(products.map((p) => {
+      const normId = p.id.startsWith('the-') ? p.id.substring(4) : p.id;
+      return [normId, p];
+    }));
+    return selectedIds.map((id) => {
+      const normId = id.startsWith('the-') ? id.substring(4) : id;
+      return { id, product: productMap.get(normId) || null };
+    });
   }, [products, selectedIds]);
 
   const toggleProduct = (id: string) => {
-    if (selectedIds.includes(id)) {
-      onChange(selectedIds.filter((pid) => pid !== id));
+    const normId = id.startsWith('the-') ? id.substring(4) : id;
+    const exists = selectedIds.some((selectedId) => {
+      const normSelected = selectedId.startsWith('the-') ? selectedId.substring(4) : selectedId;
+      return normSelected === normId;
+    });
+
+    if (exists) {
+      onChange(selectedIds.filter((selectedId) => {
+        const normSelected = selectedId.startsWith('the-') ? selectedId.substring(4) : selectedId;
+        return normSelected !== normId;
+      }));
     } else {
       onChange([...selectedIds, id]);
     }
   };
 
   const removeProduct = (id: string) => {
-    onChange(selectedIds.filter((pid) => pid !== id));
+    const normId = id.startsWith('the-') ? id.substring(4) : id;
+    onChange(selectedIds.filter((selectedId) => {
+      const normSelected = selectedId.startsWith('the-') ? selectedId.substring(4) : selectedId;
+      return normSelected !== normId;
+    }));
   };
 
   return (
@@ -146,8 +166,12 @@ const ProductMultiSelect: React.FC<ProductMultiSelectProps> = ({
               </div>
             ) : (
               filtered.map((p) => {
-                const isSelected = selectedIds.includes(p.id);
-                const inOther = otherCollections.get(p.id) || [];
+                const normPid = p.id.startsWith('the-') ? p.id.substring(4) : p.id;
+                const isSelected = selectedIds.some((selectedId) => {
+                  const normSelected = selectedId.startsWith('the-') ? selectedId.substring(4) : selectedId;
+                  return normSelected === normPid;
+                });
+                const inOther = otherCollections.get(normPid) || [];
                 return (
                   <button
                     key={p.id}
